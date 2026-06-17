@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SENSUAL - 空間人格軟裝需求引導</title>
+    <style>
+        /* 導入高級感字體 */
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap');
+
+        :root {
+            --bg-color: #E2DFD8;       /* 溫潤的大地奶茶色背景 */
+            --card-bg: #F5F4F0;        /* 輕盈的米白卡片色 */
+            --text-main: #1A1A1A;      /* 極致沉穩的深灰黑 */
+            --text-muted: #7A756E;    /* 優雅的低彩度灰褐 */
+            --accent: #A39E93;        /* 微醺的泥灰輔助色 */
+            --transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+
+        /* 頂部與底部品牌標記 - 呼應參考圖 header/footer */
+        .brand-header {
+            position: absolute; top: 30px; left: 40px; right: 40px;
+            display: flex; justify-content: space-between;
+            font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 2px;
+            color: var(--text-muted); text-transform: uppercase;
+        }
+
+        /* 主容器 - 模擬簡報比例與留白 */
+        .quiz-container {
+            width: 100%; max-width: 900px; min-height: 500px;
+            background-color: var(--card-bg);
+            padding: 60px 80px; border-radius: 4px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.03);
+            display: flex; flex-direction: column; justify-content: center;
+            position: relative; transition: var(--transition);
+        }
+
+        /* 頁碼標記 (01), (02) */
+        .page-number {
+            font-family: 'Cinzel', serif; font-size: 13px; color: var(--text-muted);
+            text-align: center; margin-bottom: 20px; letter-spacing: 1px;
+        }
+
+        /* 大標題 */
+        h1.main-title {
+            font-family: 'Cinzel', serif; font-size: 56px; font-weight: 400;
+            letter-spacing: 4px; text-align: center; text-transform: uppercase;
+            margin-bottom: 15px; color: var(--text-main);
+        }
+
+        h2.question-title {
+            font-size: 24px; font-weight: 300; line-height: 1.6;
+            text-align: center; margin-bottom: 45px; letter-spacing: 1px;
+        }
+
+        .subtitle {
+            font-size: 14px; color: var(--text-muted); text-align: center;
+            margin-bottom: 40px; letter-spacing: 2px; line-height: 1.8;
+        }
+
+        /* 輸入框設計 */
+        .input-group { max-width: 400px; margin: 0 auto 30px; width: 100%; }
+        input[type="text"], input[type="email"] {
+            width: 100%; padding: 15px 5px; background: transparent;
+            border: none; border-bottom: 1px solid var(--accent);
+            font-size: 15px; color: var(--text-main); outline: none;
+            transition: var(--transition); text-align: center; letter-spacing: 1px;
+        }
+        input::placeholder { color: var(--accent); font-weight: 300; }
+        input:focus { border-bottom-color: var(--text-main); }
+
+        /* 選項與按鈕設計 - 點擊回饋的核心 */
+        .options-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+            width: 100%; max-width: 750px; margin: 0 auto;
+        }
+
+        .btn-option {
+            background: transparent; border: 1px solid #E2DFD8; padding: 30px 25px;
+            font-size: 15px; font-weight: 300; color: var(--text-main);
+            cursor: pointer; text-align: left; line-height: 1.6; letter-spacing: 0.5px;
+            transition: var(--transition); position: relative; border-radius: 2px;
+        }
+
+        /* 懸停與點擊的優雅動效 */
+        .btn-option:hover {
+            background-color: var(--bg-color); border-color: var(--text-muted);
+            transform: translateY(-2px);
+        }
+
+        .btn-option:active {
+            transform: translateY(1px); background-color: #DDD9CE;
+        }
+
+        .btn-action {
+            display: block; width: 160px; margin: 20px auto 0; padding: 15px;
+            background-color: var(--text-main); color: white; border: none;
+            font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 2px;
+            cursor: pointer; transition: var(--transition); text-transform: uppercase;
+        }
+        .btn-action:hover { background-color: var(--text-muted); letter-spacing: 4px; }
+
+        /* 隱藏過渡樣式 */
+        .hidden { display: none !important; opacity: 0; transform: scale(0.98); }
+        
+        .fade-in {
+            animation: fadeIn 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 讀取中動畫 */
+        .spinner {
+            width: 40px; height: 40px; border: 2px solid var(--accent);
+            border-top-color: var(--text-main); border-radius: 50%;
+            margin: 30px auto; animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        @media (max-width: 768px) {
+            .quiz-container { padding: 40px 25px; }
+            .options-grid { grid-template-columns: 1fr; }
+            h1.main-title { font-size: 38px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="brand-header">
+        <span>Sensual</span>
+        <span>Brand Guideline</span>
+    </div>
+
+    <div class="quiz-container fade-in" id="quiz-card">
+        <div id="step-intro" class="fade-in">
+            <div class="page-number">( 01 )</div>
+            <h1 class="main-title">Guideline</h1>
+            <p class="subtitle">空間人格與潛在軟裝需求引導<br>讓我們透過直覺，解構您理想中的生活儀式感</p>
+            
+            <div class="input-group">
+                <input type="text" id="username" placeholder="如何稱呼您 INDIVIDUAL NAME" autocomplete="off">
+            </div>
+            <div class="input-group">
+                <input type="email" id="useremail" placeholder="聯絡信箱 CONTACT EMAIL" autocomplete="off">
+            </div>
+            <button class="btn-action" onclick="changeStep('intro', 'q1')">Begin</button>
+        </div>
+
+        <div id="step-q1" class="hidden">
+            <div class="page-number">( 02 )</div>
+            <div class="page-number" style="font-size:11px; margin-top:-15px; text-transform:uppercase;">Manifesto</div>
+            <h2 class="question-title">Q1. 週末的午後，你最希望待在空間的哪個角落？</h2>
+            <div class="options-grid">
+                <button class="btn-option" onclick="selectOption('natural', 'q1', 'q2')">
+                    灑滿陽光的落地窗前，配一株大葉植物與編織單椅，享受自然光的純粹。
+                </button>
+                <button class="btn-option" onclick="selectOption('vintage', 'q1', 'q2')">
+                    點著微弱黃光、放著黑膠唱片的胡桃木書桌前，沉浸在懷舊的包容感中。
+                </button>
+            </div>
+        </div>
+
+        <div id="step-q2" class="hidden">
+            <div class="page-number">( 03 )</div>
+            <div class="page-number" style="font-size:11px; margin-top:-15px; text-transform:uppercase;">Moodboard</div>
+            <h2 class="question-title">Q2. 如果要在空間中投資一件『可以用一輩子』的靈魂單品，你的直覺是？</h2>
+            <div class="options-grid">
+                <button class="btn-option" onclick="selectOption('natural', 'q2', 'loading')">
+                    一張溫潤、擁有天然紋理的巨型大理石或陶板餐桌，它將承載全家人的相聚時光。
+                </button>
+                <button class="btn-option" onclick="selectOption('vintage', 'q2', 'loading')">
+                    一盞線條經典、散發曖昧光暈的歐洲設計師古董立燈，點亮無人打擾的深夜角落。
+                </button>
+            </div>
+        </div>
+
+        <div id="step-loading" class="hidden" style="text-align: center;">
+            <div class="page-number">( 04 )</div>
+            <h1 class="main-title" style="font-size: 28px;">Analyzing</h1>
+            <p class="subtitle" style="margin-bottom: 10px;">AI 正在閱讀您的空間靈魂，調配專屬軟裝計畫...</p>
+            <div class="spinner"></div>
+        </div>
+    </div>
+
+    <script>
+        // 資料儲存庫
+        let clientData = {
+            name: '',
+            email: '',
+            answers: {},
+            scores: { natural: 0, vintage: 0 },
+            styleResult: ''
+        };
+
+        // 步驟切換平滑特效
+        function changeStep(currentId, nextId) {
+            const currentEl = document.getElementById(`step-${currentId}`);
+            const nextEl = document.getElementById(`step-${nextId}`);
+            const card = document.getElementById('quiz-card');
+
+            // 驗證首頁欄位
+            if (currentId === 'intro') {
+                clientData.name = document.getElementById('username').value.trim();
+                clientData.email = document.getElementById('useremail').value.trim();
+                if (!clientData.name || !clientData.email) {
+                    alert('請留下您的稱呼與信箱，讓我們為您定調風格。');
+                    return;
+                }
+            }
+
+            // 微調卡片增添動態感
+            card.style.opacity = '0.5';
+            card.style.transform = 'translateY(-5px)';
+
+            setTimeout(() => {
+                currentEl.classList.add('hidden');
+                nextEl.classList.remove('hidden');
+                nextEl.classList.add('fade-in');
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, 400);
+        }
+
+        // 選擇答案與計分
+        function selectOption(styleType, currentStep, nextStep) {
+            clientData.scores[styleType]++;
+            clientData.answers[currentStep] = styleType;
+
+            changeStep(currentStep, nextStep);
+
+            if (nextStep === 'loading') {
+                // 模擬後端傳輸與 AI 計算時間（2.5秒），隨後觸發完成
+                setTimeout(() => {
+                    executeSubmission();
+                }, 250);
+            }
+        }
+
+        // 送出資料（未來可在這裡串接 Make.com Webhook）
+        function executeSubmission() {
+            // 判斷最終風格
+            clientData.styleResult = clientData.scores.natural >= clientData.scores.vintage ? '植物系療癒風 (Natural Wabi-Sabi)' : '微醺復古風 (Mid-Century Vintage)';
+            
+            // 🚀 【未來串接點】將以下網址替換為你的 Make.com Webhook URL
+            const webhookUrl = 'https://YOUR_MAKE_WEBHOOK_URL_HERE';
+            
+            /* fetch(webhookUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(clientData)
+            });
+            */
+
+            // 展示完成畫面給老闆看
+            const card = document.getElementById('quiz-card');
+            card.style.opacity = '0';
+            
+            setTimeout(() => {
+                document.getElementById('step-loading').classList.add('hidden');
+                card.innerHTML = `
+                    <div class="fade-in" style="text-align: center;">
+                        <div class="page-number">( 05 )</div>
+                        <div class="page-number" style="font-size:11px; margin-top:-15px; text-transform:uppercase;">About ${clientData.name}</div>
+                        <h1 class="main-title" style="font-size: 32px; margin-bottom:20px;">${clientData.styleResult}</h1>
+                        <p class="subtitle" style="max-width:55px0px; margin: 0 auto 30px; text-align:justify; line-height:2;">
+                            分析完成。您的測驗資料已同步寫入設計師的 Notion 系統中。AI 正在根據您的選擇調配「色彩計畫」與「核心材質（如：陶板、亞麻與特定燈光氛圍）」，稍後我們將主動與您聯繫，為您遞交專屬的軟裝提案大綱。
+                        </p>
+                        <div class="page-number" style="font-size:12px; letter-spacing:1px; color:#1a1a1a;">Thank you for your aesthetic alignment.</div>
+                    </div>
+                `;
+                card.style.opacity = '1';
+            }, 400);
+        }
+    </script>
+</body>
+</html>
