@@ -7,12 +7,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #F5F4F0;
-            --text-main: #1A1A1A;
-            --text-muted: #7A756E;
-            --border-color: #E2DFD8;
-            --accent-color: #A39E93;
-            --card-bg: #FFFFFF;
+           --bg-color: #E2DFD8;       /* 溫潤的大地奶茶色背景 */
+            --card-bg: #F5F4F0;        /* 輕盈的米白卡片色 */
+            --text-main: #1A1A1A;      /* 極致沉穩的深灰黑 */
+            --text-muted: #7A756E;    /* 優雅的低彩度灰褐 */
+            --accent: #A39E93;        /* 微醺的泥灰輔助色 */
+            --transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         * {
@@ -22,7 +22,7 @@
         }
 
         body {
-            font-family: 'Noto Sans TC', sans-serif;
+            font-family: 'GenYo Serif';
             background-color: var(--bg-color);
             color: var(--text-main);
             line-height: 1.6;
@@ -319,33 +319,29 @@
 </head>
 <body>
 
-<div class="wrapper">
-    <header>
-        <div class="brand-logo">OBSERVATORY</div>
-    </header>
+    <div class="brand-header">
+        <span><img src="螢幕擷取畫面 2025-11-06 152214.png" alt="Guanyu Design Logo"></span>
+        <span>Bespoke Custom Design</span>
+    </div>
 
     <main class="quiz-container">
         
         <!-- 🔓 填寫基本資料頁面 -->
-        <div id="step-0" class="quiz-step active">
-            <div class="time-badge">Welcome</div>
-            <div class="step-info">Introduction</div>
-            <h2 class="question-title">尋找你的生活調性</h2>
-            <p class="subtitle">展開一段 24 小時的時間隨行，探索專屬於你的空間敘事。</p>
-            
+    <div class="quiz-container fade-in" id="quiz-card">
+        <div id="step-intro" class="fade-in">
+            <div class="page-number">( 01 )</div>
+            <h1 class="main-title">尋找你的生活調性</h1>
+            <p class="subtitle">循著日常，探索屬於你的空間敘事
+            </p>
             <div class="input-group">
-                <label for="client-name">您的稱呼 / Name</label>
-                <input type="text" id="client-name" class="input-field">
+                <input type="text" id="username" placeholder="如何稱呼您 INDIVIDUAL NAME" autocomplete="off">
             </div>
-            <div class="input-group">
-                <label for="client-email">案件名稱 / Case Name</label>
-                <input type="text" id="client-email" class="input-field">
+             <div class="input-group">
+                <input type="text" id="projectname" placeholder="案件名稱 PROJECT NAME" autocomplete="off">
             </div>
-            
-            <div class="btn-container">
-                <button class="btn-action" onclick="startQuiz()">Begin Journey</button>
-            </div>
+            <button class="btn-action" onclick="changeStep('intro', 'q1')">Start</button>
         </div>
+
 
         <!-- 🔄 動態題目會由 JS 自動渲染在此處 -->
         <div id="dynamic-quiz-box" class="quiz-step"></div>
@@ -368,7 +364,7 @@
 
     </main>
 
-    <footer>OBSERVATORY DESIGN STUDIO ／ LIVING MODULE RESIDENCE SYSTEM</footer>
+    <footer>GUANYU-DESIGN ／ INTERIOR DECORATING</footer>
 </div>
 
 <script>
