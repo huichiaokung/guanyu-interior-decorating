@@ -28,9 +28,12 @@
             font-family: "GenYoMin TW", "GenYoMin", "Noto Serif TC", serif;
             background-color: var(--bg-color);
             color: var(--text-main);
-            line-height: 1.6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
             overflow-x: hidden;
-            letter-spacing: 0.8px;
         }
 /* 確保輸入框與按鈕也繼承明體字型 */
 input, button {
@@ -67,6 +70,12 @@ input, button {
 /* 測驗容器調整：避免內容被左上角固定的 Logo 打架 */
 .quiz-container {
     padding-top: 100px; /* 預留頂部空間給左上角的 Logo */
+     width: 100%; max-width: 900px; min-height: 500px;
+            background-color: var(--card-bg);
+            padding: 60px 80px; border-radius: 4px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.03);
+            display: flex; flex-direction: column; justify-content: center;
+            position: relative; transition: var(--transition);
 }
         /* 頂部極簡外框 */
         .wrapper {
@@ -144,153 +153,89 @@ input, button {
             color: var(--text-main);
             line-height: 1.5;
         }
+        /* 大標題 */
+        h1.main-title {
+            font-family: 'Cinzel', serif; font-size: 56px; font-weight: 400;
+            letter-spacing: 4px; text-align: center; text-transform: uppercase;
+            margin-bottom: 15px; color: var(--text-main);
+        }
 
+        h2.question-title {
+            font-size: 24px; font-weight: 300; line-height: 1.6;
+            text-align: center; margin-bottom: 45px; letter-spacing: 1px;
+        }
         .subtitle {
-            font-size: 13px;
-            color: var(--text-muted);
-            text-align: center;
-            margin-bottom: 36px;
-            font-weight: 300;
+            font-size: 14px; color: var(--text-muted); text-align: center;
+            margin-bottom: 40px; letter-spacing: 2px; line-height: 1.8;
         }
 
-        /* 輸入框樣式 */
-        .input-group {
-            max-width: 450px;
-            margin: 0 auto 20px;
+        /* 輸入框設計 */
+        .input-group { max-width: 400px; margin: 0 auto 30px; width: 100%; }
+        input[type="text"], input[type="email"] {
+            width: 100%; padding: 15px 5px; background: transparent;
+            border: none; border-bottom: 1px solid var(--accent);
+            font-size: 15px; color: var(--text-main); outline: none;
+            transition: var(--transition); text-align: center; letter-spacing: 1px;
+        }
+        input::placeholder { color: var(--accent); font-weight: 300; }
+        input:focus { border-bottom-color: var(--text-main); }
+
+        /* 選項與按鈕設計 - 點擊回饋的核心 */
+        .options-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+            width: 100%; max-width: 750px; margin: 0 auto;
         }
 
-        .input-group label {
-            display: block;
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-bottom: 8px;
+        .btn-option {
+            background: transparent; border: 1px solid #E2DFD8; padding: 30px 25px;
+            font-size: 15px; font-weight: 300; color: var(--text-main);
+            cursor: pointer; text-align: left; line-height: 1.6; letter-spacing: 0.5px;
+            transition: var(--transition); position: relative; border-radius: 2px;
         }
 
-        .input-field {
-            width: 100%;
-            padding: 16px;
-            background-color: transparent;
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            font-size: 14px;
-            border-radius: 2px;
-            outline: none;
-            transition: border-color 0.3s;
+        /* 懸停與點擊的優雅動效 */
+        .btn-option:hover {
+            background-color: var(--bg-color); border-color: var(--text-muted);
+            transform: translateY(-2px);
         }
 
-        .input-field:focus {
-            border-color: var(--text-muted);
-        }
-
-        /* 選項外觀 */
-        .options-list {
-            max-width: 500px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .option-card {
-            background-color: transparent;
-            border: 1px solid var(--border-color);
-            padding: 20px 24px;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-            border-radius: 2px;
-            display: flex;
-            align-items: center;
-        }
-
-        .option-card:hover {
-            background-color: var(--border-color);
-            border-color: var(--text-muted);
-        }
-
-        .option-card.selected {
-            border-color: var(--text-main);
-            background-color: #EBEAE4;
-        }
-
-        .option-text {
-            font-size: 14px;
-            font-weight: 300;
-            color: var(--text-main);
-        }
-
-        /* 拖曳排序專用樣式 */
-        .sortable-list {
-            max-width: 500px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .sort-item {
-            background-color: transparent;
-            border: 1px solid var(--border-color);
-            padding: 18px 24px;
-            cursor: grab;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-radius: 2px;
-            user-select: none;
-            transition: background-color 0.2s;
-        }
-
-        .sort-item:hover {
-            background-color: var(--border-color);
-        }
-
-        .sort-item.dragging {
-            opacity: 0.4;
-            border: 1px dashed var(--accent-color);
-        }
-
-        .sort-index {
-            font-family: 'Cinzel', serif;
-            font-size: 12px;
-            color: var(--text-muted);
-            width: 35px;
-        }
-
-        .sort-text {
-            font-size: 14px;
-            font-weight: 300;
-            flex-grow: 1;
-        }
-
-        .sort-handle {
-            color: var(--accent-color);
-            font-size: 14px;
-        }
-
-        /* 按鈕設計 */
-        .btn-container {
-            text-align: center;
-            margin-top: 32px;
+        .btn-option:active {
+            transform: translateY(1px); background-color: #DDD9CE;
         }
 
         .btn-action {
-            background-color: var(--text-main);
-            color: #FFFFFF;
-            border: none;
-            padding: 16px 48px;
-            font-size: 13px;
-            font-family: 'Cinzel', serif;
-            letter-spacing: 2px;
-            cursor: pointer;
-            transition: opacity 0.3s;
-            text-transform: uppercase;
-            border-radius: 2px;
+            display: block; width: 160px; margin: 20px auto 0; padding: 15px;
+            background-color: var(--text-main); color: white; border: none;
+            font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 2px;
+            cursor: pointer; transition: var(--transition); text-transform: uppercase;
+        }
+        .btn-action:hover { background-color: var(--text-muted); letter-spacing: 4px; }
+
+        /* 隱藏過渡樣式 */
+        .hidden { display: none !important; opacity: 0; transform: scale(0.98); }
+        
+        .fade-in {
+            animation: fadeIn 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
 
-        .btn-action:hover {
-            opacity: 0.9;
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
+        /* 讀取中動畫 */
+        .spinner {
+            width: 40px; height: 40px; border: 2px solid var(--accent);
+            border-top-color: var(--text-main); border-radius: 50%;
+            margin: 30px auto; animation: spin 1s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        @media (max-width: 768px) {
+            .quiz-container { padding: 40px 25px; }
+            .options-grid { grid-template-columns: 1fr; }
+            h1.main-title { font-size: 38px; }
+        }
         /* 結果頁面樣式 */
         .result-layout {
             text-align: center;
