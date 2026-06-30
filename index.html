@@ -42,11 +42,11 @@ input, button {
 
 /* 品牌 Header：縮小並固定在左上角 */
 .brand-header {
-    position: absolute; /* 或固定定位 fixed，依據你網頁是否需要滾動決定 */
+    position: fixed; /* 或固定定位 fixed，依據你網頁是否需要滾動決定 */
     top: 24px;          /* 距離頂部距離，可自行調整 */
     left: 24px;         /* 距離左側距離，可自行調整 */
     display: flex;
-    flex-direction: column; /* 讓 Logo 和副標題上下排列，若要橫排請改為 row */
+    flex-direction: row; /* 讓 Logo 和副標題上下排列，若要橫排請改為 row */
     align-items: flex-start;
     gap: 4px;           /* Logo 與文字的間距 */
     z-index: 1000;      /* 確保不會被內容遮擋 */
@@ -54,13 +54,14 @@ input, button {
 
 /* 控制 Logo 圖片大小 */
 .brand-header .logo-wrapper img {
-    height: 32px;       /* 這裡可以控制 Logo 縮小後的高度，寬度會等比例縮放 */
+    height: 50px;       /* 這裡可以控制 Logo 縮小後的高度，寬度會等比例縮放 */
     width: auto;
     display: block;
 }
 
 /* 副標題文字微調 */
 .brand-header .brand-subtext {
+     font-family: "GenYoMin TW", "GenYoMin", "Noto Serif TC", serif;
     font-size: 11px;
     letter-spacing: 0.1em;
     color: #8c8c8c;     /* 優雅的灰色細字 */
@@ -94,7 +95,7 @@ input, button {
         }
 
         .brand-logo {
-            font-family: 'Cinzel', serif;
+             font-family: "GenYoMin TW", "GenYoMin", "Noto Serif TC", serif;
             font-size: 16px;
             font-weight: 400;
             letter-spacing: 4px;
@@ -127,7 +128,7 @@ input, button {
 
         /* 高級感編號與標題 */
         .time-badge {
-            font-family: 'Cinzel', serif;
+             font-family: "GenYoMin TW", "GenYoMin", "Noto Serif TC", serif;
             font-size: 32px;
             color: var(--text-muted);
             text-align: center;
@@ -136,7 +137,7 @@ input, button {
         }
 
         .step-info {
-            font-family: 'Cinzel', serif;
+             font-family: "GenYoMin TW", "GenYoMin", "Noto Serif TC", serif;
             font-size: 11px;
             text-align: center;
             color: var(--accent-color);
@@ -146,6 +147,7 @@ input, button {
         }
 
         .question-title {
+        font-family: "GenYoMin TW", "GenYoMin", "Noto Serif TC", serif;
             font-size: 20px;
             font-weight: 400;
             text-align: center;
@@ -155,7 +157,8 @@ input, button {
         }
         /* 大標題 */
         h1.main-title {
-            font-family: 'Cinzel', serif; font-size: 56px; font-weight: 400;
+             font-family: "GenYoMin TW", "GenYoMin", "Noto Serif TC", serif;
+             font-size: 48px; font-weight: 400;
             letter-spacing: 4px; text-align: center; text-transform: uppercase;
             margin-bottom: 15px; color: var(--text-main);
         }
@@ -163,10 +166,12 @@ input, button {
         h2.question-title {
             font-size: 24px; font-weight: 300; line-height: 1.6;
             text-align: center; margin-bottom: 45px; letter-spacing: 1px;
+             font-family: "GenYoMin TW", "GenYoMin", "Noto Serif TC", serif
         }
         .subtitle {
             font-size: 14px; color: var(--text-muted); text-align: center;
             margin-bottom: 40px; letter-spacing: 2px; line-height: 1.8;
+             font-family: "GenYoMin TW", "GenYoMin", "Noto Serif TC", serif
         }
 
         /* 輸入框設計 */
@@ -176,6 +181,7 @@ input, button {
             border: none; border-bottom: 1px solid var(--accent);
             font-size: 15px; color: var(--text-main); outline: none;
             transition: var(--transition); text-align: center; letter-spacing: 1px;
+             font-family: "GenYoMin TW", "GenYoMin", "Noto Serif TC", serif
         }
         input::placeholder { color: var(--accent); font-weight: 300; }
         input:focus { border-bottom-color: var(--text-main); }
@@ -244,7 +250,7 @@ input, button {
         }
 
         .result-title {
-            font-family: 'Cinzel', serif;
+            font-family: "GenYoMin TW", "GenYoMin", "Noto Serif TC", serif;
             font-size: 24px;
             letter-spacing: 2px;
             margin-bottom: 12px;
@@ -292,11 +298,10 @@ input, button {
         /* 底部註腳 */
         footer {
             text-align: center;
-            font-family: 'Cinzel', serif;
+            font-family: "GenYoMin TW", "GenYoMin", "Noto Serif TC", serif;
             font-size: 10px;
             color: var(--accent-color);
             letter-spacing: 1px;
-            margin-top: 40px;
         }
     </style>
 </head>
@@ -312,7 +317,6 @@ input, button {
     <!-- 主內容區 -->
     <div class="quiz-container fade-in" id="quiz-card">
         <div id="step-intro" class="fade-in">
-            <div class="page-number">( 01 )</div>
             <h1 class="main-title">尋找你的生活調性</h1>
             <p class="subtitle">循著日常，探索屬於你的空間敘事</p>
             
