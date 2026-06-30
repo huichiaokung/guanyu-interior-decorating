@@ -40,32 +40,39 @@ input, button {
     font-family: inherit;
 }
 
-/* 品牌 Header：縮小並固定在左上角 */
-.brand-header {
-    position: fixed; /* 或固定定位 fixed，依據你網頁是否需要滾動決定 */
-    top: 24px;          /* 距離頂部距離，可自行調整 */
-    left: 24px;         /* 距離左側距離，可自行調整 */
-    display: flex;
-    flex-direction: row; /* 讓 Logo 和副標題上下排列，若要橫排請改為 row */
-    align-items: flex-start;
-    gap: 4px;           /* Logo 與文字的間距 */
-    z-index: 1000;      /* 確保不會被內容遮擋 */
+.header {
+    position: fixed;        /* 固定定位，滾動時不移位 */
+    top: 24px;              /* 距離頂部 24px */
+    left: 24px;             /* 距離左邊 24px */
+    right: 24px;            /* 距離右邊 24px */
+    
+    display: flex;          /* 啟動 Flexbox */
+    justify-content: space-between; /* Logo 靠左，文字靠右 */
+    align-items: center;    /* 關鍵：強迫裡面所有元件「直向/垂直」中心點完美對齊 */
+    
+    z-index: 1000;          
 }
 
-/* 控制 Logo 圖片大小 */
-.brand-header .logo-wrapper img {
-    height: 50px;       /* 這裡可以控制 Logo 縮小後的高度，寬度會等比例縮放 */
+/* 2. 控制 Logo 圖片的大小 */
+.header .logo-wrapper img {
+    height: 60px;           /* 控制 Logo 高度 */
     width: auto;
-    display: block;
+    display: block;         /* 移除圖片下方的預設空白間隙 */
 }
 
-/* 副標題文字微調 */
-.brand-header .brand-subtext {
-     font-family: "GenYoMin TW", "GenYoMin", "Noto Serif TC", serif;
+/* 3. 副標題文字微調 */
+.header .brand-subtext {
     font-size: 11px;
     letter-spacing: 0.1em;
-    color: #8c8c8c;     /* 優雅的灰色細字 */
+    color: #8c8c8c;
     text-transform: uppercase;
+    font-family: "GenYoMin TW", "GenYoMin", "Noto Serif TC", serif;
+    
+    /* 關鍵修正：確保沒有任何 margin-top、margin-right 或 top 屬性在干擾它 */
+    margin: 0;             
+    line-height: 1;         /* 讓文字的行高與字體大小一致，對齊更精準 */
+    text-align: right;
+    padding-right: 27px;
 }
 
 /* 測驗容器調整：避免內容被左上角固定的 Logo 打架 */
@@ -221,11 +228,21 @@ input, button {
         }
 
         .btn-action {
-            display: block; width: 160px; margin: 20px auto 0; padding: 15px;
-            background-color: var(--text-main); color: white; border: none;
-            font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 2px;
-            cursor: pointer; transition: var(--transition); text-transform: uppercase;
-        }
+display: block;
+    width: 160px;
+    padding: 15px;
+    background-color: var(--text-main);
+    color: white;
+    border: none;
+    font-size: 13px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: var(--transition);
+    text-transform: uppercase;
+    flex-shrink: 0;
+
+    /* 關鍵修改：利用左右 margin 自動平分，讓它在畫面水平置中 */
+    margin: 30px auto 0;}
         .btn-action:hover { background-color: var(--text-muted); letter-spacing: 4px; }
 
         /* 隱藏過渡樣式 */
@@ -248,11 +265,6 @@ input, button {
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        @media (max-width: 768px) {
-            .quiz-container { padding: 40px 25px; }
-            .options-grid { grid-template-columns: 1fr; }
-            h1.main-title { font-size: 38px; }
-        }
         /* 結果頁面樣式 */
         .result-layout {
             text-align: center;
@@ -308,40 +320,80 @@ input, button {
 
         /* 底部註腳 */
         footer {
-            text-align: center;
-            font-family: "GenYoMin TW", "GenYoMin", "Noto Serif TC", serif;
+            position: absolute;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%); /* 完美的水平居中 */
             font-size: 10px;
-            color: var(--accent-color);
+            color: var(--text-muted);
             letter-spacing: 1px;
-            display: flex;
-            align-items: center;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        /* ----------------------------------
+         * 4. 修正：滿版完美響應式斷點 (RWD)
+         * ---------------------------------- */
+        @media (max-width: 768px) {
+            .brand-header {
+                top: 16px;
+                left: 16px;
+                right: 16px;
+            }
+            .brand-header .logo-wrapper img {
+                height: 45px; /* 手機版縮小 Logo */
+            }
+            .brand-header .brand-subtext {
+                font-size: 9px;
+            }
+            .wrapper {
+                padding-top: 100px;
+                padding-bottom: 60px;
+            }
+            .quiz-container {
+                padding: 40px 20px;
+            }
+            /* 手機版將 Start 的橫向並排改為直向垂直排列 */
+            .start-page-flex {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                gap: 30px;
+            }
+            h1.main-title, .subtitle {
+                text-align: center;
+            }
+            .input-group {
+                margin: 25px auto 0;
+            }
+            .options-grid {
+                grid-template-columns: 1fr; /* 題目選項改為單欄 */
+            }
         }
     </style>
 </head>
 <body>
 
 
-    <!-- 品牌 Header：固定在左上角 -->
-    <div class="brand-header">
-        <span class="logo-wrapper"><img src="螢幕擷取畫面 2025-11-06 152214.png" alt="Guanyu Design Logo"></span>
-        <span class="brand-subtext">Bespoke Custom Design</span>
-    </div>
+<div class="header">
+    <span class="logo-wrapper"><img src="C:\Users\user\Desktop\素材\螢幕擷取畫面 2025-11-06 152214.png" alt="Guanyu Design Logo"></span>
+    <span class="brand-subtext">Bespoke Custom Design</span>
+</div>
 
-    <!-- 主內容區 -->
-    <div class="quiz-container fade-in" id="quiz-card">
-        <div id="step-intro" class="fade-in">
-            <h1 class="main-title">尋找你的生活調性</h1>
-            <p class="subtitle">循著日常，探索屬於你的空間敘事</p>
-            
-            <div class="input-group">
-                <input type="text" id="username" placeholder="如何稱呼您 INDIVIDUAL NAME" autocomplete="off">
-            </div>
-             <div class="input-group">
-                <input type="text" id="projectname" placeholder="案件名稱 PROJECT NAME" autocomplete="off">
-            </div>
-            <button class="btn-action" onclick="changeStep('intro', 'q1')">Start</button>
+<div class="quiz-container fade-in" id="quiz-card">
+    <div id="step-intro" class="fade-in">
+        <h1 class="main-title"><strong>尋找你的生活調性</strong></h1>
+        <p class="subtitle"><strong>循著日常，探索屬於你的空間敘事</strong></p>
+        
+        <div class="input-group">
+            <input type="text" id="username" placeholder="如何稱呼您 INDIVIDUAL NAME" autocomplete="off">
         </div>
+        <div class="input-group">
+            <input type="text" id="projectname" placeholder="案件名稱 PROJECT NAME" autocomplete="off">
+        </div>
+        <button class="btn-action" onclick="changeStep('step-intro', 'q1')" id="btn-start">Start</button>
     </div>
+</div>
 
 
 
@@ -376,7 +428,7 @@ input, button {
     // 數據庫收集容器
     let clientData = {
         name: "",
-        email: "",
+        projectname: "",
         scoreX: 0,
         scoreY: 0,
         resultType: "",
@@ -615,22 +667,43 @@ input, button {
         "A6": { title: "藝術品味 ╳ 撞色變化", matrix: "Avant-Garde Gallery", desc: "您是天生的空間調色師，追求最極致的藝術品味與視覺震撼。空間是您的靈魂畫布，絕不妥協於平庸的樣品屋配置。極度適合全屋規劃大膽流線型的高級訂製家具或國際設計師原作，並搭配極具視覺衝擊的大膽撞色、特殊高彩度藝術畫作與前衛材質撞擊。從客廳沙發到角落一盞立燈，都是令人屏息的藝術焦點。" }
     };
 
-    // 啟動測驗
-    function startQuiz() {
-        const nameInput = document.getElementById("client-name").value.trim();
-        const emailInput = document.getElementById("client-email").value.trim();
+// 啟動測驗
+function changeStep(currentStepId, nextStepId) {
+    // 1. 抓取當前填寫資料的欄位（如果是從 step-intro 要跳到 q1，先做表單驗證）
+    if (currentStepId === 'step-intro') {
+        const usernameInput = document.getElementById('username');
+        // 關鍵修正：將 'userproject' 改為正確的 'projectname' 
+        const userprojectInput = document.getElementById('projectname'); 
 
-        if (!nameInput || !emailInput) {
-            alert("請填寫您的稱呼與信箱，開啟五感隨行。");
-            return;
+        if (usernameInput && usernameInput.value.trim() === "") {
+            alert("請填寫您的稱呼，並開啟探索之旅");
+            usernameInput.focus();
+            return; // 攔截，不往下執行跳頁
         }
-
-        clientData.name = nameInput;
-        clientData.email = emailInput;
-
-        document.getElementById("step-0").classList.remove("active");
-        renderQuestion(currentQuestionIdx);
+        if (userprojectInput && userprojectInput.value.trim() === "") {
+            alert("請填寫專案名稱，並開啟探索之旅");
+            userprojectInput.focus();
+            return; // 攔截，不往下執行跳頁
+        }
     }
+
+    // 2. 執行跳頁：隱藏當前頁面，顯示下一頁
+    const currentStep = document.getElementById(currentStepId);
+    const nextStep = document.getElementById(nextStepId);
+
+    if (currentStep && nextStep) {
+        // 備註：如果你的 CSS 切換是用 active，請確保你的 CSS 有寫 .active { display: block; }，且預設 .quiz-step 是隱藏的。
+        // 如果你之前是用隱藏類名，也可以用：currentStep.style.display = 'none'; nextStep.style.display = 'block';
+        currentStep.classList.remove('active'); // 隱藏目前這一頁
+        nextStep.classList.add('active');       // 顯示下一頁
+        console.log(`成功從 ${currentStepId} 切換至 ${nextStepId}`);
+    } else {
+        console.error(`找不到對應的網頁區塊：${currentStepId} 或 ${nextStepId}`);
+    }
+}
+
+let currentQuestionIndex = 0; // 紀錄目前填寫到第幾題
+let userAnswers = [];         // 儲存使用者的選擇結果
 
     // 動態渲染題目
     function renderQuestion(idx) {
