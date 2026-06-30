@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>尋找你的生活調性 — 觀域 OBSERVATORY</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+    <title>SENSUAL - 空間人格軟裝需求引導</title>
     <style>
+        /* 導入高級感字體 */
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500&family=Noto+Sans+TC:wght@300;400;500&display=swap');
+
         :root {
-           --bg-color: #E2DFD8;       /* 溫潤的大地奶茶色背景 */
+            --bg-color: #E2DFD8;       /* 溫潤的大地奶茶色背景 */
             --card-bg: #F5F4F0;        /* 輕盈的米白卡片色 */
             --text-main: #1A1A1A;      /* 極致沉穩的深灰黑 */
             --text-muted: #7A756E;    /* 優雅的低彩度灰褐 */
@@ -15,62 +17,108 @@
             --transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: 'GenYo Serif';
+            font-family: 'Noto Sans TC', sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
-            line-height: 1.6;
-            overflow-x: hidden;
-            letter-spacing: 0.8px;
-        }
-
-        /* 頂部極簡外框 */
-        .wrapper {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 60px 24px;
-            min-height: 100vh;
             display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .brand-logo {
-            font-family: 'Cinzel', serif;
-            font-size: 16px;
-            font-weight: 400;
-            letter-spacing: 4px;
-            color: var(--text-main);
-        }
-
-        /* 測驗步驟容器 */
-        .quiz-container {
-            flex-grow: 1;
-            display: flex;
-            align-items: center;
             justify-content: center;
-            margin-bottom: 40px;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow-x: hidden;
         }
 
-        .quiz-step {
-            display: none;
-            width: 100%;
-            animation: fadeIn 0.8s ease forwards;
+        /* 頂部與底部品牌標記 - 呼應參考圖 header/footer */
+        .brand-header {
+            position: absolute; top: 30px; left: 40px; right: 40px;
+            display: flex; justify-content: space-between;
+            font-family: 'Cinzel', serif; font-size: 11px; letter-spacing: 2px;
+            color: var(--text-muted); text-transform: uppercase;
         }
 
-        .quiz-step.active {
-            display: block;
+        /* 主容器 - 模擬簡報比例與留白 */
+        .quiz-container {
+            width: 100%; max-width: 900px; min-height: 500px;
+            background-color: var(--card-bg);
+            padding: 60px 80px; border-radius: 4px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.03);
+            display: flex; flex-direction: column; justify-content: center;
+            position: relative; transition: var(--transition);
+        }
+
+        /* 頁碼標記 (01), (02) */
+        .page-number {
+            font-family: 'Cinzel', serif; font-size: 13px; color: var(--text-muted);
+            text-align: center; margin-bottom: 20px; letter-spacing: 1px;
+        }
+
+        /* 大標題 */
+        h1.main-title {
+            font-family: 'Cinzel', serif; font-size: 56px; font-weight: 400;
+            letter-spacing: 4px; text-align: center; text-transform: uppercase;
+            margin-bottom: 15px; color: var(--text-main);
+        }
+
+        h2.question-title {
+            font-size: 24px; font-weight: 300; line-height: 1.6;
+            text-align: center; margin-bottom: 45px; letter-spacing: 1px;
+        }
+
+        .subtitle {
+            font-size: 14px; color: var(--text-muted); text-align: center;
+            margin-bottom: 40px; letter-spacing: 2px; line-height: 1.8;
+        }
+
+        /* 輸入框設計 */
+        .input-group { max-width: 400px; margin: 0 auto 30px; width: 100%; }
+        input[type="text"], input[type="email"] {
+            width: 100%; padding: 15px 5px; background: transparent;
+            border: none; border-bottom: 1px solid var(--accent);
+            font-size: 15px; color: var(--text-main); outline: none;
+            transition: var(--transition); text-align: center; letter-spacing: 1px;
+        }
+        input::placeholder { color: var(--accent); font-weight: 300; }
+        input:focus { border-bottom-color: var(--text-main); }
+
+        /* 選項與按鈕設計 - 點擊回饋的核心 */
+        .options-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+            width: 100%; max-width: 750px; margin: 0 auto;
+        }
+
+        .btn-option {
+            background: transparent; border: 1px solid #E2DFD8; padding: 30px 25px;
+            font-size: 15px; font-weight: 300; color: var(--text-main);
+            cursor: pointer; text-align: left; line-height: 1.6; letter-spacing: 0.5px;
+            transition: var(--transition); position: relative; border-radius: 2px;
+        }
+
+        /* 懸停與點擊的優雅動效 */
+        .btn-option:hover {
+            background-color: var(--bg-color); border-color: var(--text-muted);
+            transform: translateY(-2px);
+        }
+
+        .btn-option:active {
+            transform: translateY(1px); background-color: #DDD9CE;
+        }
+
+        .btn-action {
+            display: block; width: 160px; margin: 20px auto 0; padding: 15px;
+            background-color: var(--text-main); color: white; border: none;
+            font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 2px;
+            cursor: pointer; transition: var(--transition); text-transform: uppercase;
+        }
+        .btn-action:hover { background-color: var(--text-muted); letter-spacing: 4px; }
+
+        /* 隱藏過渡樣式 */
+        .hidden { display: none !important; opacity: 0; transform: scale(0.98); }
+        
+        .fade-in {
+            animation: fadeIn 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
 
         @keyframes fadeIn {
@@ -78,261 +126,34 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* 高級感編號與標題 */
-        .time-badge {
-            font-family: 'Cinzel', serif;
-            font-size: 32px;
-            color: var(--text-muted);
-            text-align: center;
-            margin-bottom: 8px;
-            font-weight: 400;
+        /* 讀取中動畫 */
+        .spinner {
+            width: 40px; height: 40px; border: 2px solid var(--accent);
+            border-top-color: var(--text-main); border-radius: 50%;
+            margin: 30px auto; animation: spin 1s linear infinite;
         }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        .step-info {
-            font-family: 'Cinzel', serif;
-            font-size: 11px;
-            text-align: center;
-            color: var(--accent-color);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 24px;
-        }
-
-        .question-title {
-            font-size: 20px;
-            font-weight: 400;
-            text-align: center;
-            margin-bottom: 16px;
-            color: var(--text-main);
-            line-height: 1.5;
-        }
-
-        .subtitle {
-            font-size: 13px;
-            color: var(--text-muted);
-            text-align: center;
-            margin-bottom: 36px;
-            font-weight: 300;
-        }
-
-        /* 輸入框樣式 */
-        .input-group {
-            max-width: 450px;
-            margin: 0 auto 20px;
-        }
-
-        .input-group label {
-            display: block;
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-        }
-
-        .input-field {
-            width: 100%;
-            padding: 16px;
-            background-color: transparent;
-            border: 1px solid var(--border-color);
-            color: var(--text-main);
-            font-size: 14px;
-            border-radius: 2px;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        .input-field:focus {
-            border-color: var(--text-muted);
-        }
-
-        /* 選項外觀 */
-        .options-list {
-            max-width: 500px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .option-card {
-            background-color: transparent;
-            border: 1px solid var(--border-color);
-            padding: 20px 24px;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-            border-radius: 2px;
-            display: flex;
-            align-items: center;
-        }
-
-        .option-card:hover {
-            background-color: var(--border-color);
-            border-color: var(--text-muted);
-        }
-
-        .option-card.selected {
-            border-color: var(--text-main);
-            background-color: #EBEAE4;
-        }
-
-        .option-text {
-            font-size: 14px;
-            font-weight: 300;
-            color: var(--text-main);
-        }
-
-        /* 拖曳排序專用樣式 */
-        .sortable-list {
-            max-width: 500px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
-
-        .sort-item {
-            background-color: transparent;
-            border: 1px solid var(--border-color);
-            padding: 18px 24px;
-            cursor: grab;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            border-radius: 2px;
-            user-select: none;
-            transition: background-color 0.2s;
-        }
-
-        .sort-item:hover {
-            background-color: var(--border-color);
-        }
-
-        .sort-item.dragging {
-            opacity: 0.4;
-            border: 1px dashed var(--accent-color);
-        }
-
-        .sort-index {
-            font-family: 'Cinzel', serif;
-            font-size: 12px;
-            color: var(--text-muted);
-            width: 35px;
-        }
-
-        .sort-text {
-            font-size: 14px;
-            font-weight: 300;
-            flex-grow: 1;
-        }
-
-        .sort-handle {
-            color: var(--accent-color);
-            font-size: 14px;
-        }
-
-        /* 按鈕設計 */
-        .btn-container {
-            text-align: center;
-            margin-top: 32px;
-        }
-
-        .btn-action {
-            background-color: var(--text-main);
-            color: #FFFFFF;
-            border: none;
-            padding: 16px 48px;
-            font-size: 13px;
-            font-family: 'Cinzel', serif;
-            letter-spacing: 2px;
-            cursor: pointer;
-            transition: opacity 0.3s;
-            text-transform: uppercase;
-            border-radius: 2px;
-        }
-
-        .btn-action:hover {
-            opacity: 0.9;
-        }
-
-        /* 結果頁面樣式 */
-        .result-layout {
-            text-align: center;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .result-title {
-            font-family: 'Cinzel', serif;
-            font-size: 24px;
-            letter-spacing: 2px;
-            margin-bottom: 12px;
-            font-weight: 400;
-        }
-
-        .result-matrix {
-            font-size: 13px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 32px;
-        }
-
-        .result-description {
-            font-size: 15px;
-            font-weight: 300;
-            color: #333333;
-            line-height: 1.8;
-            text-align: justify;
-            margin-bottom: 40px;
-        }
-
-        .epilogue-box {
-            border-top: 1px solid var(--border-color);
-            padding-top: 40px;
-            margin-top: 40px;
-        }
-
-        .epilogue-text {
-            font-size: 14px;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-            font-weight: 300;
-        }
-
-        .epilogue-highlight {
-            font-size: 20px;
-            letter-spacing: 3px;
-            color: var(--text-main);
-            margin-bottom: 32px;
-            font-weight: 400;
-        }
-
-        /* 底部註腳 */
-        footer {
-            text-align: center;
-            font-family: 'Cinzel', serif;
-            font-size: 10px;
-            color: var(--accent-color);
-            letter-spacing: 1px;
-            margin-top: 40px;
+        @media (max-width: 768px) {
+            .quiz-container { padding: 40px 25px; }
+            .options-grid { grid-template-columns: 1fr; }
+            h1.main-title { font-size: 38px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="brand-header">
+<div class="brand-header">
         <span><img src="螢幕擷取畫面 2025-11-06 152214.png" alt="Guanyu Design Logo"></span>
         <span>Bespoke Custom Design</span>
     </div>
 
-    <main class="quiz-container">
-        
-        <!-- 🔓 填寫基本資料頁面 -->
     <div class="quiz-container fade-in" id="quiz-card">
         <div id="step-intro" class="fade-in">
             <div class="page-number">( 01 )</div>
             <h1 class="main-title">尋找你的生活調性</h1>
-            <p class="subtitle">循著日常，探索屬於你的空間敘事
-            </p>
+            <p class="subtitle">循著日常，探索屬於你的空間敘事</p>
+            
             <div class="input-group">
                 <input type="text" id="username" placeholder="如何稱呼您 INDIVIDUAL NAME" autocomplete="off">
             </div>
@@ -342,497 +163,131 @@
             <button class="btn-action" onclick="changeStep('intro', 'q1')">Start</button>
         </div>
 
-
-        <!-- 🔄 動態題目會由 JS 自動渲染在此處 -->
-        <div id="dynamic-quiz-box" class="quiz-step"></div>
-
-        <!-- 🏆 最終結果頁面 -->
-        <div id="step-result" class="quiz-step">
-            <div class="result-layout">
-                <div class="step-info">Your Vibe Archetype</div>
-                <h2 class="result-title" id="display-vibe-title">讀取中...</h2>
-                <div class="result-matrix" id="display-vibe-matrix">讀取中...</div>
-                <p class="result-description" id="display-vibe-desc">系統正在為您定調軟裝美學...</p>
-                
-                <div class="epilogue-box">
-                    <p class="epilogue-text">EPILOGUE ／ 觀域</p>
-                    <p class="epilogue-highlight">我們整理的，不只是空間。更是未來長期生活的方式。</p>
-                    <button class="btn-action" style="background-color: transparent; border: 1px solid var(--text-main); color: var(--text-main);" onclick="location.reload();">Restart</button>
-                </div>
+        <div id="step-q1" class="hidden">
+            <div class="page-number">( 02 )</div>
+            <div class="page-number" style="font-size:11px; margin-top:-15px; text-transform:uppercase;">Manifesto</div>
+            <h2 class="question-title">Q1. 週末的午後，你最希望待在空間的哪個角落？</h2>
+            <div class="options-grid">
+                <button class="btn-option" onclick="selectOption('natural', 'q1', 'q2')">
+                    灑滿陽光的落地窗前，配一株大葉植物與編織單椅，享受自然光的純粹。
+                </button>
+                <button class="btn-option" onclick="selectOption('vintage', 'q1', 'q2')">
+                    點著微弱黃光、放著黑膠唱片的胡桃木書桌前，沉浸在懷舊的包容感中。
+                </button>
             </div>
         </div>
 
-    </main>
+        <div id="step-q2" class="hidden">
+            <div class="page-number">( 03 )</div>
+            <div class="page-number" style="font-size:11px; margin-top:-15px; text-transform:uppercase;">Moodboard</div>
+            <h2 class="question-title">Q2. 如果要在空間中投資一件『可以用一輩子』的靈魂單品，你的直覺是？</h2>
+            <div class="options-grid">
+                <button class="btn-option" onclick="selectOption('natural', 'q2', 'loading')">
+                    一張溫潤、擁有天然紋理的巨型大理石或陶板餐桌，它將承載全家人的相聚時光。
+                </button>
+                <button class="btn-option" onclick="selectOption('vintage', 'q2', 'loading')">
+                    一盞線條經典、散發曖昧光暈的歐洲設計師古董立燈，點亮無人打擾的深夜角落。
+                </button>
+            </div>
+        </div>
 
-    <footer>GUANYU-DESIGN ／ INTERIOR DECORATING</footer>
-</div>
+        <div id="step-loading" class="hidden" style="text-align: center;">
+            <div class="page-number">( 04 )</div>
+            <h1 class="main-title" style="font-size: 28px;">Analyzing</h1>
+            <p class="subtitle" style="margin-bottom: 10px;">AI 正在閱讀您的空間靈魂，調配專屬軟裝計畫...</p>
+            <div class="spinner"></div>
+        </div>
+    </div>
 
-<script>
-    // 🔗 串接 Make.com 用的 Webhook 網址
-    const webhookUrl = "https://hook.us1.make.com/xxxxxxxxxxxxxx"; 
-
-    // 數據庫收集容器
-    let clientData = {
-        name: "",
-        email: "",
-        scoreX: 0,
-        scoreY: 0,
-        resultType: "",
-        answers: {}
-    };
-
-    let currentQuestionIdx = 0;
-
-    // 24小時全套題目庫配置
-    const questions = [
-        {
-            time: "00:00", info: "Phase 1 - Light & Shadow", type: "single",
-            q: "微醺的夜，最吸引你目光的光影是？", sub: "定調最深層的感性色彩基礎",
-            options: [
-                { text: "暖黃色的間接照明，均勻洗在乾淨米白色牆面上，非常療癒。", x: 1, y: 1, tag: "排斥高彩度跳色" },
-                { text: "一盞線條大膽、帶有金屬未來感的雕塑立燈，在黑暗中投射強烈光影。", x: 3, y: 1, tag: "偏好獨特線條" },
-                { text: "帶著神祕勃根地紅或復古綠的局部跳色牆，配上微微搖曳的燭光。", x: 2, y: 3, tag: "偏好大膽跳色" }
-            ]
-        },
-        {
-            time: "01:00", info: "Phase 1 - Reject Element", type: "multiple",
-            q: "閉上眼，你絕對不想在新家的夢境裡看見哪種畫面？", sub: "過濾心中最排斥的材質與氛圍（可複選）",
-            options: [
-                { text: "冰冷僵硬、毫無個性，看起來像大量複製的平庸樣品屋。", x: 0, y: 0, tag: "排斥平庸樣品屋感" },
-                { text: "笨重老舊、色調過於深沉沉悶的傳統木作感。", x: 0, y: 0, tag: "排斥深色老舊木作" },
-                { text: "雜亂無章、各種刺眼色彩混雜在一起的凌亂感。", x: 0, y: 0, tag: "排斥複雜用色" },
-                { text: "充滿銳利鐵件、稜角過多且難以親近的冰冷材質。", x: 0, y: 0, tag: "排斥圓形/複雜造型" }
-            ]
-        },
-        {
-            time: "02:00", info: "Phase 1 - Deep Dream", type: "single",
-            q: "在你的理想夢境中，你正被哪一種空間的「風格調性」包裹著？", sub: "挖掘基礎核心美學風格偏好",
-            options: [
-                { text: "溫潤內斂、帶有自然微瑕肌理的寂靜侘寂感。", x: 2, y: 1, tag: "喜歡風格:侘寂自然" },
-                { text: "線條俐落、黑白灰幾何分明的現代極簡感。", x: 1, y: 1, tag: "喜歡風格:現代極簡" },
-                { text: "復古摩登、帶有法式優雅弧線與大膽色彩的中世紀摩登 (MCM)。", x: 3, y: 3, tag: "喜歡風格:摩登復古" },
-                { text: "經典雋永、重視材質比例與對稱美學的當代經典。", x: 3, y: 2, tag: "喜歡風格:當代經典" }
-            ]
-        },
-        {
-            time: "03:00", info: "Phase 1 - Visual Layout", type: "single",
-            q: "如果可以用「一組家具配置」來具象化你的靈魂，你直覺更趨近哪一種？", sub: "回推心中基礎配置美學結構",
-            options: [
-                { text: "規格化、簡單俐落、溫潤同色系的雋永經典配置。", x: 1, y: 1, tag: "偏好俐落規格品" },
-                { text: "內斂同色，但充滿細緻訂製感與圓潤弧線的高級配置。", x: 2, y: 1, tag: "偏好細緻訂製款" },
-                { text: "充滿藝術品味、大膽跳色且線條豐富的原創大師配置。", x: 3, y: 3, tag: "偏好大師原創藝術品" }
-            ]
-        },
-        {
-            time: "04:00", info: "Phase 1 - Inspiration", type: "single",
-            q: "醒來前，如果能打包幾張「特別嚮往的家居參考照片」，你最愛它的主因會是？", sub: "抓取軟裝搭配的核心切入點",
-            options: [
-                { text: "「我喜歡那些家具擺放的慵懶呼吸感，看起來非常放鬆、留白。」", x: 1, y: 1, tag: "追求空間鬆弛感" },
-                { text: "「我被照片裡某幾件極具設計感的單椅或特殊燈飾深深吸引。」", x: 3, y: 2, tag: "追求設計師單品焦點" },
-                { text: "「我喜歡照片中材質的細緻堆疊，例如陶板與木皮撞擊出的細節。」", x: 2, y: 1, tag: "重視產品質感細節" }
-            ]
-        },
-        {
-            time: "05:00", info: "Phase 2 - Life Companions", type: "multiple",
-            q: "天剛亮，一雙溫暖的眼睛正在看著你，那是誰？", sub: "收集新家的空間常駐成員與安全防護需求（可複選）",
-            options: [
-                { text: "活潑的毛孩（貓/狗），正準備在客廳地板與沙發上飛奔。", x: 0, y: 0, tag: "有養寵物" },
-                { text: "牙牙學語的小孩，或者是需要安心慢活的長輩。", x: 0, y: 0, tag: "有小孩/長輩" },
-                { text: "目前是獨居的自由靈魂，空間完全由我一人掌控。", x: 0, y: 0, tag: "成員:獨居" },
-                { text: "甜蜜的兩人世界，正準備共同構築生活細節。", x: 0, y: 0, tag: "成員:伴侶" }
-            ]
-        },
-        {
-            time: "06:00", info: "Phase 2 - Material Touch", type: "single",
-            q: "走到衛浴洗漱，你希望腳下踩到、手觸摸到的材質帶給你什麼感受？", sub: "測量材質維護心態與細節黏著度",
-            options: [
-                { text: "極度好清潔、不易留水痕且好打理的現代實用材質。", x: 1, y: 0, tag: "材質要求好清潔" },
-                { text: "帶有獨特自然紋理的高級石材、巨型岩板或天然木皮的微瑕肌理。", x: 3, y: 0, tag: "喜歡石材/木質天然質感" },
-                { text: "平整、顏色溫和且標準規整的霧面規格瓷磚。", x: 1, y: 0, tag: "材質要求規整標準" }
-            ]
-        },
-        {
-            time: "07:00", info: "Phase 2 - Lines Preference", type: "single",
-            q: "準備做早餐，推開公共空間的窗簾，你對家具線條的第一直覺是？", sub: "過濾造型細節（圓潤防撞 vs 俐落方正）",
-            options: [
-                { text: "造型想要圓潤一點、多一些圓弧倒角，讓家看起來更有包容力。", x: 1, y: 0, tag: "造型想要圓潤一點" },
-                { text: "線條想要方正、俐落、幾何感強，床頭櫃或邊几不想要圓形的。", x: 2, y: 0, tag: "線條俐落方正/不想要圓形床頭櫃" },
-                { text: "沒有特定形狀限制，只要比例完美、具有設計藝術感都可以接受。", x: 3, y: 0, tag: "重視原創藝術線條" }
-            ]
-        },
-        {
-            time: "08:00", info: "Phase 2 - Inheritance", type: "multiple",
-            q: "坐在餐廳吃早餐，環顧四周，新家有保留哪些「舊情感」嗎？", sub: "調查自購品項與沿用舊家具規劃（可複選）",
-            options: [
-                { text: "有打算從舊家沿用具有紀念價值或習慣的沿用家具。", x: 0, y: 0, tag: "有沿用舊家具" },
-                { text: "沒有，所有家具我都希望全新採購，徹底為新家打底。", x: 0, y: 0, tag: "家具全部換新" },
-                { text: "我已經自行偷偷物色、或是有確定自購的特定軟裝品項了。", x: 0, y: 0, tag: "已有確定自購品項" }
-            ]
-        },
-        {
-            time: "09:00", info: "Phase 2 - Storage Control", type: "single",
-            q: "整理桌面準備展開行程，此時你對空間「整潔與陳列」的控制欲是？", sub: "推估機能收納與展示單品的比例心態",
-            options: [
-                { text: "雜物必須全部藏起來！我希望使用大量隱形收納，家具簡單俐落就好。", x: 1, y: 0, tag: "機能偏好:隱形大量收納" },
-                { text: "容許生活痕跡。我喜歡用幾件高級的開放式層架，展示我的藏書與生活品味。", x: 3, y: 0, tag: "機能偏好:美學開放展示" }
-            ]
-        },
-        {
-            time: "10:00", info: "Phase 3 - Deep Focus", type: "single",
-            q: "進入工作或學習狀態，你在新家最常「長時間辦公或專注」的基地是？", sub: "挖掘核心日常習慣與公共區長桌機能需求",
-            options: [
-                { text: "我習慣隨性在客廳沙發上，抱著平板或筆電處理事情。", x: 1, y: 0, tag: "日常習慣:習慣在客廳辦公" },
-                { text: "我會長時間在餐廳區的大長桌辦公，這裡是我靈感的延伸。", x: 2, y: 0, tag: "日常習慣:長時間在餐廳區辦公" },
-                { text: "我必須在獨立的書房空間或個人專屬書桌前，才能完美專注。", x: 1, y: 0, tag: "日常習慣:需要獨立工作書房" }
-            ]
-        },
-        {
-            time: "11:00", info: "Phase 3 - Dining Habit", type: "single",
-            q: "專注到一半你想喝杯咖啡，關於「在客廳吃喝東西」這件事...？", sub: "決定面料抗污防潑水之實用等級",
-            options: [
-                { text: "超級習慣！我就是喜歡窩在客廳沙發上喝咖啡、吃零食，甚至看電視吃正餐。", x: 1, y: 0, tag: "使用習慣:習慣在客廳喝咖啡吃東西" },
-                { text: "絕對禁止。為了維持極致整潔，吃喝東西一律只能在餐廳或中島進行。", x: 2, y: 0, tag: "使用習慣:客廳禁止飲食" }
-            ]
-        },
-        {
-            time: "12:00", info: "Phase 3 - Midday Rest", type: "single",
-            q: "短暫的午休充電，你最渴望被家裡哪一個「核心品項」完全包裹？", sub: "探知一定要具備的核心家具與使用偏好",
-            options: [
-                { text: "一座寬大舒適、深度極具包容感、可以整個人陷進去的核心大沙發。", x: 1, y: 0, tag: "必備品項:核心深度沙發/極致舒適要求" },
-                { text: "一張擺在窗邊、符合人體工學且線條優雅的設計師單椅。", x: 3, y: 0, tag: "必備品項:設計師單椅/習慣坐在單椅上閱讀" },
-                { text: "一張大尺寸、充滿極致陶板工藝或實木觸感的厚實餐桌。", x: 2, y: 0, tag: "必備品項:質感厚實大餐桌" }
-            ]
-        },
-        {
-            time: "13:00", info: "Phase 3 - Flexibility", type: "multiple",
-            q: "起手拉展一下筋骨，你是否也希望家裡的家具具備「伸縮彈性」？", sub: "收集特殊彈性機能硬核需求（可複選）",
-            options: [
-                { text: "是的，客廳沙發或大餐桌最好具備伸縮彈性，人多時可隨時展開。", x: 0, y: 0, tag: "特殊需求:沙發餐桌要可以伸縮" },
-                { text: "我希望沙發或專屬單椅可以額外加腳凳，讓雙腿得到充分抬高放鬆。", x: 0, y: 0, tag: "特殊需求:沙發單椅要加腳凳" },
-                { text: "不需要特殊伸縮，我更追求家具一體成型、線條不可割捨的固定結構美學。", x: 0, y: 0, tag: "特殊需求:追求一體成型家具" }
-            ]
-        },
-        {
-            time: "14:00", info: "Phase 3 - Soul Priority", type: "sort",
-            q: "此時你開始盤算軟裝的資金比例，請排出你最願意投資的「品項優先順序」：", sub: "拖曳進行排序：最捨得砸預算的放最上面（加權計分項目）",
-            options: [
-                { text: "核心沙發區 — 撐起客廳的靈魂包裹感", val: "核心沙發" },
-                { text: "大長餐桌椅 — 兼顧辦公與相聚的靈感中島", val: "餐桌椅" },
-                { text: "設計師單椅 — 窗邊獨處與夜讀的品味儀式", val: "設計師單椅" },
-                { text: "藝術燈飾與地毯 — 點亮夜晚感性氛圍的調色盤", val: "燈飾地毯" }
-            ]
-        },
-        {
-            time: "15:00", info: "Phase 3 - Final Checklist", type: "multiple",
-            q: "除了上述的空間主角，新家的配置中「必定要規畫」的配件有哪些？", sub: "完善採購需求檢核表（可複選）",
-            options: [
-                { text: "實用大容量、能收納生活雜物的電視櫃或端景收納櫃", x: 0, y: 0, tag: "必備配件:電視櫃/收納櫃" },
-                { text: "主臥空間必備的設計感床頭櫃與機能化妝台", x: 0, y: 0, tag: "必備配件:床頭櫃/化妝台" },
-                { text: "玄關落塵區的機能穿鞋榻或迎賓端景几", x: 0, y: 0, tag: "必備配件:玄關家具" },
-                { text: "用來展示私人收藏或珍貴書籍的開放式陳列架", x: 0, y: 0, tag: "必備配件:開放式展示架" }
-            ]
-        },
-        {
-            time: "16:00", info: "Phase 4 - Color Gradient", type: "single",
-            q: "看著窗外夕陽漸漸沉落，你希望新家鋪陳的「大面積色系底蘊」是？", sub: "定調用色變化 Y 軸明度與色調基底",
-            options: [
-                { text: "溫潤明亮的淺色奶茶系、米白、暖灰色，隨著日光折射溫柔微光。", x: 0, y: 1, tag: "材料使用淺色系" },
-                { text: "深沉、內斂且帶有高級神祕感的深色系木質、暗黑灰調或沉穩黑色調。", x: 0, y: 1, tag: "材料使用深色系" },
-                { text: "帶有低飽和灰調的莫蘭迪色、灰藍色，展現空間溫柔的色塊層次。", x: 0, y: 2, tag: "材料使用莫蘭迪色系" }
-            ]
-        },
-        {
-            time: "17:00", info: "Phase 4 - Vibe Expectation", type: "single",
-            q: "下班開車走在回家的路上，你最期待打開大門那一瞬間的「氛圍撞擊」？", sub: "交叉對應最終美學定位象限",
-            options: [
-                { text: "簡單俐落、毫無負擔。能讓大腦一秒關機、極簡乾淨的純粹歸屬感。", x: 1, y: 0, tag: "偏好氛圍:簡單俐落" },
-                { text: "溫馨同色、被大地色細緻包裹。像精品度假飯店一樣的低調內斂高雅。", x: 2, y: 0, tag: "偏好氛圍:內斂同色" },
-                { text: "充滿故事、像私人藝廊。每一件家具線條都獨具藝術品味的陳列儀式。", x: 3, y: 0, tag: "偏好氛圍:藝術品味" }
-            ]
-        },
-        {
-            time: "18:00", info: "Phase 4 - Social Identity", type: "single",
-            q: "晚餐時間門鈴響了，你的公共空間平常有準備迎接「社交活動」嗎？", sub: "回推家具配置的開闊度與款待機能需求",
-            options: [
-                { text: "有，我常邀請三五好友來家裡聚會喝咖啡，需要具備靈活款待人的包容彈性。", x: 1, y: 0, tag: "使用習慣:有聚會社交需求" },
-                { text: "極少，家是我高度私密的精神堡壘，除了摯愛家人，我更沉溺於極致獨享與清靜。", x: 2, y: 0, tag: "使用習慣:極致獨享無社交需求" }
-            ]
-        },
-        {
-            time: "19:00", info: "Phase 4 - Contrast Tension", type: "single",
-            q: "若要在客廳掛一幅「巨型當代藝術畫作」，你的大腦對色彩的接受極限是？", sub: "定調 Y 軸跳色與大膽撞色之接受邊界",
-            options: [
-                { text: "色調必須與沙發、牆面完美融為一體，最好是同色系、留白或低調純色幾何。", x: 0, y: 1, tag: "色彩極度保守/追求同色調" },
-                { text: "可以接受1-2個高彩度的經典色塊（如克萊因藍、土橘色）局部跳色點綴空間。", x: 0, y: 2, tag: "可接受空間局部跳色" },
-                { text: "越包容越大膽越好！我著迷於衝突且極具美學張力的撞色變化。", x: 0, y: 3, tag: "追求大膽撞色變化" }
-            ]
-        },
-        {
-            time: "20:00", info: "Phase 5 - Core Philosophy", type: "single",
-            q: "拉上窗簾，點亮核心燈具。你認為一套好的居家軟裝，核心價值該是什麼？", sub: "測量預算心態與原創品牌的溢價認同度",
-            options: [
-                { text: "實用、好維護、高 CP 值。在合理經濟的範疇內，達到生活機能最大化。", x: 0, y: 0, tag: "重視實用與高CP值" },
-                { text: "量身定製與細緻工藝細節。沙發的車縫線、陶板的邊角收邊，都該是訂製的精緻工藝。", x: 2, y: 0, tag: "重視標準與高級訂製工藝" },
-                { text: "原創大師精神與美學不可替代性。家具就是家裡的雕塑藝術品，我願意為原創買單。", x: 4, y: 0, tag: "追求原創設計師品牌" }
-            ]
-        },
-        {
-            time: "21:00", info: "Phase 5 - Reality Budget", type: "single",
-            q: "與現實攤牌：在規劃新家的軟裝採購規劃時，您的真實總預算區間是？", sub: "最真實硬核的數據收集，用以精準對應採購通路",
-            options: [
-                { text: "經濟實用型：希望以高 CP 值的家用規格品為主（預算範圍：輕軟裝區間）。", x: 0, y: 0, tag: "預算範圍:經濟規格品" },
-                { text: "重點升級型：核心沙發、大長餐桌願意升級高級訂製款，其餘燈飾混搭規格品。", x: 2, y: 0, tag: "預算範圍:核心高訂/其餘規格混搭" },
-                { text: "頂級追求型：追求極致整體感與品味純粹性，全屋家具傾向高級訂製或原裝品牌。", x: 4, y: 0, tag: "預算範圍:全屋頂級高級訂製" }
-            ]
-        },
-        {
-            time: "22:00", info: "Phase 5 - Product Details", type: "single",
-            q: "夜深了，喝著溫水，回顧前面 22 題的一日隨行，你發現你最在意的細節其實是？", sub: "挖掘潛意識中「機能」與「美學」的勝負分水嶺",
-            options: [
-                { text: "物件本身的「耐用度、高機能與高維護度」，是否完美契合生活習慣。", x: 1, y: 0, tag: "最在意细節:機能與耐用度" },
-                { text: "物件本身的「美學張力、獨特外觀與極致觸感」，是否能在開門一瞬間觸動我。", x: 3, y: 0, tag: "最在意細節:美學張力與極致觸感" }
-            ]
-        },
-        {
-            time: "23:00", info: "Phase 5 - Epilogue Concept", type: "single",
-            q: "時針即將走回起點。在閉上眼享受這個新家前，請對著未來的空間留下一句話：", sub: "驗證對觀域品牌核心精神的共鳴度",
-            options: [
-                { text: "「我期盼這個精心調配的新空間，能幫我整理好日常生活的步調。」", x: 0, y: 0, tag: "空間期許:整理生活步調" },
-                { text: "「因為我們整理的，不只是空間。更是未來長期生活的方式。」", x: 0, y: 0, tag: "空間期許:定調長期生活方式" }
-            ]
-        }
-    ];
-
-    // 九宮格結果定義
-    const vibeResults = {
-        "A1": { title: "簡單俐落 ╳ 內斂同色", matrix: "Muted Simplicity", desc: "您追求靈魂徹底留白的純粹感。在軟裝配置上，極度適合線條規整、簡單俐落的規格化或基礎訂製家具。色彩上建議採用高明度的淺米色、大白牆或溫潤奶茶色進行大面積同色系堆疊。整體空間不堆砌過多裝飾，強調無負擔、好維持的機能實用性，讓空間幫您整理好日常最純粹的步調。" },
-        "A2": { title: "簡單俐落 ╳ 撞色變化", matrix: "Vibrant Streamline", desc: "您在追求乾淨俐落的家具線條之餘，內心渴望色彩帶來的活力衝擊。適合選用結構規整、規矩好清潔的基礎家具為底，但在局部牆面或窗簾、抱枕面料上大膽採用1-2款高彩度的特殊色塊（如克萊因藍或莫蘭迪跳色）進行撞色。在實用好打理的前提下，利用色塊在公共空間創造耀眼的視覺焦點。" },
-        "A3": { title: "標準訂製 ╳ 內斂同色", matrix: "Refined Balance", desc: "您完美立足於「精緻工藝細節」與「低調大器」的平衡點。核心沙發與大長餐桌非常適合選用工藝細緻、造型帶有些微圓潤弧線的標準或高級訂製款，展現優雅包容力。在色調上則堅持內斂同色系（如深沉木皮肌理、大理石灰或溫潤大地色系）的精緻堆疊。既講究車縫線與頂級岩板觸感，又維持優雅沈穩的頂級飯店度假感。" },
-        "A4": { title: "標準訂製 ╳ 撞色變化", matrix: "Expressive Craftsmanship", desc: "您喜愛精緻的手工訂製工藝，同時著迷於獨特的美學張力。適合將客廳與餐廳區的核心家具升級為特殊弧形訂製款，並在家具面料（如單椅或抱枕）上大膽挑選帶有神祕勃根地紅、復古綠或當代摩登的色彩進行撞色。在工藝細節與大膽色彩中，定調出一套專屬於您、極具美學層次的生活方式。" },
-        "A5": { title: "藝術品味 ╳ 內斂同色", matrix: "Sculptural Serenity", desc: "您是一位極具內斂品味的藝術鑑賞家。比起色彩的喧嘩，您更著迷於物件本身的「線條幾何張力」與「不可替代性」。空間極度適合大量挑選設計師大師原創單品、造型如雕塑般獨特的單椅與藝術地燈。色彩上維持極致純粹的內斂大地色、暗黑系或高雅單色系，讓光影自然在家具完美的藝術弧線上折射，呈現藝廊般的極致品味。" },
-        "A6": { title: "藝術品味 ╳ 撞色變化", matrix: "Avant-Garde Gallery", desc: "您是天生的空間調色師，追求最極致的藝術品味與視覺震撼。空間是您的靈魂畫布，絕不妥協於平庸的樣品屋配置。極度適合全屋規劃大膽流線型的高級訂製家具或國際設計師原作，並搭配極具視覺衝擊的大膽撞色、特殊高彩度藝術畫作與前衛材質撞擊。從客廳沙發到角落一盞立燈，都是令人屏息的藝術焦點。" }
-    };
-
-    // 啟動測驗
-    function startQuiz() {
-        const nameInput = document.getElementById("client-name").value.trim();
-        const emailInput = document.getElementById("client-email").value.trim();
-
-        if (!nameInput || !emailInput) {
-            alert("請填寫您的稱呼與信箱，開啟五感隨行。");
-            return;
-        }
-
-        clientData.name = nameInput;
-        clientData.email = emailInput;
-
-        document.getElementById("step-0").classList.remove("active");
-        renderQuestion(currentQuestionIdx);
-    }
-
-    // 動態渲染題目
-    function renderQuestion(idx) {
-        const qBox = document.getElementById("dynamic-quiz-box");
-        qBox.innerHTML = ""; // 清空
-        qBox.className = "quiz-step active";
-
-        const qData = questions[idx];
-
-        // 建立時間與標題 HTML
-        let html = `
-            <div class="time-badge">${qData.time}</div>
-            <div class="step-info">${qData.info}</div>
-            <h2 class="question-title">Q${idx + 1}. ${qData.q}</h2>
-            <p class="subtitle">${qData.sub}</p>
-        `;
-
-        if (qData.type === "single" || qData.type === "multiple") {
-            html += `<div class="options-list">`;
-            qData.options.forEach((opt, oIdx) => {
-                html += `
-                    <div class="option-card" onclick="handleOptionClick(this, ${idx}, ${oIdx}, '${qData.type}')">
-                        <span class="option-text">${opt.text}</span>
-                    </div>
-                `;
-            });
-            html += `</div>`;
-            html += `
-                <div class="btn-container">
-                    <button class="btn-action" onclick="nextQuestion(${idx})">Next Step</button>
-                </div>
-            `;
-        } else if (qData.type === "sort") {
-            // 渲染滑動排序題
-            html += `<div class="sortable-list" id="drag-list">`;
-            qData.options.forEach((opt, oIdx) => {
-                html += `
-                    <div class="sort-item" draggable="true" data-val="${opt.val}">
-                        <span class="sort-index">0${oIdx + 1}</span>
-                        <span class="sort-text">${opt.text}</span>
-                        <span class="sort-handle">☰</span>
-                    </div>
-                `;
-            });
-            html += `</div>`;
-            html += `
-                <div class="btn-container">
-                    <button class="btn-action" onclick="handleSortConfirm(${idx})">Next Step</button>
-                </div>
-            `;
-        }
-
-        qBox.innerHTML = html;
-
-        // 若為排序題，動態綁定 Drag & Drop 監聽事件
-        if (qData.type === "sort") {
-            initDragAndDrop();
-        }
-    }
-
-    // 處理選項點擊 (單選與複選視覺切換)
-    function handleOptionClick(card, qIdx, oIdx, type) {
-        if (type === "single") {
-            const siblings = card.parentNode.querySelectorAll(".option-card");
-            siblings.forEach(s => s.classList.remove("selected"));
-            card.classList.add("selected");
-        } else {
-            card.classList.toggle("selected");
-        }
-    }
-
-    // 初始化排序題的拖曳功能
-    function initDragAndDrop() {
-        const list = document.getElementById("drag-list");
-        list.addEventListener("dragstart", (e) => {
-            if(e.target.classList.contains("sort-item")) e.target.classList.add("dragging");
-        });
-        list.addEventListener("dragend", (e) => {
-            if(e.target.classList.contains("sort-item")) {
-                e.target.classList.remove("dragging");
-                const items = list.querySelectorAll(".sort-item");
-                items.forEach((item, index) => {
-                    item.querySelector(".sort-index").innerText = String(index + 1).padStart(2, '0');
-                });
-            }
-        });
-        list.addEventListener("dragover", (e) => {
-            e.preventDefault();
-            const draggingItem = document.querySelector(".dragging");
-            const siblings = [...list.querySelectorAll(".sort-item:not(.dragging)")];
-            let nextSibling = siblings.find(sibling => {
-                return e.clientY <= sibling.getBoundingClientRect().top + sibling.getBoundingClientRect().height / 2;
-            });
-            list.insertBefore(draggingItem, nextSibling);
-        });
-    }
-
-    // 儲存排序題數據
-    function handleSortConfirm(idx) {
-        const list = document.getElementById("drag-list");
-        const items = list.querySelectorAll(".sort-item");
-        let sortOrder = [];
-        
-        items.forEach((item, index) => {
-            sortOrder.push(`${index + 1}.${item.getAttribute("data-val")}`);
-        });
-
-        // 核心加權計分邏輯：若將「設計師單椅」或「燈飾地毯」排在第一順位，代表藝術品味高
-        const firstPlace = items[0].getAttribute("data-val");
-        if (firstPlace === "設計師單椅" || firstPlace === "燈飾地毯") {
-            clientData.scoreX += 3;
-        } else {
-            clientData.scoreX += 1;
-        }
-
-        clientData.answers["家具重視度排序"] = sortOrder.join(" > ");
-        
-        // 進入下一題
-        currentQuestionIdx++;
-        renderQuestion(currentQuestionIdx);
-    }
-
-    // 下一題通用邏輯 (單選與複選)
-    function nextQuestion(idx) {
-        const qBox = document.getElementById("dynamic-quiz-box");
-        const selectedCards = qBox.querySelectorAll(".option-card.selected");
-
-        if (selectedCards.length === 0) {
-            alert("請感知您的內心，並至少選擇一個選項。");
-            return;
-        }
-
-        const qData = questions[idx];
-        let chosenTexts = [];
-        let chosenTags = [];
-
-        // 加總計分與標籤收集
-        selectedCards.forEach(card => {
-            const text = card.querySelector(".option-text").innerText;
-            chosenTexts.push(text);
-
-            // 尋找對應的原始配置數據
-            const matchedOpt = qData.options.find(o => o.text === text);
-            if (matchedOpt) {
-                clientData.scoreX += matchedOpt.x;
-                clientData.scoreY += matchedOpt.y;
-                chosenTags.push(matchedOpt.tag);
-            }
-        });
-
-        // 把當前答案寫入 answers 物件
-        clientData.answers[`Q${idx + 1}_(${qData.time})_${qData.q}`] = {
-            answers: chosenTexts.join(" | "),
-            tags: chosenTags.join(", ")
+    <script>
+        // 資料儲存庫
+        let clientData = {
+            name: '',
+            email: '',
+            answers: {},
+            scores: { natural: 0, vintage: 0 },
+            styleResult: ''
         };
 
-        // 判斷是否還有下一題
-        if (currentQuestionIdx < questions.length - 1) {
-            currentQuestionIdx++;
-            renderQuestion(currentQuestionIdx);
-        } else {
-            // 24題結束，執行計分判定與發送資料
-            calculateAndSubmit();
+        // 步驟切換平滑特效
+        function changeStep(currentId, nextId) {
+            const currentEl = document.getElementById(`step-${currentId}`);
+            const nextEl = document.getElementById(`step-${nextId}`);
+            const card = document.getElementById('quiz-card');
+
+            // 驗證首頁欄位
+            if (currentId === 'intro') {
+                clientData.name = document.getElementById('username').value.trim();
+                clientData.email = document.getElementById('useremail').value.trim();
+                if (!clientData.name || !clientData.email) {
+                    alert('請留下您的稱呼與信箱，讓我們為您定調風格。');
+                    return;
+                }
+            }
+
+            // 微調卡片增添動態感
+            card.style.opacity = '0.5';
+            card.style.transform = 'translateY(-5px)';
+
+            setTimeout(() => {
+                currentEl.classList.add('hidden');
+                nextEl.classList.remove('hidden');
+                nextEl.classList.add('fade-in');
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0)';
+            }, 400);
         }
-    }
 
-    // 總分落點判定與自動發送
-    function calculateAndSubmit() {
-        document.getElementById("dynamic-quiz-box").classList.remove("active");
-        const resultStep = document.getElementById("step-result");
-        resultStep.classList.add("active");
+        // 選擇答案與計分
+        function selectOption(styleType, currentStep, nextStep) {
+            clientData.scores[styleType]++;
+            clientData.answers[currentStep] = styleType;
 
-        let finalTypeKey = "A1"; // 預設安全落點
-        const sx = clientData.scoreX;
-        const sy = clientData.scoreY;
+            changeStep(currentStep, nextStep);
 
-        // X軸判定 (造型與預算總和分水嶺)
-        // Y軸判定 (色彩大膽度：0-5為內斂，6以上為大膽)
-        if (sx <= 12) {
-            finalTypeKey = (sy <= 12) ? "A1" : "A2";
-        } else if (sx > 12 && sx <= 22) {
-            finalTypeKey = (sy <= 12) ? "A3" : "A4";
-        } else {
-            finalTypeKey = (sy <= 12) ? "A5" : "A6";
+            if (nextStep === 'loading') {
+                // 模擬後端傳輸與 AI 計算時間（2.5秒），隨後觸發完成
+                setTimeout(() => {
+                    executeSubmission();
+                }, 250);
+            }
         }
 
-        const finalResult = vibeResults[finalTypeKey];
-        clientData.resultType = finalResult.title;
+        // 送出資料（未來可在這裡串接 Make.com Webhook）
+        function executeSubmission() {
+            // 判斷最終風格
+            clientData.styleResult = clientData.scores.natural >= clientData.scores.vintage ? '植物系療癒風 (Natural Wabi-Sabi)' : '微醺復古風 (Mid-Century Vintage)';
+            
+            // 🚀 【未來串接點】將以下網址替換為你的 Make.com Webhook URL
+            const webhookUrl = 'https://YOUR_MAKE_WEBHOOK_URL_HERE';
+            
+            /* fetch(webhookUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(clientData)
+            });
+            */
 
-        // 渲染到前端畫面上
-        document.getElementById("display-vibe-title").innerText = finalResult.title;
-        document.getElementById("display-vibe-matrix").innerText = finalResult.matrix;
-        document.getElementById("display-vibe-desc").innerText = finalResult.desc;
-
-        // 🚀 利用 Fetch 將整包豐富的諮詢數據無縫打包，隔空傳送至 Make.com / Notion
-        fetch(webhookUrl, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(clientData)
-        })
-        .then(res => console.log("觀域後台數據同步成功。"))
-        .catch(err => console.error("數據同步卡關：", err));
-    }
-</script>
-
+            // 展示完成畫面給老闆看
+            const card = document.getElementById('quiz-card');
+            card.style.opacity = '0';
+            
+            setTimeout(() => {
+                document.getElementById('step-loading').classList.add('hidden');
+                card.innerHTML = `
+                    <div class="fade-in" style="text-align: center;">
+                        <div class="page-number">( 05 )</div>
+                        <div class="page-number" style="font-size:11px; margin-top:-15px; text-transform:uppercase;">About ${clientData.name}</div>
+                        <h1 class="main-title" style="font-size: 32px; margin-bottom:20px;">${clientData.styleResult}</h1>
+                        <p class="subtitle" style="max-width:55px0px; margin: 0 auto 30px; text-align:justify; line-height:2;">
+                            分析完成。您的測驗資料已同步寫入設計師的 Notion 系統中。AI 正在根據您的選擇調配「色彩計畫」與「核心材質（如：陶板、亞麻與特定燈光氛圍）」，稍後我們將主動與您聯繫，為您遞交專屬的軟裝提案大綱。
+                        </p>
+                        <div class="page-number" style="font-size:12px; letter-spacing:1px; color:#1a1a1a;">Thank you for your aesthetic alignment.</div>
+                    </div>
+                `;
+                card.style.opacity = '1';
+            }, 400);
+        }
+    </script>
 </body>
 </html>
