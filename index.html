@@ -12,8 +12,8 @@
         :root {
            --bg-color: #E2DFD8;       /* 溫潤的大地奶茶色背景 */
             --card-bg: #F5F4F0;        /* 輕盈的米白卡片色 */
-            --text-main: #1A1A1A;      /* 極致沉穩的深灰黑 */
-            --text-muted: #7A756E;    /* 優雅的低彩度灰褐 */
+            --text-main: #4e4c4a;      /* 極致沉穩的深灰黑 */
+            --text-muted: #7a756e;    /* 優雅的低彩度灰褐 */
             --accent: #A39E93;        /* 微醺的泥灰輔助色 */
             --transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
@@ -24,33 +24,36 @@
             padding: 0;
         }
 
-        body {
-            font-family: "GenYoMin TW", "GenYoMin", "Noto Serif TC", serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-            overflow-x: hidden;
-        }
-/* 確保輸入框與按鈕也繼承明體字型 */
+body {
+    font-family: "GenYoMin TW", "GenYoMin", "Noto Serif TC", serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    
+    /* 💡 核心修正：改用 flex 垂直排列，讓整頁內容由上往下依序推開 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    
+    min-height: 100vh;
+    padding: 40px 20px; /* 給網頁最外層加上上下安全襯距 */
+    box-sizing: border-box;
+}
 input, button {
     font-family: inherit;
 }
 
 .header {
     position: fixed;        /* 固定定位，滾動時不移位 */
-    top: 24px;              /* 距離頂部 24px */
-    left: 24px;             /* 距離左邊 24px */
-    right: 24px;            /* 距離右邊 24px */
-    
+    top: 0%;              /* 距離頂部 24px */
+    left: 0px;             /* 距離左邊 24px */
+    right: 0px;            /* 距離右邊 24px */
+    width: 100% !important;
+    padding: 30px 40px !important;
     display: flex;          /* 啟動 Flexbox */
     justify-content: space-between; /* Logo 靠左，文字靠右 */
     align-items: center;    /* 關鍵：強迫裡面所有元件「直向/垂直」中心點完美對齊 */
-    
-    z-index: 1000;          
+    z-index: 2000;
+    background-color: var(--bg-color);     
 }
 
 /* 2. 控制 Logo 圖片的大小 */
@@ -67,23 +70,124 @@ input, button {
     color: #8c8c8c;
     text-transform: uppercase;
     font-family: "GenYoMin TW", "GenYoMin", "Noto Serif TC", serif;
-    
-    /* 關鍵修正：確保沒有任何 margin-top、margin-right 或 top 屬性在干擾它 */
     margin: 0;             
     line-height: 1;         /* 讓文字的行高與字體大小一致，對齊更精準 */
     text-align: right;
     padding-right: 27px;
 }
 
+/* 1. 滿版背景層：只有首頁時顯現 */
+.quiz-bg-cover {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(45, 41, 37, 0.55), rgba(45, 41, 37, 0.55)), 
+                url("C:\\Users\\user\\Downloads\\LAGOM.jpg") no-repeat center center;
+    background-size: cover;
+    z-index: -1; 
+    opacity: 0;
+    transition: opacity 0.1 ease;
+}
+.is-home .quiz-bg-cover {
+    opacity: 1;
+}
+
+.is-home .header {
+    background-color: transparent;
+}
+
+/* 2. 首頁懸浮大標題調整 */
+.is-home #intro-title-zone {
+    text-align: center;
+    margin-top: 140px;  
+    margin-bottom: 20px;
+    z-index: 10;
+    text-align: center;
+    margin-top: 180px; 
+    margin-bottom: 20px;
+}
+.is-home h1.main-title {
+    font-size: 60px;
+    font-weight: bold;
+    letter-spacing: 3px;    
+    color:var(--card-bg);
+    text-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+.is-home .subtitle {
+    font-size: 16px;
+    font-weight: bold;
+    color:var(--bg-color);
+    letter-spacing: 3px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+/* 3. 🎯 核心魔法：首頁時，將主容器的米白背景、外框、陰影全部拿掉，徹底隱形！ */
+.is-home .quiz-container {
+    background-color: transparent;
+    box-shadow: none;
+    border: none;
+    margin-top: 30px;
+    padding: 20px 80px;
+    opacity: 1;
+    transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1) !important; 
+}
+.quiz-container.fade-in-active {
+    opacity: 1 !important;
+}
+
+/* 4. 首頁輸入框：改為純白雅緻底線、純白文字與高透光 Placeholder */
+.is-home .input-group {
+    max-width: 450px; /* 稍微加寬，讓英文字 placeholder 能優雅展開 */
+}
+.is-home .input-group input[type="text"] {
+    color:var(--card-bg);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    font-size: 14px;
+    letter-spacing: 2px;
+}
+.is-home .input-group input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+.is-home .input-group input:focus {
+    border-bottom-color: var(--card-bg);
+}
+
+/* 5. 首頁 Start 按鈕：完美復刻 image_ab257d.png 的微透深灰方形按鈕 */
+.is-home .btn-action {
+    background-color: rgba(62, 59, 56, 0.85) ; 
+    color: var(--card-bg) ;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+    margin-top: 40px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+.is-home .btn-action:hover {
+    background-color:var(--card-bg);
+    color: #3e3b38;
+    letter-spacing: 4px;
+}
+
+
 /* 測驗容器調整：避免內容被左上角固定的 Logo 打架 */
 .quiz-container {
-    padding-top: 100px; /* 預留頂部空間給左上角的 Logo */
-     width: 100%; max-width: 900px; min-height: 500px;
-            background-color: var(--card-bg);
-            padding: 60px 80px; border-radius: 4px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.03);
-            display: flex; flex-direction: column; justify-content: center;
-            position: relative; transition: var(--transition);
+    width: 100%;
+    max-width: 1200px;
+    height: auto;             /* 隨內容物高矮自動縮放 */
+    min-height: auto;
+    background-color: var(--card-bg);
+    padding: 60px 80px 50px;  /* 留出舒適的內襯 */
+    border-radius: 4px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.03);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    position: relative;
+    transition: var(--transition);
+    margin: 160px auto 60px; 
+    opacity: 0;
+    transition: opacity 0.5s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.4s ease;
 }
         /* 頂部極簡外框 */
         .wrapper {
@@ -109,19 +213,9 @@ input, button {
             color: var(--text-main);
         }
 
-        /* 測驗步驟容器 */
-        .quiz-container {
-            flex-grow: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 40px;
-        }
-
         .quiz-step {
             display: none;
             width: 100%;
-            animation: fadeIn 0.8s ease forwards;
         }
 
         .quiz-step.active {
@@ -195,40 +289,79 @@ input, button {
 
         /* 選項與按鈕設計 - 點擊回饋的核心 */
         .options-grid {
-            display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
-            width: 100%; max-width: 750px; margin: 0 auto;
+            display: flex;
+            flex-direction: column;   /* 強迫一列一個答案直向排列 */
+            gap: 10px;                /* 格子與格子的間距 */
+            width: 100%;
+            max-width: 750px;         /* 配合你原本的設定寬度 */
+            margin: 0 auto 30px;
         }
 
         .btn-option {
-            background: transparent; border: 1px solid #E2DFD8; padding: 30px 25px;
-            font-size: 15px; font-weight: 300; color: var(--text-main);
-            cursor: pointer; text-align: left; line-height: 1.6; letter-spacing: 0.5px;
-            transition: var(--transition); position: relative; border-radius: 2px;
+            background: transparent;
+            border: 1px solid #E2DFD8;
+            padding: 24px 30px;       /* 舒適的內留白 */
+            font-size: 14px;
+            color: var(--text-main);
+            cursor: pointer;
+            text-align: left;
+            line-height: 1.6;
+            letter-spacing: 2px;      /* 保持精緻字距 */
+            transition: var(--transition);
+            position: relative;
+            border-radius: 2.5px;
+            width: 100%;              /* 寬度撐滿 */
+            height: auto;             /* 關鍵：字多字少自動縮放高度 */
+            display: block;
         }
-/* 1. 設定按鈕的預設底色 */
-.previous-button-class { 
-    background-color: #F5F4F0; /* 預設底色 */
-    color: #333333;            /* 文字顏色，可依視覺需求調整 */
-    transition: background-color 0.3s ease; /* 讓顏色切換時有流暢的漸變效果 */
-}
+        .btn-option.selected {
+            background-color: var(--bg-color); 
+            border-color: var(--text-muted);
+            font-weight: 700;
+        }
 
-/* 2. 設定滑鼠懸停（Hover）或點擊時的回饋色 */
-.previous-button-class:hover,
-.previous-button-class:active {
-    background-color: #A39E93; /* 懸停與點擊時的回饋底色 */
-}
+/* ─── 4. 底部按鈕雙欄佈局（左 Previous、右 Next） ─── */
+        .quiz-navigation-flex {
+            display: flex;
+            justify-content: space-between; /* 一左一右散開 */
+            align-items: center;
+            width: 100%;
+            max-width: 750px;
+            margin: 30px auto 0;
+        }
+
+        /* 左邊上一題按鈕：低調優雅、無邊框襯托 */
+        .btn-prev {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 12px;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            padding: 10px 0;
+            transition: var(--transition);
+            text-transform: uppercase;
+        }
+        .btn-prev:hover {
+            color: var(--text-main);
+        }
+
+        .btn-prev:selected {
+            color: var(--text-main);
+        }
+
         /* 懸停與點擊的優雅動效 */
         .btn-option:hover {
             background-color: var(--bg-color); border-color: var(--text-muted);
             transform: translateY(-2px);
+            font-weight: 700;
         }
 
         .btn-option:active {
             transform: translateY(1px); background-color: #DDD9CE;
         }
-
-        .btn-action {
-display: block;
+.btn-action{    
+    display: block;
     width: 160px;
     padding: 15px;
     background-color: var(--text-main);
@@ -240,16 +373,45 @@ display: block;
     transition: var(--transition);
     text-transform: uppercase;
     flex-shrink: 0;
-
-    /* 關鍵修改：利用左右 margin 自動平分，讓它在畫面水平置中 */
     margin: 30px auto 0;}
-        .btn-action:hover { background-color: var(--text-muted); letter-spacing: 4px; }
+
+.btn-next {
+    display: block;
+    width: 160px;
+    padding: 15px;
+    background-color: var(--text-main);
+    color: white;
+    border: none;
+    font-size: 13px;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: var(--transition);
+    text-transform: uppercase;
+    flex-shrink: 0;
+}
+
+
+.btn-next:hover, .btn-action:hover {
+    background-color: var(--accent); 
+    border-color: var(--text-muted);
+    color: var(--text-main);
+    letter-spacing: 4px;                 
+    font-weight: 700;                    
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
+}
+
+.btn-next:selected, .btn-action:selected{
+            background-color: var(--accent); 
+            border-color: var(--text-muted);
+            color: var(--text-main);
+            font-weight: 700;
+        }
 
         /* 隱藏過渡樣式 */
         .hidden { display: none !important; opacity: 0; transform: scale(0.98); }
         
         .fade-in {
-            animation: fadeIn 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            animation: fadeIn 2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
         }
 
         @keyframes fadeIn {
@@ -319,16 +481,15 @@ display: block;
         }
 
         /* 底部註腳 */
-        footer {
-            position: absolute;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%); /* 完美的水平居中 */
-            font-size: 10px;
-            color: var(--text-muted);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            white-space: nowrap;
+footer {
+    position: relative; 
+    text-align: center;
+    font-size: 10px;
+    color: var(--text-muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-top: auto; 
+    width: 100%;
         }
 
         /* ----------------------------------
@@ -365,61 +526,57 @@ display: block;
             }
             .input-group {
                 margin: 25px auto 0;
-            }
-            .options-grid {
-                grid-template-columns: 1fr; /* 題目選項改為單欄 */
-            }
-        }
+            }}
     </style>
 </head>
-<body>
+<body class="is-home">
 
+<div class="quiz-bg-cover"></div>
 
 <div class="header">
     <span class="logo-wrapper"><img src="C:\Users\user\Desktop\素材\螢幕擷取畫面 2025-11-06 152214.png" alt="Guanyu Design Logo"></span>
     <span class="brand-subtext">Bespoke Custom Design</span>
 </div>
 
-<div class="quiz-container fade-in" id="quiz-card">
-    <div id="step-intro" class="fade-in">
-        <h1 class="main-title"><strong>尋找你的生活調性</strong></h1>
-        <p class="subtitle"><strong>循著日常，探索屬於你的空間敘事</strong></p>
-        
+<div id="intro-title-zone" class="fade-in">
+    <h1 class="main-title">尋找你的生活調性</h1>
+    <p class="subtitle">循著日常，探索屬於你的空間敘事</p>
+</div>
+
+<main class="quiz-container">
+
+    <div id="step-0" class="quiz-step active">
         <div class="input-group">
-            <input type="text" id="username" placeholder="如何稱呼您 INDIVIDUAL NAME" autocomplete="off">
+            <input type="text" id="client-name" placeholder="如何稱呼您 INDIVIDUAL NAME" autocomplete="off">
         </div>
         <div class="input-group">
             <input type="text" id="projectname" placeholder="案件名稱 PROJECT NAME" autocomplete="off">
         </div>
-        <button class="btn-action" onclick="changeStep('step-intro', 'q1')" id="btn-start">Start</button>
+        <div class="btn-container">
+            <button class="btn-action" onclick="startQuiz()">Start</button>
+        </div>
     </div>
-</div>
 
+    <div id="dynamic-quiz-box" class="quiz-step"></div>
 
-
-        <!-- 🔄 動態題目會由 JS 自動渲染在此處 -->
-        <div id="dynamic-quiz-box" class="quiz-step"></div>
-
-        <!-- 🏆 最終結果頁面 -->
-        <div id="step-result" class="quiz-step">
-            <div class="result-layout">
-                <div class="step-info">Your Vibe Archetype</div>
-                <h2 class="result-title" id="display-vibe-title">讀取中...</h2>
-                <div class="result-matrix" id="display-vibe-matrix">讀取中...</div>
-                <p class="result-description" id="display-vibe-desc">系統正在為您定調軟裝美學...</p>
-                
-                <div class="epilogue-box">
-                    <p class="epilogue-text">EPILOGUE ／ 觀域</p>
-                    <p class="epilogue-highlight">我們整理的，不只是空間。更是未來長期生活的方式。</p>
-                    <button class="btn-action" style="background-color: transparent; border: 1px solid var(--text-main); color: var(--text-main);" onclick="location.reload();">Restart</button>
-                </div>
+    <div id="step-result" class="quiz-step">
+        <div class="result-layout">
+            <div class="step-info">Your Vibe Archetype</div>
+            <h2 class="result-title" id="display-vibe-title">讀取中...</h2>
+            <div class="result-matrix" id="display-vibe-matrix">讀取中...</div>
+            <p class="result-description" id="display-vibe-desc">系統正在為您定調軟裝美學...</p>
+            
+            <div class="epilogue-box">
+                <p class="epilogue-text">EPILOGUE ／ 觀域</p>
+                <p class="epilogue-highlight">我們整理的，不只是空間。更是未來長期生活的方式。</p>
+                <button class="btn-action" style="background-color: transparent; border: 1px solid var(--text-main); color: var(--text-main);" onclick="location.reload();">Restart</button>
             </div>
         </div>
+    </div>
 
-    </main>
+</main>
 
-    <footer>GUANYU-DESIGN ／ INTERIOR DECORATING</footer>
-</div>
+<footer>GUANYU-DESIGN ／ INTERIOR DECORATING</footer>
 
 <script>
     // 🔗 串接 Make.com 用的 Webhook 網址
@@ -667,53 +824,53 @@ display: block;
         "A6": { title: "藝術品味 ╳ 撞色變化", matrix: "Avant-Garde Gallery", desc: "您是天生的空間調色師，追求最極致的藝術品味與視覺震撼。空間是您的靈魂畫布，絕不妥協於平庸的樣品屋配置。極度適合全屋規劃大膽流線型的高級訂製家具或國際設計師原作，並搭配極具視覺衝擊的大膽撞色、特殊高彩度藝術畫作與前衛材質撞擊。從客廳沙發到角落一盞立燈，都是令人屏息的藝術焦點。" }
     };
 
-// 啟動測驗
-function changeStep(currentStepId, nextStepId) {
-    // 1. 抓取當前填寫資料的欄位（如果是從 step-intro 要跳到 q1，先做表單驗證）
-    if (currentStepId === 'step-intro') {
-        const usernameInput = document.getElementById('username');
-        // 關鍵修正：將 'userproject' 改為正確的 'projectname' 
-        const userprojectInput = document.getElementById('projectname'); 
+// 啟動測驗與通用跳頁函式
+function startQuiz() {
+    const nameInput = document.getElementById("client-name") ? document.getElementById("client-name").value.trim() : "";
+    const projectnameInput = document.getElementById("projectname") ? document.getElementById("projectname").value.trim() : "";
 
-        if (usernameInput && usernameInput.value.trim() === "") {
-            alert("請填寫您的稱呼，並開啟探索之旅");
-            usernameInput.focus();
-            return; // 攔截，不往下執行跳頁
-        }
-        if (userprojectInput && userprojectInput.value.trim() === "") {
-            alert("請填寫專案名稱，並開啟探索之旅");
-            userprojectInput.focus();
-            return; // 攔截，不往下執行跳頁
-        }
+    if (!nameInput || !projectnameInput) {
+        alert("請填寫您的稱呼與專案名稱，並開始探索之旅");
+        return;
     }
 
-    // 2. 執行跳頁：隱藏當前頁面，顯示下一頁
-    const currentStep = document.getElementById(currentStepId);
-    const nextStep = document.getElementById(nextStepId);
+    clientData.name = nameInput;
+    clientData.projectname = projectnameInput;
 
-    if (currentStep && nextStep) {
-        // 備註：如果你的 CSS 切換是用 active，請確保你的 CSS 有寫 .active { display: block; }，且預設 .quiz-step 是隱藏的。
-        // 如果你之前是用隱藏類名，也可以用：currentStep.style.display = 'none'; nextStep.style.display = 'block';
-        currentStep.classList.remove('active'); // 隱藏目前這一頁
-        nextStep.classList.add('active');       // 顯示下一頁
-        console.log(`成功從 ${currentStepId} 切換至 ${nextStepId}`);
-    } else {
-        console.error(`找不到對應的網頁區塊：${currentStepId} 或 ${nextStepId}`);
-    }
+    // 💡 ✨【核心解法】點擊 Start 的瞬間，直接移除 body 的首頁標記
+    // 這會一秒解除首頁的外掛 CSS，讓大容器與後面頁面百分之百變回你最經典、好讀的米色與奶茶底色！
+    document.body.classList.remove("is-home");
+
+    // 隱藏首頁專屬的大標題區
+    const titleZone = document.getElementById("intro-title-zone");
+    if (titleZone) titleZone.style.display = "none";
+
+    // 隱藏首頁輸入欄位
+    document.getElementById("step-0").classList.remove("active");
+    
+    // 顯示題目容器並渲染第一題
+    const qBox = document.getElementById("dynamic-quiz-box");
+    qBox.classList.add("active");
+    
+    currentQuestionIdx = 0; // 確保變數名稱統一
+    renderQuestion(currentQuestionIdx);
 }
 
-let currentQuestionIndex = 0; // 紀錄目前填寫到第幾題
-let userAnswers = [];         // 儲存使用者的選擇結果
 
-    // 動態渲染題目
-    function renderQuestion(idx) {
-        const qBox = document.getElementById("dynamic-quiz-box");
-        qBox.innerHTML = ""; // 清空
-        qBox.className = "quiz-step active";
+function renderQuestion(idx) {
+    // 💡 改為抓取最外層的大盒子容器
+    const container = document.querySelector(".quiz-container");
+    const qBox = document.getElementById("dynamic-quiz-box");
+    
+    // 【第一步】讓整個大白框連同內部物件，一起在 0.35 秒內優雅淡出
+    container.classList.remove("fade-in-active");
 
+    // 【第二步】等大白框完全變透明後，悄悄在後台塞入新題目
+    setTimeout(() => {
+        qBox.innerHTML = ""; // 清空舊畫面
         const qData = questions[idx];
 
-        // 建立時間與標題 HTML
+        // 組合題目的時間標籤、階段資訊、問題主標題與副標題
         let html = `
             <div class="time-badge">${qData.time}</div>
             <div class="step-info">${qData.info}</div>
@@ -721,23 +878,27 @@ let userAnswers = [];         // 儲存使用者的選擇結果
             <p class="subtitle">${qData.sub}</p>
         `;
 
+        // 判斷題型：單選與複選
         if (qData.type === "single" || qData.type === "multiple") {
-            html += `<div class="options-list">`;
+            html += `<div class="options-grid">`;
             qData.options.forEach((opt, oIdx) => {
                 html += `
-                    <div class="option-card" onclick="handleOptionClick(this, ${idx}, ${oIdx}, '${qData.type}')">
+                    <div class="btn-option" onclick="handleOptionClick(this, ${idx}, ${oIdx}, '${qData.type}')">
                         <span class="option-text">${opt.text}</span>
                     </div>
                 `;
             });
             html += `</div>`;
+            
             html += `
-                <div class="btn-container">
-                    <button class="btn-action" onclick="nextQuestion(${idx})">Next Step</button>
+                <div class="quiz-navigation-flex">
+                    ${idx > 0 ? `<button class="btn-prev" onclick="prevQuestion()">← Previous</button>` : `<div></div>`}
+                    <button class="btn-next" onclick="nextQuestion(${idx})">Next</button>
                 </div>
             `;
+
+        // 判斷題型：拖曳排序
         } else if (qData.type === "sort") {
-            // 渲染滑動排序題
             html += `<div class="sortable-list" id="drag-list">`;
             qData.options.forEach((opt, oIdx) => {
                 html += `
@@ -749,25 +910,34 @@ let userAnswers = [];         // 儲存使用者的選擇結果
                 `;
             });
             html += `</div>`;
+            
             html += `
-                <div class="btn-container">
-                    <button class="btn-action" onclick="handleSortConfirm(${idx})">Next Step</button>
+                <div class="quiz-navigation-flex">
+                    <button class="btn-prev" onclick="prevQuestion()">← Previous</button>
+                    <button class="btn-next" onclick="handleSortConfirm(${idx})">Next</button>
                 </div>
             `;
         }
 
+        // 塞入新 HTML
         qBox.innerHTML = html;
 
-        // 若為排序題，動態綁定 Drag & Drop 監聽事件
         if (qData.type === "sort") {
             initDragAndDrop();
         }
-    }
+
+        // 【第三步】內容換好了，讓大白框帶領新題目一起輕柔地淡入顯現
+        setTimeout(() => {
+            container.classList.add("fade-in-active");
+        }, 50);
+
+    }, 350); 
+}
 
     // 處理選項點擊 (單選與複選視覺切換)
     function handleOptionClick(card, qIdx, oIdx, type) {
         if (type === "single") {
-            const siblings = card.parentNode.querySelectorAll(".option-card");
+            const siblings = card.parentNode.querySelectorAll(".btn-option");
             siblings.forEach(s => s.classList.remove("selected"));
             card.classList.add("selected");
         } else {
@@ -801,17 +971,16 @@ let userAnswers = [];         // 儲存使用者的選擇結果
         });
     }
 
-    // 儲存排序題數據
-    function handleSortConfirm(idx) {
+function handleSortConfirm(idx) {
         const list = document.getElementById("drag-list");
+        if(!list) return;
         const items = list.querySelectorAll(".sort-item");
-        let sortOrder = [];
+        let sortOrder = []; 
         
         items.forEach((item, index) => {
             sortOrder.push(`${index + 1}.${item.getAttribute("data-val")}`);
         });
 
-        // 核心加權計分邏輯：若將「設計師單椅」或「燈飾地毯」排在第一順位，代表藝術品味高
         const firstPlace = items[0].getAttribute("data-val");
         if (firstPlace === "設計師單椅" || firstPlace === "燈飾地毯") {
             clientData.scoreX += 3;
@@ -821,54 +990,65 @@ let userAnswers = [];         // 儲存使用者的選擇結果
 
         clientData.answers["家具重視度排序"] = sortOrder.join(" > ");
         
-        // 進入下一題
-        currentQuestionIdx++;
-        renderQuestion(currentQuestionIdx);
-    }
-
-    // 下一題通用邏輯 (單選與複選)
-    function nextQuestion(idx) {
-        const qBox = document.getElementById("dynamic-quiz-box");
-        const selectedCards = qBox.querySelectorAll(".option-card.selected");
-
-        if (selectedCards.length === 0) {
-            alert("請感知您的內心，並至少選擇一個選項。");
-            return;
-        }
-
-        const qData = questions[idx];
-        let chosenTexts = [];
-        let chosenTags = [];
-
-        // 加總計分與標籤收集
-        selectedCards.forEach(card => {
-            const text = card.querySelector(".option-text").innerText;
-            chosenTexts.push(text);
-
-            // 尋找對應的原始配置數據
-            const matchedOpt = qData.options.find(o => o.text === text);
-            if (matchedOpt) {
-                clientData.scoreX += matchedOpt.x;
-                clientData.scoreY += matchedOpt.y;
-                chosenTags.push(matchedOpt.tag);
-            }
-        });
-
-        // 把當前答案寫入 answers 物件
-        clientData.answers[`Q${idx + 1}_(${qData.time})_${qData.q}`] = {
-            answers: chosenTexts.join(" | "),
-            tags: chosenTags.join(", ")
-        };
-
-        // 判斷是否還有下一題
-        if (currentQuestionIdx < questions.length - 1) {
-            currentQuestionIdx++;
+        //  這段程式碼必須待在函式裡面，這樣它才能共用上面的 (idx)
+        currentQuestionIdx = idx + 1; 
+        if (currentQuestionIdx < questions.length) {
             renderQuestion(currentQuestionIdx);
         } else {
-            // 24題結束，執行計分判定與發送資料
             calculateAndSubmit();
         }
+    } 
+        
+// 下一題通用邏輯 (單選與複選修正版)
+function nextQuestion(idx) {
+    const qBox = document.getElementById("dynamic-quiz-box");
+    // 💡 修正：抓取新設計的 .btn-option.selected
+    const selectedCards = qBox.querySelectorAll(".btn-option.selected");
+
+    if (selectedCards.length === 0) {
+        alert("請感知您的內心，並至少選擇一個選項。");
+        return;
     }
+
+    const qData = questions[idx];
+    let chosenTexts = [];
+    let chosenTags = [];
+
+    // 加總計分與標籤收集
+    selectedCards.forEach(card => {
+        const text = card.querySelector(".option-text").innerText;
+        chosenTexts.push(text);
+
+        const matchedOpt = qData.options.find(o => o.text === text);
+        if (matchedOpt) {
+            clientData.scoreX += matchedOpt.x;
+            clientData.scoreY += matchedOpt.y;
+            chosenTags.push(matchedOpt.tag);
+        }
+    });
+
+    // 把當前答案寫入 answers 物件
+    clientData.answers[`Q${idx + 1}_(${qData.time})_${qData.q}`] = {
+        answers: chosenTexts.join(" | "),
+        tags: chosenTags.join(", ")
+    };
+
+    // 💡 修正關鍵：統一使用全域變數 currentQuestionIdx 進行累加與判斷
+    currentQuestionIdx = idx + 1;
+    if (currentQuestionIdx < questions.length) {
+        renderQuestion(currentQuestionIdx);
+    } else {
+        calculateAndSubmit();
+    }
+}
+
+function prevQuestion() {
+    // 1. 如果大於第 1 題 (idx > 0)，就讓全域指針減 1，並重新渲染
+    if (currentQuestionIdx > 0) {
+        currentQuestionIdx--; 
+        renderQuestion(currentQuestionIdx);
+    }
+}
 
     // 總分落點判定與自動發送
     function calculateAndSubmit() {
