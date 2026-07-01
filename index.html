@@ -15,7 +15,6 @@
             --text-main: #4e4c4a;      /* 極致沉穩的深灰黑 */
             --text-muted: #7a756e;    /* 優雅的低彩度灰褐 */
             --accent: #A39E93;        /* 微醺的泥灰輔助色 */
-            --transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         * {
@@ -307,7 +306,6 @@ input, button {
             text-align: left;
             line-height: 1.6;
             letter-spacing: 2px;      /* 保持精緻字距 */
-            transition: var(--transition);
             position: relative;
             border-radius: 2.5px;
             width: 100%;              /* 寬度撐滿 */
@@ -318,6 +316,7 @@ input, button {
             background-color: var(--bg-color); 
             border-color: var(--text-muted);
             font-weight: 700;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
 /* ─── 4. 底部按鈕雙欄佈局（左 Previous、右 Next） ─── */
@@ -353,12 +352,13 @@ input, button {
         /* 懸停與點擊的優雅動效 */
         .btn-option:hover {
             background-color: var(--bg-color); border-color: var(--text-muted);
-            transform: translateY(-2px);
             font-weight: 700;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 
         .btn-option:active {
-            transform: translateY(1px); background-color: #DDD9CE;
+            background-color: #DDD9CE;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
 .btn-action{    
     display: block;
@@ -480,6 +480,79 @@ input, button {
             font-weight: 400;
         }
 
+        /* ─── 排序題專屬：拖曳清單與方塊設計 ─── */
+.sortable-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    max-width: 750px;
+    margin: 0 auto 30px;
+}
+
+.sort-item {
+    background: transparent;
+    border: 1px solid #E2DFD8;
+    padding: 20px 30px;
+    font-size: 14px;
+    color: var(--text-main);
+    cursor: grab; /* 讓滑鼠游標變成小手抓取狀 */
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* 讓序號、文字與三條線圖示優雅散開 */
+    letter-spacing: 2px;
+    border-radius: 2.5px;
+    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.1s ease;
+    background-color: rgba(255, 255, 255, 0.3); /* 給予微透明底色增加方塊感 */
+}
+
+/* 序號微調：讓 01, 02 帶點優雅的低調感 */
+.sort-index {
+    font-family: "Noto Serif TC", serif;
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-right: 20px;
+    font-weight: bold;
+}
+
+/* 核心內文：靠左撐開 */
+.sort-text {
+    flex-grow: 1;
+    text-align: left;
+}
+
+/* 拖曳手把（☰）的優雅灰褐色彩 */
+.sort-handle {
+    color: var(--accent);
+    font-size: 16px;
+    margin-left: 15px;
+    user-select: none;
+}
+
+/* 懸停時的精緻回饋 */
+.sort-item:hover {
+    background-color: var(--bg-color);
+    border-color: var(--text-muted);
+}
+
+/* 當被點擊、抓取時的動態效果 */
+.sort-item:active {
+    cursor: grabbing;
+}
+
+/* 🔥 關鍵：正在被拖曳中的節點樣式（讓它變淡並隱藏邊框，製造懸浮感） */
+.sort-item.dragging {
+opacity: 0.5;
+    background-color: var(--bg-color) !important;
+    border: 1px dashed var(--text-muted) !important;
+    transform: scale(0.98);
+}
+.sort-index, 
+.sort-text, 
+.sort-handle {
+    pointer-events: none; 
+}
+
         /* 底部註腳 */
 footer {
     position: relative; 
@@ -527,6 +600,12 @@ footer {
             .input-group {
                 margin: 25px auto 0;
             }}
+
+#step-result.quiz-step.active {
+    display: block !important;
+    opacity: 1 !important;
+    animation: none !important; /* 💡 關閉原本可能衝突的單獨位移動畫 */
+}
     </style>
 </head>
 <body class="is-home">
@@ -569,7 +648,7 @@ footer {
             <div class="epilogue-box">
                 <p class="epilogue-text">EPILOGUE ／ 觀域</p>
                 <p class="epilogue-highlight">我們整理的，不只是空間。更是未來長期生活的方式。</p>
-                <button class="btn-action" style="background-color: transparent; border: 1px solid var(--text-main); color: var(--text-main);" onclick="location.reload();">Restart</button>
+                <button class="btn-action" style="background-color: transparent; border: 1px solid var(--text-main); color: var(--text-main);" onclick="restartQuiz();">Restart</button>
             </div>
         </div>
     </div>
@@ -592,8 +671,58 @@ footer {
         answers: {}
     };
 
-    let currentQuestionIdx = 0;
+let currentQuestionIdx = localStorage.getItem("quiz_current_idx") 
+    ? parseInt(localStorage.getItem("quiz_current_idx")) 
+    : 0;
 
+// 💡 2. 讀取使用者填寫過的資料（如果之前有填過的話）
+if (localStorage.getItem("quiz_client_data")) {
+    clientData = JSON.parse(localStorage.getItem("quiz_client_data"));
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+    // 重新撈取最新的狀態
+    const isFinished = localStorage.getItem("quiz_finished") === "true";
+    const isInProgress = localStorage.getItem("quiz_in_progress") === "true";
+    
+    const titleZone = document.getElementById("intro-title-zone");
+    const container = document.querySelector(".quiz-container");
+    const qBox = document.getElementById("dynamic-quiz-box");
+
+    // A. 已經完全做完測驗，F5 重新整理時留再結果頁
+    if (isFinished) {
+        document.body.classList.remove("is-home");
+        document.getElementById("step-0").classList.remove("active");
+        if (titleZone) { titleZone.style.display = "none"; }
+        if (container) { container.classList.add("active", "fade-in-active"); }
+        calculateAndSubmit(); 
+        return;
+    }
+
+    // B. 🎯 只有當「正在測驗中」的標籤真的存在時，F5 重新整理才扣在題目頁面
+    if (isInProgress) {
+        document.body.classList.remove("is-home");
+        document.getElementById("step-0").classList.remove("active");
+        if (titleZone) { titleZone.style.display = "none"; }
+        if (container) { container.classList.add("active", "fade-in-active"); }
+        if (qBox) { qBox.classList.add("active"); }
+        
+        renderQuestion(currentQuestionIdx);
+        return;
+    }
+
+    // C. 🎯 如果 localStorage 什麼都沒有（按了 Restart 刷新後），絕對只能老老實實待在首頁
+    document.body.classList.add("is-home");
+    document.getElementById("step-0").classList.add("active");
+    if (titleZone) {
+        titleZone.style.display = "block";
+        titleZone.style.opacity = "1";
+    }
+    if (container) {
+        container.classList.add("active");
+        container.classList.remove("fade-in-active");
+    }
+});
     // 24小時全套題目庫配置
     const questions = [
         {
@@ -847,7 +976,10 @@ function startQuiz() {
 
     // 隱藏首頁輸入欄位
     document.getElementById("step-0").classList.remove("active");
-    
+    localStorage.setItem("quiz_in_progress", "true");
+localStorage.setItem("quiz_client_data", JSON.stringify(clientData));
+localStorage.setItem("quiz_current_idx", "0");
+
     // 顯示題目容器並渲染第一題
     const qBox = document.getElementById("dynamic-quiz-box");
     qBox.classList.add("active");
@@ -861,13 +993,16 @@ function renderQuestion(idx) {
     // 💡 改為抓取最外層的大盒子容器
     const container = document.querySelector(".quiz-container");
     const qBox = document.getElementById("dynamic-quiz-box");
+    currentQuestionIdx = idx;
+    localStorage.setItem("quiz_current_idx", idx.toString());
+    localStorage.setItem("quiz_client_data", JSON.stringify(clientData));
     
     // 【第一步】讓整個大白框連同內部物件，一起在 0.35 秒內優雅淡出
     container.classList.remove("fade-in-active");
 
     // 【第二步】等大白框完全變透明後，悄悄在後台塞入新題目
     setTimeout(() => {
-        qBox.innerHTML = ""; // 清空舊畫面
+        qBox.innerHTML = "html"; 
         const qData = questions[idx];
 
         // 組合題目的時間標籤、階段資訊、問題主標題與副標題
@@ -897,8 +1032,8 @@ function renderQuestion(idx) {
                 </div>
             `;
 
-        // 判斷題型：拖曳排序
-        } else if (qData.type === "sort") {
+} else if (qData.type === "sort") {
+            // 渲染滑動排序題
             html += `<div class="sortable-list" id="drag-list">`;
             qData.options.forEach((opt, oIdx) => {
                 html += `
@@ -909,14 +1044,14 @@ function renderQuestion(idx) {
                     </div>
                 `;
             });
-            html += `</div>`;
-            
-            html += `
-                <div class="quiz-navigation-flex">
-                    <button class="btn-prev" onclick="prevQuestion()">← Previous</button>
-                    <button class="btn-next" onclick="handleSortConfirm(${idx})">Next</button>
-                </div>
-            `;
+html += `<div class="quiz-navigation-flex">`;
+    if (idx > 0) {
+        html += `<button class="btn-prev" onclick="prevQuestion()">← Previous</button>`;
+    } else {
+        html += `<div></div>`; // 確保只有一題時，Next 按鈕依然能靠右對齊置中
+    }
+    html += `<button class="btn-next" onclick="handleSortConfirm(${idx})">Next</button>`;
+    html += `</div>`;
         }
 
         // 塞入新 HTML
@@ -945,7 +1080,7 @@ function renderQuestion(idx) {
         }
     }
 
-    // 初始化排序題的拖曳功能
+// 初始化排序題的拖曳功能
     function initDragAndDrop() {
         const list = document.getElementById("drag-list");
         list.addEventListener("dragstart", (e) => {
@@ -960,27 +1095,58 @@ function renderQuestion(idx) {
                 });
             }
         });
-        list.addEventListener("dragover", (e) => {
-            e.preventDefault();
-            const draggingItem = document.querySelector(".dragging");
-            const siblings = [...list.querySelectorAll(".sort-item:not(.dragging)")];
-            let nextSibling = siblings.find(sibling => {
-                return e.clientY <= sibling.getBoundingClientRect().top + sibling.getBoundingClientRect().height / 2;
-            });
-            list.insertBefore(draggingItem, nextSibling);
+// 🎯 限制拖曳範圍的防禦版 dragover
+    list.addEventListener("dragover", (e) => {
+        e.preventDefault(); // 允許放下
+        if (e.dataTransfer) {
+            e.dataTransfer.dropEffect = "move";
+        }
+
+        const draggingItem = list.querySelector(".sort-item.dragging");
+        if (!draggingItem) return;
+
+        // 1. 撈出「純選項」的方塊（不包含底下的導覽按鈕區）
+        const siblings = [...list.querySelectorAll(".sort-item:not(.dragging)")];
+        if (siblings.length === 0) return;
+
+        // 2. 🎯 【關鍵防禦】：取得目前畫面上最後一個「純選項方塊」的底部邊界高度
+        const lastSibling = siblings[siblings.length - 1];
+        const lastBox = lastSibling.getBoundingClientRect();
+        
+        // 3. 如果滑鼠游標已經低於最後一個選項的中心點或底部，就直接強制卡在最後一個選項後面
+        // 這樣拖曳方塊就絕對不可能越界跑到按鈕下方！
+        if (e.clientY > lastBox.bottom) {
+            list.insertBefore(draggingItem, lastSibling.nextSibling);
+            return;
+        }
+
+        // 4. 原本的正常居中換位計算
+        let nextSibling = siblings.find(sibling => {
+            const box = sibling.getBoundingClientRect();
+            return e.clientY <= box.top + box.height / 2;
         });
+
+        // 實時移動 DOM 節點
+        if (nextSibling) {
+            list.insertBefore(draggingItem, nextSibling);
+        } else {
+            // 如果沒找到，但也沒超出邊界，就放在最後一個選項的前面
+            list.insertBefore(draggingItem, lastSibling.nextSibling);
+        }
+    });
     }
 
-function handleSortConfirm(idx) {
+    // 儲存排序題數據
+    function handleSortConfirm(idx) {
         const list = document.getElementById("drag-list");
-        if(!list) return;
         const items = list.querySelectorAll(".sort-item");
-        let sortOrder = []; 
+        let sortOrder = [];
         
         items.forEach((item, index) => {
             sortOrder.push(`${index + 1}.${item.getAttribute("data-val")}`);
         });
 
+        // 核心加權計分邏輯：若將「設計師單椅」或「燈飾地毯」排在第一順位，代表藝術品味高
         const firstPlace = items[0].getAttribute("data-val");
         if (firstPlace === "設計師單椅" || firstPlace === "燈飾地毯") {
             clientData.scoreX += 3;
@@ -990,14 +1156,10 @@ function handleSortConfirm(idx) {
 
         clientData.answers["家具重視度排序"] = sortOrder.join(" > ");
         
-        //  這段程式碼必須待在函式裡面，這樣它才能共用上面的 (idx)
-        currentQuestionIdx = idx + 1; 
-        if (currentQuestionIdx < questions.length) {
-            renderQuestion(currentQuestionIdx);
-        } else {
-            calculateAndSubmit();
-        }
-    } 
+        // 進入下一題
+        currentQuestionIdx++;
+        renderQuestion(currentQuestionIdx);
+    }
         
 // 下一題通用邏輯 (單選與複選修正版)
 function nextQuestion(idx) {
@@ -1050,43 +1212,120 @@ function prevQuestion() {
     }
 }
 
-    // 總分落點判定與自動發送
-    function calculateAndSubmit() {
-        document.getElementById("dynamic-quiz-box").classList.remove("active");
-        const resultStep = document.getElementById("step-result");
-        resultStep.classList.add("active");
+function calculateAndSubmit() {
+    const container = document.querySelector(".quiz-container");
+    const qBox = document.getElementById("dynamic-quiz-box");
+    localStorage.setItem("quiz_finished", "true");
+    
+    // 【第一步】讓大白框連同最後一題內容一起優雅淡出
+    container.classList.remove("fade-in-active");
 
-        let finalTypeKey = "A1"; // 預設安全落點
-        const sx = clientData.scoreX;
-        const sy = clientData.scoreY;
+    setTimeout(() => {
+        // 清空題目，塞入高訂質感預載動畫 (使用你原本 CSS 就有的 .spinner 類名)
+        qBox.innerHTML = `
+            <div style="text-align: center; padding: 60px 0;">
+                <div class="spinner"></div>
+                <p style="font-family: 'Noto Serif TC', serif; font-size: 14px; color: var(--text-muted); letter-spacing: 2px; margin-top: 20px;">
+                    正在為您定調空間敘事...
+                </p>
+            </div>
+        `;
+        
+        // 讓大白框帶領 Loading 動畫一起淡淡地浮現
+        container.classList.add("fade-in-active");
+    }, 350);
 
-        // X軸判定 (造型與預算總和分水嶺)
-        // Y軸判定 (色彩大膽度：0-5為內斂，6以上為大膽)
-        if (sx <= 12) {
-            finalTypeKey = (sy <= 12) ? "A1" : "A2";
-        } else if (sx > 12 && sx <= 22) {
-            finalTypeKey = (sy <= 12) ? "A3" : "A4";
-        } else {
-            finalTypeKey = (sy <= 12) ? "A5" : "A6";
-        }
+    // 【第二步】給予 2 秒（2000ms）的沉靜緩衝時間，時間到才切換到結果頁
+    setTimeout(() => {
+        // Loading 時間到，再次讓 Container 隱形做轉場
+        container.classList.remove("fade-in-active");
 
-        const finalResult = vibeResults[finalTypeKey];
-        clientData.resultType = finalResult.title;
+        setTimeout(() => {
+            // 隱藏動態題目盒
+            qBox.classList.remove("active");
+            qBox.innerHTML = "";
 
-        // 渲染到前端畫面上
-        document.getElementById("display-vibe-title").innerText = finalResult.title;
-        document.getElementById("display-vibe-matrix").innerText = finalResult.matrix;
-        document.getElementById("display-vibe-desc").innerText = finalResult.desc;
+            // 顯示結果頁容器
+            const resultStep = document.getElementById("step-result");
+            resultStep.classList.add("active");
 
-        // 🚀 利用 Fetch 將整包豐富的諮詢數據無縫打包，隔空傳送至 Make.com / Notion
-        fetch(webhookUrl, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(clientData)
-        })
-        .then(res => console.log("觀域後台數據同步成功。"))
-        .catch(err => console.error("數據同步卡關：", err));
+            // ─── 以下維持你原本的落點與渲染邏輯 ───
+            let finalTypeKey = "A1"; 
+            const sx = clientData.scoreX;
+            const sy = clientData.scoreY;
+
+            if (sx <= 12) {
+                finalTypeKey = (sy <= 12) ? "A1" : "A2";
+            } else if (sx > 12 && sx <= 22) {
+                finalTypeKey = (sy <= 12) ? "A3" : "A4";
+            } else {
+                finalTypeKey = (sy <= 12) ? "A5" : "A6";
+            }
+
+            const finalResult = vibeResults[finalTypeKey];
+            clientData.resultType = finalResult.title;
+
+            // 渲染到前端畫面上
+            document.getElementById("display-vibe-title").innerText = finalResult.title;
+            document.getElementById("display-vibe-matrix").innerText = finalResult.matrix;
+            document.getElementById("display-vibe-desc").innerText = finalResult.desc;
+
+            // 還原大卡片布局為 flex
+            container.classList.add("active");
+            
+            // 【第三步】結果資料換好了，讓結果頁大卡片優雅登場！
+            setTimeout(() => {
+                container.classList.add("fade-in-active");
+            }, 50);
+
+        }, 350); // 第二次淡出的等待時間
+
+    }, 2350); // 總 Loading 停留時間 (2000ms 內容 + 350ms 轉場)
+}
+function restartQuiz() {
+    // 1. 擦乾淨進度鎖
+    localStorage.removeItem("quiz_in_progress");
+    localStorage.removeItem("quiz_finished");
+
+    // 2. 數據歸零
+    clientData.scoreX = 0;
+    clientData.scoreY = 0;
+    clientData.answers = {};
+    currentQuestionIdx = 0;
+
+    // 3. 隱藏結果頁與問題盒
+    const resultStep = document.getElementById("step-result");
+    if (resultStep) resultStep.classList.remove("active");
+    
+    const qBox = document.getElementById("dynamic-quiz-box");
+    if (qBox) {
+        qBox.classList.remove("active");
+        qBox.innerHTML = "";
     }
+
+    // 4. 把大卡片的測驗中 class 拆掉，還原首頁佈局
+    const container = document.querySelector(".quiz-container");
+    if (container) {
+        container.classList.remove("fade-in-active");
+        container.classList.add("active");
+    }
+
+    // 5. 強制讓首頁的大標題區域浮現
+    const titleZone = document.getElementById("intro-title-zone");
+    if (titleZone) {
+        titleZone.style.display = "block";
+        titleZone.style.opacity = "1";
+    }
+
+    // 6. 讓輸入名字的第一頁 active
+    const step0 = document.getElementById("step-0");
+    if (step0) {
+        step0.classList.add("active");
+    }
+
+    // 7. 讓 body 掛回首頁狀態
+    document.body.classList.add("is-home");
+}
 </script>
 
 </body>
