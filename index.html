@@ -1430,7 +1430,39 @@ function calculateAndSubmit() {
         }, 350);
     }, 2350);
 }
+function renderResultLogic() {
+    // 獲取分數並計算結果類型 (與 calculateAndSubmit 中的邏輯一致)
+    const getIdx = (s) => (s <= 8 ? 1 : (s <= 16 ? 2 : 3));
+    const finalTypeKey = `${getIdx(clientData.scoreX)}_${getIdx(clientData.scoreY)}`;
+    const res = vibeResults[finalTypeKey] || vibeResults["1_1"]; // 預設值防止錯誤
 
+    // 渲染內容
+    document.getElementById("display-vibe-title").innerText = res.title;
+    document.getElementById("display-vibe-matrix").innerText = res.matrix;
+    document.getElementById("display-vibe-desc").innerText = res.desc;
+    document.getElementById("display-vibe-image").src = res.img;
+    
+    // 渲染標籤
+    const tagsContainer = document.getElementById("display-vibe-tags");
+    tagsContainer.innerHTML = res.tags.map(t => `<span class="tag-item">${t}</span>`).join('');
+    
+    // 渲染量表
+    const pX = Math.min((clientData.scoreX / 24) * 100, 100);
+    const pY = Math.min((clientData.scoreY / 24) * 100, 100);
+    document.getElementById("display-vibe-gauge").innerHTML = `
+        <div class="gauge-row"><span>簡單俐落</span><div class="gauge-bar-bg"><div class="gauge-bar-fill" style="width: ${pX}%"></div></div><span>藝術品味</span></div>
+        <div class="gauge-row"><span>內斂同色</span><div class="gauge-bar-bg"><div class="gauge-bar-fill" style="width: ${pY}%"></div></div><span>撞色變化</span></div>
+    `;
+
+const itemsContainer = document.getElementById("recommend-items");
+if (res.items) {
+    itemsContainer.innerHTML = res.items.map(item => `
+        <div style="width: 150px;">
+            <img src="${item}" style="width: 100%; height: auto; display: block;">
+        </div>
+    `).join('');
+}}
+    
 function restartQuiz() {
     // 1. 擦乾淨進度鎖
     localStorage.removeItem("quiz_in_progress");
