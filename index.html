@@ -83,7 +83,7 @@ input, button {
     width: 100%;
     height: 100%;
     background: linear-gradient(rgba(45, 41, 37, 0.55), rgba(45, 41, 37, 0.55)), 
-                url("image/LAGOM.jpg") no-repeat center center;
+                url("C:\\Users\\user\\Downloads\\image\\LAGOM.jpg") no-repeat center center;
     background-size: cover;
     z-index: -1; 
     opacity: 0;
@@ -428,7 +428,7 @@ input, button {
         /* 結果頁面樣式 */
         .result-layout {
             text-align: center;
-            max-width: 600px;
+            max-width: 900px;
             margin: 0 auto;
         }
 
@@ -486,9 +486,13 @@ input, button {
 .gauge-bar-bg { width: 160px; height: 4px; background-color: #E2DFD8; position: relative; }
 .gauge-bar-fill { height: 100%; background-color: var(--text-main); transition: width 1s ease-in-out; }
 
-.display-vibe-image { width: 100%; margin: 30px 0; border-radius: 4px; overflow: hidden;height: auto; display: block
+.display-vibe-image { width: 100%; margin: 30px auto;max-width:900px;overflow: hidden;
 }
-
+.display-vibe-image img {
+    width: 100%;      
+    height: auto;    
+    display: block; 
+}
 .tag-list { display: flex; justify-content: center; gap: 8px; margin-bottom: 25px; flex-wrap: wrap; }
 .tag-item { font-size: 11px; color: var(--text-muted); border: 1px solid #D6D3CD; padding: 4px 12px; border-radius: 20px; }
 .tags-wrapper {
@@ -728,7 +732,7 @@ footer {
 <div class="quiz-bg-cover"></div>
 
 <div class="header">
-    <a href="index.html" class="logo-wrapper" onclick="restartQuiz()"><img src="image/螢幕擷取畫面 2025-11-06 152214.png" alt="Guanyu Design Logo"></a>
+    <a href="index.html" class="logo-wrapper" onclick="restartQuiz()"><img src="C:\Users\user\Downloads\image\螢幕擷取畫面 2025-11-06 152214.png" alt="Guanyu Design Logo"></a>
     <span class="brand-subtext">Bespoke Custom Design</span>
 </div>
 
@@ -759,7 +763,7 @@ footer {
             <h2 class="result-title" id="display-vibe-title"></h2>
             <div class="result-matrix" id="display-vibe-matrix"></div>
             
-            <div class=".display-vibe-image">
+            <div class="display-vibe-image">
                 <img id="display-vibe-image" src="" alt="風格示意圖">
             </div>
 
@@ -1105,7 +1109,7 @@ window.addEventListener("DOMContentLoaded", () => {
 
     // 九宮格結果定義
 const vibeResults = {
-    "1_1": { title: "璞", matrix: "Simple", img:"image/1.png",desc: "「璞」象徵著未經修飾的真實與純粹。我們捨棄過度繁複的裝飾，選擇線條最為簡約的家具，讓空間回歸最原始的質感，如同打磨過的原石般內斂；正因這種不刻意雕琢的留白，反而映襯出日常生活最平實的溫度，證明家的美感不必源於昂貴的堆砌，而是源於對真實生活的誠實擁抱。", img: "...", tags: ["#標籤1", "#標籤2"] },
+    "1_1": { title: "璞", matrix: "Simple", img:"image/1.png",desc: "「璞」象徵著未經修飾的真實與純粹。我們捨棄過度繁複的裝飾，選擇線條最為簡約的家具，讓空間回歸最原始的質感，如同打磨過的原石般內斂；正因這種不刻意雕琢的留白，反而映襯出日常生活最平實的溫度，證明家的美感不必源於昂貴的堆砌，而是源於對真實生活的誠實擁抱。", tags: ["#標籤1", "#標籤2"] },
 };
 
 // 啟動測驗與通用跳頁函式
@@ -1379,7 +1383,7 @@ function calculateAndSubmit() {
         qBox.innerHTML = `
             <div style="text-align: center; padding: 60px 0;">
                 <div class="spinner"></div>
-                <p style="font-family: 'GenYoMin TW', 'GenYoMin', 'Noto Serif TC', serif; font-size: 20px; color: var(--text-muted); letter-spacing: 2px; margin-top: 20px;font-weight: 700;">
+                <p style="font-family: 'Noto Serif TC', serif; font-size: 14px; color: var(--text-muted); letter-spacing: 2px; margin-top: 20px;">
                     正在為您定調空間敘事...
                 </p>
             </div>
@@ -1430,11 +1434,12 @@ function calculateAndSubmit() {
         }, 350);
     }, 2350);
 }
+// 💡 補上遺失的渲染結果邏輯
 function renderResultLogic() {
     // 獲取分數並計算結果類型 (與 calculateAndSubmit 中的邏輯一致)
     const getIdx = (s) => (s <= 8 ? 1 : (s <= 16 ? 2 : 3));
     const finalTypeKey = `${getIdx(clientData.scoreX)}_${getIdx(clientData.scoreY)}`;
-    const res = vibeResults[finalTypeKey] || vibeResults["1_1"]; // 預設值防止錯誤
+    const res = vibeResults[finalTypeKey] || vibeResults["1_1"];
 
     // 渲染內容
     document.getElementById("display-vibe-title").innerText = res.title;
@@ -1462,7 +1467,7 @@ if (res.items) {
         </div>
     `).join('');
 }}
-    
+
 function restartQuiz() {
     // 1. 擦乾淨進度鎖
     localStorage.removeItem("quiz_in_progress");
