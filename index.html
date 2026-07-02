@@ -83,7 +83,7 @@ input, button {
     width: 100%;
     height: 100%;
     background: linear-gradient(rgba(45, 41, 37, 0.55), rgba(45, 41, 37, 0.55)), 
-                url("LAGOM.jpg") no-repeat center center;
+                url("image/LAGOM.jpg") no-repeat center center;
     background-size: cover;
     z-index: -1; 
     opacity: 0;
@@ -303,7 +303,7 @@ input, button {
             cursor: pointer;
             text-align: left;
             line-height: 1.6;
-            letter-spacing: 2px;      /* 保持精緻字距 */
+            letter-spacing: 1.5px;      /* 保持精緻字距 */
             position: relative;
             border-radius: 2.5px;
             width: 100%;              /* 寬度撐滿 */
@@ -434,27 +434,30 @@ input, button {
 
         .result-title {
             font-family: "GenYoMin TW", "GenYoMin", "Noto Serif TC", serif;
-            font-size: 24px;
+            font-size: 45px;
             letter-spacing: 2px;
             margin-bottom: 12px;
-            font-weight: 400;
+            font-weight: 1000;
         }
 
         .result-matrix {
-            font-size: 13px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 32px;
+        font-family: "GenYoMin TW", "GenYoMin", "Noto Serif TC", serif;
+        font-size: 14px;
+        font-weight: bold;
+        color:var(--text-muted);
+        letter-spacing: 1.5px;
         }
 
         .result-description {
             font-size: 15px;
             font-weight: 300;
-            color: #333333;
-            line-height: 1.8;
+            line-height: 2;
             text-align: justify;
             margin-bottom: 40px;
+            color: var(--text-main);
+            cursor: pointer;
+            letter-spacing: 1.5px;      /* 保持精緻字距 */
+            display: block;
         }
 
         .epilogue-box {
@@ -477,6 +480,34 @@ input, button {
             margin-bottom: 32px;
             font-weight: 400;
         }
+/* 結果頁擴充樣式 */
+.gauge-container { margin: 30px auto; width: 100%; max-width: 400px; }
+.gauge-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-size: 11px; color: var(--text-muted); letter-spacing: 1px; }
+.gauge-bar-bg { width: 160px; height: 4px; background-color: #E2DFD8; position: relative; }
+.gauge-bar-fill { height: 100%; background-color: var(--text-main); transition: width 1s ease-in-out; }
+
+.display-vibe-image { width: 100%; margin: 30px 0; border-radius: 4px; overflow: hidden;height: auto; display: block
+}
+
+.tag-list { display: flex; justify-content: center; gap: 8px; margin-bottom: 25px; flex-wrap: wrap; }
+.tag-item { font-size: 11px; color: var(--text-muted); border: 1px solid #D6D3CD; padding: 4px 12px; border-radius: 20px; }
+.tags-wrapper {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 24px 0; /* 增加上下間距讓標籤區塊更獨立 */
+    flex-wrap: wrap;
+}
+
+.tag {
+    font-size: 11px; /* 與您的設計圖字體大小保持一致 */
+    padding: 6px 16px;
+    border: 1px solid #C4C0B9;
+    border-radius: 20px;
+    color: #5D5A54;
+    background: transparent;
+    letter-spacing: 0.5px;
+}
 
         /* ─── 排序題專屬：拖曳清單與方塊設計 ─── */
 .sortable-list {
@@ -577,7 +608,7 @@ footer {
     }
     /* 2. 確保圖片不會超出容器 */
     .header .logo-wrapper img {
-        height: 45px; /* 稍微縮小以適應 300px 的總寬度 */
+        height: 55px; /* 稍微縮小以適應 300px 的總寬度 */
         width: auto;
     }
 
@@ -697,7 +728,7 @@ footer {
 <div class="quiz-bg-cover"></div>
 
 <div class="header">
-    <span class="logo-wrapper"><img src="螢幕擷取畫面 2025-11-06 152214.png" alt="Guanyu Design Logo"></span>
+    <a href="index.html" class="logo-wrapper" onclick="restartQuiz()"><img src="image/螢幕擷取畫面 2025-11-06 152214.png" alt="Guanyu Design Logo"></a>
     <span class="brand-subtext">Bespoke Custom Design</span>
 </div>
 
@@ -722,20 +753,34 @@ footer {
 
     <div id="dynamic-quiz-box" class="quiz-step"></div>
 
-    <div id="step-result" class="quiz-step">
+<div id="step-result" class="quiz-step">
+    <!-- 第一區塊：風格結果與量表 -->
         <div class="result-layout">
-            <div class="step-info">Your Vibe Archetype</div>
-            <h2 class="result-title" id="display-vibe-title">讀取中...</h2>
-            <div class="result-matrix" id="display-vibe-matrix">讀取中...</div>
-            <p class="result-description" id="display-vibe-desc">系統正在為您定調軟裝美學...</p>
+            <h2 class="result-title" id="display-vibe-title"></h2>
+            <div class="result-matrix" id="display-vibe-matrix"></div>
             
-            <div class="epilogue-box">
-                <p class="epilogue-text">EPILOGUE ／ 觀域</p>
-                <p class="epilogue-highlight">我們整理的，不只是空間。更是未來長期生活的方式。</p>
-                <button class="btn-action" style="background-color: transparent; border: 1px solid var(--text-main); color: var(--text-main);" onclick="restartQuiz();">Restart</button>
+            <div class=".display-vibe-image">
+                <img id="display-vibe-image" src="" alt="風格示意圖">
             </div>
+
+            <p class="result-description" id="display-vibe-desc"></p>
+            <div class="tag-list" id="display-vibe-tags"></div>
+            
+            <!-- 量表移到這裡，讓它成為風格分析的一部分 -->
+            <div class="gauge-container" id="display-vibe-gauge"></div>
         </div>
-    </div>
+
+    <!-- 第二區塊：推薦單品 -->
+        <div class="epilogue-box">
+            <p class="epilogue-text" style="text-align: center; margin-bottom: 40px;">你可能會喜歡的單品...</p>
+            
+            <div id="recommend-items" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; margin-bottom: 60px;">
+                <!-- JavaScript 動態載入單品 -->
+            </div>
+
+            <button class="btn-action" style="background-color: transparent; border: 1px solid var(--text-main); color: var(--text-main); margin: 0 auto;" onclick="restartQuiz();">RESTART</button>
+        </div>
+</div>
 
 </main>
 
@@ -1059,14 +1104,9 @@ window.addEventListener("DOMContentLoaded", () => {
     ];
 
     // 九宮格結果定義
-    const vibeResults = {
-        "A1": { title: "簡單俐落 ╳ 內斂同色", matrix: "Muted Simplicity", desc: "您追求靈魂徹底留白的純粹感。在軟裝配置上，極度適合線條規整、簡單俐落的規格化或基礎訂製家具。色彩上建議採用高明度的淺米色、大白牆或溫潤奶茶色進行大面積同色系堆疊。整體空間不堆砌過多裝飾，強調無負擔、好維持的機能實用性，讓空間幫您整理好日常最純粹的步調。" },
-        "A2": { title: "簡單俐落 ╳ 撞色變化", matrix: "Vibrant Streamline", desc: "您在追求乾淨俐落的家具線條之餘，內心渴望色彩帶來的活力衝擊。適合選用結構規整、規矩好清潔的基礎家具為底，但在局部牆面或窗簾、抱枕面料上大膽採用1-2款高彩度的特殊色塊（如克萊因藍或莫蘭迪跳色）進行撞色。在實用好打理的前提下，利用色塊在公共空間創造耀眼的視覺焦點。" },
-        "A3": { title: "標準訂製 ╳ 內斂同色", matrix: "Refined Balance", desc: "您完美立足於「精緻工藝細節」與「低調大器」的平衡點。核心沙發與大長餐桌非常適合選用工藝細緻、造型帶有些微圓潤弧線的標準或高級訂製款，展現優雅包容力。在色調上則堅持內斂同色系（如深沉木皮肌理、大理石灰或溫潤大地色系）的精緻堆疊。既講究車縫線與頂級岩板觸感，又維持優雅沈穩的頂級飯店度假感。" },
-        "A4": { title: "標準訂製 ╳ 撞色變化", matrix: "Expressive Craftsmanship", desc: "您喜愛精緻的手工訂製工藝，同時著迷於獨特的美學張力。適合將客廳與餐廳區的核心家具升級為特殊弧形訂製款，並在家具面料（如單椅或抱枕）上大膽挑選帶有神祕勃根地紅、復古綠或當代摩登的色彩進行撞色。在工藝細節與大膽色彩中，定調出一套專屬於您、極具美學層次的生活方式。" },
-        "A5": { title: "藝術品味 ╳ 內斂同色", matrix: "Sculptural Serenity", desc: "您是一位極具內斂品味的藝術鑑賞家。比起色彩的喧嘩，您更著迷於物件本身的「線條幾何張力」與「不可替代性」。空間極度適合大量挑選設計師大師原創單品、造型如雕塑般獨特的單椅與藝術地燈。色彩上維持極致純粹的內斂大地色、暗黑系或高雅單色系，讓光影自然在家具完美的藝術弧線上折射，呈現藝廊般的極致品味。" },
-        "A6": { title: "藝術品味 ╳ 撞色變化", matrix: "Avant-Garde Gallery", desc: "您是天生的空間調色師，追求最極致的藝術品味與視覺震撼。空間是您的靈魂畫布，絕不妥協於平庸的樣品屋配置。極度適合全屋規劃大膽流線型的高級訂製家具或國際設計師原作，並搭配極具視覺衝擊的大膽撞色、特殊高彩度藝術畫作與前衛材質撞擊。從客廳沙發到角落一盞立燈，都是令人屏息的藝術焦點。" }
-    };
+const vibeResults = {
+    "1_1": { title: "璞", matrix: "Simple", img:"image/1.png",desc: "「璞」象徵著未經修飾的真實與純粹。我們捨棄過度繁複的裝飾，選擇線條最為簡約的家具，讓空間回歸最原始的質感，如同打磨過的原石般內斂；正因這種不刻意雕琢的留白，反而映襯出日常生活最平實的溫度，證明家的美感不必源於昂貴的堆砌，而是源於對真實生活的誠實擁抱。", img: "...", tags: ["#標籤1", "#標籤2"] },
+};
 
 // 啟動測驗與通用跳頁函式
 function startQuiz() {
@@ -1332,77 +1372,72 @@ function calculateAndSubmit() {
     const qBox = document.getElementById("dynamic-quiz-box");
     localStorage.setItem("quiz_finished", "true");
     
-    // 【第一步】讓大白框連同最後一題內容一起優雅淡出
+    // 【第一步】淡出題目
     container.classList.remove("fade-in-active");
 
     setTimeout(() => {
-        // 清空題目，塞入高訂質感預載動畫 (使用你原本 CSS 就有的 .spinner 類名)
         qBox.innerHTML = `
             <div style="text-align: center; padding: 60px 0;">
                 <div class="spinner"></div>
-                <p style="font-family: 'Noto Serif TC', serif; font-size: 14px; color: var(--text-muted); letter-spacing: 2px; margin-top: 20px;">
+                <p style="font-family: 'GenYoMin TW', 'GenYoMin', 'Noto Serif TC', serif; font-size: 20px; color: var(--text-muted); letter-spacing: 2px; margin-top: 20px;font-weight: 700;">
                     正在為您定調空間敘事...
                 </p>
             </div>
         `;
-        
-        // 讓大白框帶領 Loading 動畫一起淡淡地浮現
         container.classList.add("fade-in-active");
     }, 350);
 
-    // 【第二步】給予 2 秒（2000ms）的沉靜緩衝時間，時間到才切換到結果頁
+    // 【第二步】沉靜緩衝與結果渲染
     setTimeout(() => {
-        // Loading 時間到，再次讓 Container 隱形做轉場
         container.classList.remove("fade-in-active");
 
         setTimeout(() => {
-            // 隱藏動態題目盒
             qBox.classList.remove("active");
             qBox.innerHTML = "";
-
-            // 顯示結果頁容器
             const resultStep = document.getElementById("step-result");
             resultStep.classList.add("active");
 
-            // ─── 以下維持你原本的落點與渲染邏輯 ───
-            let finalTypeKey = "A1"; 
-            const sx = clientData.scoreX;
-            const sy = clientData.scoreY;
+            // 9 種結果判定邏輯 (區間 1-3)
+            const getIdx = (s) => (s <= 8 ? 1 : (s <= 16 ? 2 : 3));
+            const finalTypeKey = `${getIdx(clientData.scoreX)}_${getIdx(clientData.scoreY)}`;
+            const res = vibeResults[finalTypeKey];
+            clientData.resultType = res.title;
 
-            if (sx <= 12) {
-                finalTypeKey = (sy <= 12) ? "A1" : "A2";
-            } else if (sx > 12 && sx <= 22) {
-                finalTypeKey = (sy <= 12) ? "A3" : "A4";
-            } else {
-                finalTypeKey = (sy <= 12) ? "A5" : "A6";
-            }
+            // 渲染內容 (對應「網頁_工作區域 1_4.jpg」結構)
+            document.getElementById("display-vibe-title").innerText = res.title;
+            document.getElementById("display-vibe-matrix").innerText = res.matrix;
+            document.getElementById("display-vibe-desc").innerText = res.desc;
+            document.getElementById("display-vibe-image").src = res.img;
+            
+            // 渲染標籤
+            document.getElementById("display-vibe-tags").innerHTML = res.tags
+                .map(t => `<span class="tag-item">${t}</span>`).join('');
+            
+            // 渲染量表
+            const pX = Math.min((clientData.scoreX / 24) * 100, 100);
+            const pY = Math.min((clientData.scoreY / 24) * 100, 100);
+            document.getElementById("display-vibe-gauge").innerHTML = `
+                <div class="gauge-row"><span>簡單俐落</span><div class="gauge-bar-bg"><div class="gauge-bar-fill" style="width: ${pX}%"></div></div><span>藝術品味</span></div>
+                <div class="gauge-row"><span>內斂同色</span><div class="gauge-bar-bg"><div class="gauge-bar-fill" style="width: ${pY}%"></div></div><span>撞色變化</span></div>
+            `;
 
-            const finalResult = vibeResults[finalTypeKey];
-            clientData.resultType = finalResult.title;
-
-            // 渲染到前端畫面上
-            document.getElementById("display-vibe-title").innerText = finalResult.title;
-            document.getElementById("display-vibe-matrix").innerText = finalResult.matrix;
-            document.getElementById("display-vibe-desc").innerText = finalResult.desc;
-
-            // 還原大卡片布局為 flex
             container.classList.add("active");
             
-            // 【第三步】結果資料換好了，讓結果頁大卡片優雅登場！
+            // 【第三步】結果優雅登場
             setTimeout(() => {
                 container.classList.add("fade-in-active");
             }, 50);
-
-        }, 350); // 第二次淡出的等待時間
-
-    }, 2350); // 總 Loading 停留時間 (2000ms 內容 + 350ms 轉場)
+        }, 350);
+    }, 2350);
 }
+
 function restartQuiz() {
     // 1. 擦乾淨進度鎖
     localStorage.removeItem("quiz_in_progress");
     localStorage.removeItem("quiz_finished");
     localStorage.removeItem("quiz_client_data"); // 💡 同步清除備份資料
     localStorage.removeItem("quiz_current_idx");  // 💡 同步清除指針備份
+    location.reload(); // 或使用您的轉場函數重置狀態
 
     // 2. 數據歸零
     clientData.name = "";
@@ -1451,6 +1486,42 @@ function restartQuiz() {
     // 7. 讓 body 掛回首頁狀態
     document.body.classList.add("is-home");
 }
+
+
+
+document.addEventListener("keydown", (e) => {
+    // 按下 K 鍵強制跳轉
+    if (e.key === "k" || e.key === "K") {
+        console.log("強制跳轉至結果頁...");
+        
+        // 1. 移除首頁與問題頁的狀態
+        document.body.classList.remove("is-home");
+        document.getElementById("intro-title-zone").style.display = "none";
+        document.getElementById("dynamic-quiz-box").classList.remove("active");
+        document.getElementById("step-0").classList.remove("active"); // 確保關閉首頁
+        
+        // 2. 強制顯示結果區域
+        const resultStep = document.getElementById("step-result");
+        resultStep.classList.add("active");
+        
+        // 3. 設定測試分數
+        clientData.scoreX = 15; 
+        clientData.scoreY = 20; 
+        
+        // 4. 確保 vibeResults 內有對應的資料（若無，請務必補上此物件內容）
+        // 呼叫渲染邏輯
+        renderResultLogic(); 
+        
+        // 5. 確保容器可見並執行淡入動畫
+        const container = document.querySelector(".quiz-container");
+        container.classList.add("active");
+        setTimeout(() => {
+            container.classList.add("fade-in-active");
+        }, 50);
+    }
+});
+
+
 </script>
 
 </body>
