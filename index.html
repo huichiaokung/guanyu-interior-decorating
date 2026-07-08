@@ -83,7 +83,7 @@ input, button {
     width: 100%;
     height: 100%;
     background: linear-gradient(rgba(45, 41, 37, 0.55), rgba(45, 41, 37, 0.55)), 
-                url("C:\\Users\\user\\Downloads\\image\\LAGOM.jpg") no-repeat center center;
+                url("image/LAGOM.jpg") no-repeat center center;
     background-size: cover;
     z-index: -1; 
     opacity: 0;
@@ -230,18 +230,8 @@ input, button {
             font-size: 32px;
             color: var(--text-muted);
             text-align: center;
-            margin-bottom: 8px;
+            margin-bottom: 20px;
             font-weight: 400;
-        }
-
-        .step-info {
-             font-family: "GenYoMin TW", "GenYoMin", "Noto Serif TC", serif;
-            font-size: 11px;
-            text-align: center;
-            color: var(--accent-color);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 24px;
         }
 
         .question-title {
@@ -263,7 +253,7 @@ input, button {
 
         h2.question-title {
             font-size: 24px; font-weight: 300; line-height: 1.6;
-            text-align: center; margin-bottom: 45px; letter-spacing: 1px;
+            text-align: center; margin-bottom: 25px; letter-spacing: 1px;
              font-family: "GenYoMin TW", "GenYoMin", "Noto Serif TC", serif
         }
         .subtitle {
@@ -298,7 +288,7 @@ input, button {
             background: transparent;
             border: 1px solid #E2DFD8;
             padding: 24px 30px;       /* 舒適的內留白 */
-            font-size: 14px;
+            font-size: 15px;
             color: var(--text-main);
             cursor: pointer;
             text-align: left;
@@ -463,29 +453,19 @@ input, button {
         .epilogue-box {
             border-top: 1px solid var(--border-color);
             padding-top: 40px;
-            margin-top: 40px;
+            margin-top: 60px;
         }
 
         .epilogue-text {
-            font-size: 14px;
-            color: var(--text-muted);
-            margin-bottom: 8px;
-            font-weight: 300;
+            font-family: "GenYoMin TW", "GenYoMin", "Noto Serif TC", serif;
+            font-size: 38px;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            font-weight: 1000;
+            color:var(--text-muted);
         }
 
-        .epilogue-highlight {
-            font-size: 20px;
-            letter-spacing: 3px;
-            color: var(--text-main);
-            margin-bottom: 32px;
-            font-weight: 400;
-        }
 /* 結果頁擴充樣式 */
-.gauge-container { margin: 30px auto; width: 100%; max-width: 400px; }
-.gauge-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; font-size: 11px; color: var(--text-muted); letter-spacing: 1px; }
-.gauge-bar-bg { width: 160px; height: 4px; background-color: #E2DFD8; position: relative; }
-.gauge-bar-fill { height: 100%; background-color: var(--text-main); transition: width 1s ease-in-out; }
-
 .display-vibe-image { width: 100%; margin: 30px auto;max-width:900px;overflow: hidden;
 }
 .display-vibe-image img {
@@ -493,8 +473,25 @@ input, button {
     height: auto;    
     display: block; 
 }
-.tag-list { display: flex; justify-content: center; gap: 8px; margin-bottom: 25px; flex-wrap: wrap; }
-.tag-item { font-size: 11px; color: var(--text-muted); border: 1px solid #D6D3CD; padding: 4px 12px; border-radius: 20px; }
+.tag-list { 
+    display: flex; 
+    justify-content: center; 
+    gap: 15px; 
+    margin: 50px 0; 
+    flex-wrap: wrap; }
+
+.tag-item { 
+    font-family: "GenYoMin TW", "GenYoMin", "Noto Serif TC", serif;
+    font-size: 15px; 
+    color: var(--card-bg); 
+    background-color: var(--accent); 
+    padding: 8px 18px; 
+    border-radius: 50px;
+    letter-spacing: 1.5px;
+    font-weight: 500;
+    display: inline-block;
+    line-height: 1; }
+
 .tags-wrapper {
     display: flex;
     justify-content: center;
@@ -503,14 +500,53 @@ input, button {
     flex-wrap: wrap;
 }
 
-.tag {
-    font-size: 11px; /* 與您的設計圖字體大小保持一致 */
-    padding: 6px 16px;
-    border: 1px solid #C4C0B9;
-    border-radius: 20px;
-    color: #5D5A54;
-    background: transparent;
-    letter-spacing: 0.5px;
+.gauge-container{
+    width:100%;
+    margin:50px auto;
+}
+
+.gauge-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom:20px;
+    font-size:15px;
+    color:var(--text-main);
+    font-family:"GenYoMin TW","GenYoMin","Noto Serif TC",serif;
+    font-weight:600;
+    letter-spacing:1.5px;
+}
+
+.gauge-row span{
+    white-space:nowrap;
+}
+
+.gauge-bar-bg{
+    flex:1;
+    margin:0 20px;
+    height:8px;
+    background:var(--bg-color);
+    border-radius:999px;
+    position:relative;
+    overflow:hidden;
+}
+
+.gauge-bar-fill{
+    position:absolute;
+    top:0;
+    bottom:0;
+    background:var(--text-main);
+    border-radius:999px;
+    transition:width .8s ease;
+}
+.gauge-center {
+    position:absolute;
+    left:50%;
+    top:-3px;
+    width:2px;
+    height:14px;
+    background:#999;
+    z-index:2;
 }
 
         /* ─── 排序題專屬：拖曳清單與方塊設計 ─── */
@@ -597,7 +633,8 @@ footer {
     margin-top: auto; 
     width: 100%;
         }
-        @media (max-width: 768px) {
+        
+@media (max-width: 768px) {
 .header {
     position: fixed;        /* 固定定位，滾動時不移位 */
     top: 0%;              /* 距離頂部 24px */
@@ -718,7 +755,50 @@ footer {
             }
             .input-group {
                 margin: 25px auto 0;
-            }}
+            }
+                    .result-layout {
+            text-align: center;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .btn-option {
+           font-size: 14px;
+        }
+
+        .result-title {
+            font-family: "GenYoMin TW", "GenYoMin", "Noto Serif TC", serif;
+            font-size: 32px;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            font-weight: 1000;
+        }
+
+        .result-matrix {
+        font-family: "GenYoMin TW", "GenYoMin", "Noto Serif TC", serif;
+        font-size: 12px;
+        font-weight: bold;
+        color:var(--text-muted);
+        letter-spacing: 1.5px;
+        }
+
+        .result-description {
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 2;
+            text-align: justify;
+            margin-bottom: 40px;
+            color: var(--text-main);
+            cursor: pointer;
+            letter-spacing: 1.5px;      /* 保持精緻字距 */
+            display: block;
+        }
+        .display-vibe-image { width: 100%; margin: 30px auto;max-width:700px;overflow: hidden;
+}
+.display-vibe-image img {
+    width: 100%;      
+    height: auto;    
+    display: block; 
+}}
 
 #step-result.quiz-step.active {
     display: block ;
@@ -732,7 +812,7 @@ footer {
 <div class="quiz-bg-cover"></div>
 
 <div class="header">
-    <a href="index.html" class="logo-wrapper" onclick="restartQuiz()"><img src="C:\Users\user\Downloads\image\螢幕擷取畫面 2025-11-06 152214.png" alt="Guanyu Design Logo"></a>
+    <a href="index.html" class="logo-wrapper" onclick="restartQuiz()"><img src="image/螢幕擷取畫面 2025-11-06 152214.png" alt="Guanyu Design Logo"></a>
     <span class="brand-subtext">Bespoke Custom Design</span>
 </div>
 
@@ -771,7 +851,7 @@ footer {
             <div class="tag-list" id="display-vibe-tags"></div>
             
             <!-- 量表移到這裡，讓它成為風格分析的一部分 -->
-            <div class="gauge-container" id="display-vibe-gauge"></div>
+            <div id="display-vibe-gauge"></div>
         </div>
 
     <!-- 第二區塊：推薦單品 -->
@@ -890,226 +970,289 @@ window.addEventListener("DOMContentLoaded", () => {
     // 24小時全套題目庫配置
     const questions = [
         {
-            time: "00:00", info: "Phase 1 - Light & Shadow", type: "single",
-            q: "微醺的夜，最吸引你目光的光影是？", sub: "定調最深層的感性色彩基礎",
+            time: "00:00",type: "multiple",
+            q: "忙碌了一整天，你回到家，家裡有誰正在等著你？", sub: "了解空間常駐成員(可複選）",
             options: [
-                { text: "暖黃色的間接照明，均勻洗在乾淨米白色牆面上，非常療癒。", x: 1, y: 1, tag: "排斥高彩度跳色" },
-                { text: "一盞線條大膽、帶有金屬未來感的雕塑立燈，在黑暗中投射強烈光影。", x: 3, y: 1, tag: "偏好獨特線條" },
-                { text: "帶著神祕勃根地紅或復古綠的局部跳色牆，配上微微搖曳的燭光。", x: 2, y: 3, tag: "偏好大膽跳色" }
+                { text: "活潑的毛孩，正在空間裡奔跑", x: 0, y: 0, tag: "有養寵物" },
+                { text: "牙牙學語的小孩，等待著爸媽的陪伴", x: 0, y: 0, tag: "有小孩"},
+                { text: "正在靜靜閱讀，安心慢活的長輩", x: 0, y: 0, tag: "有長輩" },
+                { text: "目前是獨居的自由靈魂，空間完全由我一人掌控", x: 0, y: 0, tag: "獨居" },
+                { text: "甜蜜的兩人世界，正準備共同構築生活細節", x: 0, y: 0, tag: "成員:伴侶" }
             ]
         },
         {
-            time: "01:00", info: "Phase 1 - Reject Element", type: "multiple",
-            q: "閉上眼，你絕對不想在新家的夢境裡看見哪種畫面？", sub: "過濾心中最排斥的材質與氛圍（可複選）",
+            time: "01:00",type: "multiple",
+            q: "把握難得的休息時光，你習慣會在哪裡享用美味的宵夜？", sub: "使用習慣及面料選擇（可複選）",
             options: [
-                { text: "冰冷僵硬、毫無個性，看起來像大量複製的平庸樣品屋。", x: 0, y: 0, tag: "排斥平庸樣品屋感" },
-                { text: "笨重老舊、色調過於深沉沉悶的傳統木作感。", x: 0, y: 0, tag: "排斥深色老舊木作" },
-                { text: "雜亂無章、各種刺眼色彩混雜在一起的凌亂感。", x: 0, y: 0, tag: "排斥複雜用色" },
-                { text: "充滿銳利鐵件、稜角過多且難以親近的冰冷材質。", x: 0, y: 0, tag: "排斥圓形/複雜造型" }
+                { text: "坐在餐廳區滑著手機邊享用", x: 0, y: 0, tag: "避免會卡髒的造型、用抗污和耐熱的面料" },
+                { text: "坐臥在沙發上看著電視享用", x: 0, y: 0, tag: "避免會卡髒的造型、用抗汙面料" },
+                { text: "在客廳茶几旁席地而坐，邊看電視", x: 0, y: 0, tag: "用抗汙耐熱面料，不能用地毯" },
+                { text: "單椅上舒適的享用", x: 0, y: 0, tag: "避免會卡髒的造型、用抗污的面料" },
+                { text: "在個人空間或書房慢慢享用", x: 0, y: 0, tag: "避免會卡髒的造型、用抗汙面料，重視私領域" }
             ]
         },
         {
-            time: "02:00", info: "Phase 1 - Deep Dream", type: "single",
-            q: "在你的理想夢境中，你正被哪一種空間的「風格調性」包裹著？", sub: "挖掘基礎核心美學風格偏好",
+            time: "02:00", type: "multiple",
+            q: "想「徹底放鬆」的時候，你會選擇在哪個角落窩著？", sub: "生活習慣及品項需求（可複選）",
             options: [
-                { text: "溫潤內斂、帶有自然微瑕肌理的寂靜侘寂感。", x: 2, y: 1, tag: "喜歡風格:侘寂自然" },
-                { text: "線條俐落、黑白灰幾何分明的現代極簡感。", x: 1, y: 1, tag: "喜歡風格:現代極簡" },
-                { text: "復古摩登、帶有法式優雅弧線與大膽色彩的中世紀摩登 (MCM)。", x: 3, y: 3, tag: "喜歡風格:摩登復古" },
-                { text: "經典雋永、重視材質比例與對稱美學的當代經典。", x: 3, y: 2, tag: "喜歡風格:當代經典" }
+                { text: "在沙發上盤腿坐臥，享受著大螢幕", x: 0, y: 0, tag: "需求:寬敞沙發/大型地毯" },
+                { text: "餐廳/中島區：坐在餐桌旁滑手機、品酒或進行簡單料理", x: 0, y: 0, tag: "需求:餐椅舒適度/餐吊燈/檯面質感" },
+                { text: "書桌前：專注於個人的興趣", x: 0, y: 0, tag: "需求:人體工學椅/層架/書桌" },
+                { text: "梳妝桌前：滑滑手機或處理瑣事", x: 0, y: 0, tag: "需求:好坐的梳妝椅" },
+                { text: "單椅上：追劇或單純眺望窗外放空", x: 0, y: 0, tag: "需求:休閒單椅/腳凳/氛圍燈" },
+                { text: "居家角落：坐臥在鋪設軟墊或地毯處，享受不受拘束的自由感", x: 0, y: 0, tag: "需求:坐墊/軟骨頭/地毯/異材質軟裝" },
+                { text: "臥室：躺在床上滑手機或看書", x: 0, y: 0, tag: "需求:床/床頭櫃/閱讀燈" }
             ]
         },
         {
-            time: "03:00", info: "Phase 1 - Visual Layout", type: "single",
-            q: "如果可以用「一組家具配置」來具象化你的靈魂，你直覺更趨近哪一種？", sub: "回推心中基礎配置美學結構",
+            time: "03:00",type: "multiple",
+            q: "在寧靜的深夜中準備入睡，你會希望你的床邊周圍...", sub: "臥室家具細節偏好（可複選）",
             options: [
-                { text: "規格化、簡單俐落、溫潤同色系的雋永經典配置。", x: 1, y: 1, tag: "偏好俐落規格品" },
-                { text: "內斂同色，但充滿細緻訂製感與圓潤弧線的高級配置。", x: 2, y: 1, tag: "偏好細緻訂製款" },
-                { text: "充滿藝術品味、大膽跳色且線條豐富的原創大師配置。", x: 3, y: 3, tag: "偏好大師原創藝術品" }
+                { text: "有可以隨手放置物品的小平台", x: 0, y: 0, tag: "床頭邊几" },
+                { text: "有床頭板能舒適靠臥", x: 0, y: 0, tag: "軟包床頭板" },
+                { text: "有氛圍燈的溫潤微光", x: 0, y: 0, tag: "燈光整合" },
+                { text: "有少許收納空間，把小物件都放裡面", x: 0, y: 0, tag: "整裝床頭櫃兩抽" }
+            ]
+        },
+                {
+            time: "04:00",type: "multiple",
+            q: "你漸漸閉上眼，覺得什麼樣的搭配會瞬間破壞整體舒適感？", sub: "過濾心中排斥的造型與氛圍（可複選）",
+            options: [
+                { text: "太多乾淨俐落、多直角的搭配", x: 10, y: 0, tag: "排斥平庸感" },
+                { text: "過於複雜造型的搭配", x: -5, y: 0, tag: "排斥繁複線條" },
+                { text: "市面上過於常見的制式搭配", x: 0, y: 0, tag: "排斥量產制式感" },
+                { text: "單一用色的搭配", x: 0, y: 5, tag: "排斥單一用色" },
+                { text: "大面積大膽跳色的搭配", x: 0, y: -10, tag: "排斥圓形/複雜造型" },
+                { text: "混搭的配置方式", x: 0, y: 0, tag: "排斥調性混搭" },
+                { text: "單一風格的搭配", x: 0, y: 0, tag: "排斥強烈風格性質" }]
+  
+        },
+        {
+            time: "05:00",type: "multiple",
+            q: "在燈光幾乎全暗的空間裡，有哪些家飾品在黑暗中默默發著光？", sub: "想要放置的裝飾品（可複選）",
+            options: [
+                { text: "裝飾掛畫", x: 0, y: 0, tag: "裝飾掛畫" },
+                { text: "落地植栽", x: 0, y: 0, tag: "落地植栽" },
+                { text: "擺飾藝品", x: 0, y: 0, tag: "擺飾藝品" },
+                { text: "造型抱枕", x: 0, y: 0, tag: "造型抱枕" },
+                { text: "地毯", x: 0, y: 0, tag: "地毯" },
+                { text: "花器", x: 0, y: 0, tag: "花器" },
+                { text: "便攜燈", x: 0, y: 0, tag: "便攜燈" }
             ]
         },
         {
-            time: "04:00", info: "Phase 1 - Inspiration", type: "single",
-            q: "醒來前，如果能打包幾張「特別嚮往的家居參考照片」，你最愛它的主因會是？", sub: "抓取軟裝搭配的核心切入點",
+            time: "06:00",type: "single",
+            q: "天亮了，你遊走在居家空間中，你對家具線條的想像是...?", sub: "過濾造型細節",
             options: [
-                { text: "「我喜歡那些家具擺放的慵懶呼吸感，看起來非常放鬆、留白。」", x: 1, y: 1, tag: "追求空間鬆弛感" },
-                { text: "「我被照片裡某幾件極具設計感的單椅或特殊燈飾深深吸引。」", x: 3, y: 2, tag: "追求設計師單品焦點" },
-                { text: "「我喜歡照片中材質的細緻堆疊，例如陶板與木皮撞擊出的細節。」", x: 2, y: 1, tag: "重視產品質感細節" }
+                { text: "方正、俐落、幾何感強的線條，秩序感拉滿", x: -10, y: 0, tag: "" },
+                { text: "偶有直線，偶有曲線相輔相成，層次更豐富", x: 0, y: 0, tag: "喜歡石材/木質天然質感" },
+                { text: "圓潤一點、多一些圓弧倒角，看起來更有包容力", x: 5, y: 0, tag: "造型想要圓潤一點" },
+                { text: "多為藝術感強烈的線條，獨一無二", x: 10, y: 0, tag: "材質要求規整標準" },
+                { text: "沒有特定形狀限制，只要比例完美、具有設計藝術感都可以接受", x: 0, y: 0, tag: "重視原創藝術線條" },
             ]
         },
         {
-            time: "05:00", info: "Phase 2 - Life Companions", type: "multiple",
-            q: "天剛亮，一雙溫暖的眼睛正在看著你，那是誰？", sub: "收集新家的空間常駐成員與安全防護需求（可複選）",
+            time: "07:00",type: "multiple",
+            q: "當你輕輕拉開窗簾，哪種光影與觸感最能喚醒你的一天？", sub: "窗簾樣式與材質偏好（可複選）",
             options: [
-                { text: "活潑的毛孩（貓/狗），正準備在客廳地板與沙發上飛奔。", x: 0, y: 0, tag: "有養寵物" },
-                { text: "牙牙學語的小孩，或者是需要安心慢活的長輩。", x: 0, y: 0, tag: "有小孩/長輩" },
-                { text: "目前是獨居的自由靈魂，空間完全由我一人掌控。", x: 0, y: 0, tag: "成員:獨居" },
-                { text: "甜蜜的兩人世界，正準備共同構築生活細節。", x: 0, y: 0, tag: "成員:伴侶" }
+                { text: "紗簾：透光朦朧，感受空氣般的輕盈質感", x: 0, y: 0, tag: "材質:高質感紗簾" },
+                { text: "調光簾：層次分明，調控光線強弱", x: 0, y: 0, tag: "樣式:現代調光簾" },
+                { text: "布簾：柔和包覆，營造沉穩氣韻", x: 0, y: 0, tag: "材質:細緻棉麻/絨布" },
+                { text: "絲柔百葉：光線柔化，像霧般的朦朧感", x: 0, y: 0, tag: "樣式:絲柔百葉" },
+                { text: "木百葉：天然紋理，過濾出內斂的光感", x: 0, y: 0, tag: "樣式:木百葉" },
+                { text: "羅馬簾：細膩摺疊，展現典雅的層次", x: 0, y: 0, tag: "樣式:羅馬簾" },
+                { text: "鋁百葉：俐落線條，營造安定的氣氛", x: 0, y: 0, tag: "樣式:鋁百葉" },
+                { text: "防水遮光捲簾：全然隱私，兼具機能性質", x: 0, y: 0, tag: "機能:遮光捲簾" }
+    ]
+        },
+        {
+            time: "08:00",type: "single",
+            q: "你吃著早餐滑手機，看到一張心儀的空間照，它最吸引你的地方是？", sub: "軟裝搭配核心切入點",
+            options: [
+                { text: "「我喜歡軟裝搭配起來的鬆弛感，和諧的同色系又簡約」", x: -10, y: -10, tag: "追求空間鬆弛感" },
+                { text: "「我喜歡家具的造型線條，簡單卻有設計感」", x: -5, y: 0, tag: "重視家具造型線條" },
+                { text: "「我喜歡不經意出現的跳色家具和的流線線條，擁有著驚喜感」", x: 5, y: 5, tag: "重視家具造型線條" },
+                { text: "「我被照片裡某幾件極具設計感的單椅或特殊燈飾深深吸引」", x: 10, y: 0, tag: "追求設計師單品焦點" },
+                { text: "「我喜歡照片中材質的細緻堆疊，不同材質呈現出來的層次都不一樣」", x: 10, y: 0, tag: "重視產品質感細節" },
+                { text: "「我很欣賞那種大膽的色彩碰撞，展現出很強烈的個人風格」", x: 0, y: 10, tag: "重視空間氛圍感" },
+                { text: "「我本來就有喜歡的特定風格，它完全符合我的審美」", x: 0, y: 0, tag: "重視家具風格" },
             ]
         },
         {
-            time: "06:00", info: "Phase 2 - Material Touch", type: "single",
-            q: "走到衛浴洗漱，你希望腳下踩到、手觸摸到的材質帶給你什麼感受？", sub: "測量材質維護心態與細節黏著度",
+            time: "09:00",type: "single",
+            q: "你準備進入工作或學習狀態，你在家最常「長時間辦公或專注」的地方是？", sub: "日常習慣與機能需求",
             options: [
-                { text: "極度好清潔、不易留水痕且好打理的現代實用材質。", x: 1, y: 0, tag: "材質要求好清潔" },
-                { text: "帶有獨特自然紋理的高級石材、巨型岩板或天然木皮的微瑕肌理。", x: 3, y: 0, tag: "喜歡石材/木質天然質感" },
-                { text: "平整、顏色溫和且標準規整的霧面規格瓷磚。", x: 1, y: 0, tag: "材質要求規整標準" }
+                { text: "我習慣隨性在客廳沙發上，抱著平板或筆電處理事情", x: 0, y: 0, tag: "日常習慣:習慣在客廳辦公" },
+                { text: "我會長時間在餐廳區的大長桌辦公，這裡是我靈感的延伸", x: 0, y: 0, tag: "日常習慣:長時間在餐廳區辦公" },
+                { text: "我必須在個人空間或專用書桌前，才能完全專注", x: 0, y: 0, tag: "日常習慣:需要獨立工作書房" }
+            ]
+        },
+                {
+            time: "10:00",type: "multiple",
+            q: "工作告一段落，你起身拉展一下筋骨，你是否希望家裡的家具具備「延伸彈性」？", sub: "收集特殊彈性機能硬核需求（可複選）",
+            options: [
+                { text: "沙發本身有包含伸展機能的話更吸引我", x: 0, y: 0, tag: "特殊需求:沙發餐桌要可以伸縮" },
+                { text: "餐桌如果有伸縮功能會更方便使用", x: 0, y: 0, tag: "特殊需求:沙發餐桌要可以伸縮" },
+                { text: "我希望沙發或單椅可以額外加腳凳", x: 0, y: 0, tag: "特殊需求:沙發單椅要加腳凳" },
+                { text: "不需要特殊伸縮，我更追求家具一體成型", x: 0, y: 0, tag: "特殊需求:追求一體成型家具" }
             ]
         },
         {
-            time: "07:00", info: "Phase 2 - Lines Preference", type: "single",
-            q: "準備做早餐，推開公共空間的窗簾，你對家具線條的第一直覺是？", sub: "過濾造型細節（圓潤防撞 vs 俐落方正）",
+            time: "11:00",type: "multiple",
+            q: "你拿著一杯水準備坐下，包裹著你的是什麼材質的座面？", sub: "面料使用偏好（可複選）",
             options: [
-                { text: "造型想要圓潤一點、多一些圓弧倒角，讓家看起來更有包容力。", x: 1, y: 0, tag: "造型想要圓潤一點" },
-                { text: "線條想要方正、俐落、幾何感強，床頭櫃或邊几不想要圓形的。", x: 2, y: 0, tag: "線條俐落方正/不想要圓形床頭櫃" },
-                { text: "沒有特定形狀限制，只要比例完美、具有設計藝術感都可以接受。", x: 3, y: 0, tag: "重視原創藝術線條" }
+                { text: "皮革", x: 0, y: 0, tag: "" },
+                { text: "貓抓布", x: 0, y: 0, tag: "" },
+                { text: "絨布", x: 0, y: 0, tag: "" },
+                { text: "羊羔絨", x: 0, y: 0, tag: "" },
+                { text: "棉麻", x: 0, y: 0, tag: "" }
             ]
         },
-        {
-            time: "08:00", info: "Phase 2 - Inheritance", type: "multiple",
-            q: "坐在餐廳吃早餐，環顧四周，新家有保留哪些「舊情感」嗎？", sub: "調查自購品項與沿用舊家具規劃（可複選）",
-            options: [
-                { text: "有打算從舊家沿用具有紀念價值或習慣的沿用家具。", x: 0, y: 0, tag: "有沿用舊家具" },
-                { text: "沒有，所有家具我都希望全新採購，徹底為新家打底。", x: 0, y: 0, tag: "家具全部換新" },
-                { text: "我已經自行偷偷物色、或是有確定自購的特定軟裝品項了。", x: 0, y: 0, tag: "已有確定自購品項" }
-            ]
-        },
-        {
-            time: "09:00", info: "Phase 2 - Storage Control", type: "single",
-            q: "整理桌面準備展開行程，此時你對空間「整潔與陳列」的控制欲是？", sub: "推估機能收納與展示單品的比例心態",
-            options: [
-                { text: "雜物必須全部藏起來！我希望使用大量隱形收納，家具簡單俐落就好。", x: 1, y: 0, tag: "機能偏好:隱形大量收納" },
-                { text: "容許生活痕跡。我喜歡用幾件高級的開放式層架，展示我的藏書與生活品味。", x: 3, y: 0, tag: "機能偏好:美學開放展示" }
-            ]
-        },
-        {
-            time: "10:00", info: "Phase 3 - Deep Focus", type: "single",
-            q: "進入工作或學習狀態，你在新家最常「長時間辦公或專注」的基地是？", sub: "挖掘核心日常習慣與公共區長桌機能需求",
-            options: [
-                { text: "我習慣隨性在客廳沙發上，抱著平板或筆電處理事情。", x: 1, y: 0, tag: "日常習慣:習慣在客廳辦公" },
-                { text: "我會長時間在餐廳區的大長桌辦公，這裡是我靈感的延伸。", x: 2, y: 0, tag: "日常習慣:長時間在餐廳區辦公" },
-                { text: "我必須在獨立的書房空間或個人專屬書桌前，才能完美專注。", x: 1, y: 0, tag: "日常習慣:需要獨立工作書房" }
-            ]
-        },
-        {
-            time: "11:00", info: "Phase 3 - Dining Habit", type: "single",
-            q: "專注到一半你想喝杯咖啡，關於「在客廳吃喝東西」這件事...？", sub: "決定面料抗污防潑水之實用等級",
-            options: [
-                { text: "超級習慣！我就是喜歡窩在客廳沙發上喝咖啡、吃零食，甚至看電視吃正餐。", x: 1, y: 0, tag: "使用習慣:習慣在客廳喝咖啡吃東西" },
-                { text: "絕對禁止。為了維持極致整潔，吃喝東西一律只能在餐廳或中島進行。", x: 2, y: 0, tag: "使用習慣:客廳禁止飲食" }
-            ]
-        },
-        {
-            time: "12:00", info: "Phase 3 - Midday Rest", type: "single",
-            q: "短暫的午休充電，你最渴望被家裡哪一個「核心品項」完全包裹？", sub: "探知一定要具備的核心家具與使用偏好",
-            options: [
-                { text: "一座寬大舒適、深度極具包容感、可以整個人陷進去的核心大沙發。", x: 1, y: 0, tag: "必備品項:核心深度沙發/極致舒適要求" },
-                { text: "一張擺在窗邊、符合人體工學且線條優雅的設計師單椅。", x: 3, y: 0, tag: "必備品項:設計師單椅/習慣坐在單椅上閱讀" },
-                { text: "一張大尺寸、充滿極致陶板工藝或實木觸感的厚實餐桌。", x: 2, y: 0, tag: "必備品項:質感厚實大餐桌" }
-            ]
-        },
-        {
-            time: "13:00", info: "Phase 3 - Flexibility", type: "multiple",
-            q: "起手拉展一下筋骨，你是否也希望家裡的家具具備「伸縮彈性」？", sub: "收集特殊彈性機能硬核需求（可複選）",
-            options: [
-                { text: "是的，客廳沙發或大餐桌最好具備伸縮彈性，人多時可隨時展開。", x: 0, y: 0, tag: "特殊需求:沙發餐桌要可以伸縮" },
-                { text: "我希望沙發或專屬單椅可以額外加腳凳，讓雙腿得到充分抬高放鬆。", x: 0, y: 0, tag: "特殊需求:沙發單椅要加腳凳" },
-                { text: "不需要特殊伸縮，我更追求家具一體成型、線條不可割捨的固定結構美學。", x: 0, y: 0, tag: "特殊需求:追求一體成型家具" }
-            ]
-        },
-        {
-            time: "14:00", info: "Phase 3 - Soul Priority", type: "sort",
-            q: "此時你開始盤算軟裝的資金比例，請排出你最願意投資的「品項優先順序」：", sub: "拖曳進行排序：最捨得砸預算的放最上面（加權計分項目）",
+                {
+            time: "12:00",type: "sort",
+            q: "你等等準備出門採買家具，正在算著軟裝預算，請排出你最願意投資的「品項優先順序」：", sub: "拖曳進行排序：最捨得砸預算的放最上面",
             options: [
                 { text: "核心沙發區 — 撐起客廳的靈魂包裹感", val: "核心沙發" },
                 { text: "大長餐桌椅 — 兼顧辦公與相聚的靈感中島", val: "餐桌椅" },
+                { text: "造型燈飾 — 點亮夜晚感性氛圍的調色盤", val: "燈飾" },
                 { text: "設計師單椅 — 窗邊獨處與夜讀的品味儀式", val: "設計師單椅" },
-                { text: "藝術燈飾與地毯 — 點亮夜晚感性氛圍的調色盤", val: "燈飾地毯" }
+                { text: "穩固床架 — 讓你每天都享有優質睡眠", val: "床" },
+                { text: "藝術裝飾與地毯 — 注入濃厚的藝術氣息及情調", val: "家飾品" },
             ]
         },
         {
-            time: "15:00", info: "Phase 3 - Final Checklist", type: "multiple",
-            q: "除了上述的空間主角，新家的配置中「必定要規畫」的配件有哪些？", sub: "完善採購需求檢核表（可複選）",
+            time: "13:00",type: "single",
+            q: "在規劃新家的軟裝採購規劃時，你的總預算區間是...", sub: "精準規劃預算分配",
             options: [
-                { text: "實用大容量、能收納生活雜物的電視櫃或端景收納櫃", x: 0, y: 0, tag: "必備配件:電視櫃/收納櫃" },
-                { text: "主臥空間必備的設計感床頭櫃與機能化妝台", x: 0, y: 0, tag: "必備配件:床頭櫃/化妝台" },
-                { text: "玄關落塵區的機能穿鞋榻或迎賓端景几", x: 0, y: 0, tag: "必備配件:玄關家具" },
-                { text: "用來展示私人收藏或珍貴書籍的開放式陳列架", x: 0, y: 0, tag: "必備配件:開放式展示架" }
+                { text: "經濟實用型：以高 CP 值的常規規格品為主", x: 0, y: 0, tag: "預算範圍:經濟規格品" },
+                { text: "重點升級型：核心家具升級訂製款，其餘混搭規格品", x: 0, y: 0, tag: "預算範圍:核心高訂/其餘規格混搭" },
+                { text: "標準美學型：全面採標準值以上的升級訂製款", x: 0, y: 0, tag: "預算範圍:核心高訂/部分單品高訂" },
+                { text: "頂級追求型：全面追求極致品味與整體感", x: 0, y: 0, tag: "預算範圍:全屋頂級高級訂製" }
+            ]
+        },
+                {
+            time: "14:00",type: "multiple",
+            q: "出門後，你最掛心家中成員的安全，哪些家具設計能讓你更安心？", sub: "家具細節偏好（可複選）",
+            options: [
+                { text: "桌面需要全帶大圓弧", x: 0, y: 0, tag: "" },
+                { text: "桌面需要防刮耐磨", x: 0, y: 0, tag: "" },
+                { text: "座椅面料要好清潔，全數使用皮革", x: 0, y: 0, tag: "" },
+                { text: "座墊設計須平整，避免卡髒汙", x: 0, y: 0, tag: "" },
+                { text: "有考量基本安全需求即可，無特別要求", x: 0, y: 0, tag: "" },
             ]
         },
         {
-            time: "16:00", info: "Phase 4 - Color Gradient", type: "single",
-            q: "看著窗外夕陽漸漸沉落，你希望新家鋪陳的「大面積色系底蘊」是？", sub: "定調用色變化 Y 軸明度與色調基底",
+            time: "15:00",type: "multiple",
+            q: "你抵達家具店，正在思考空間中是否需要放特殊單品...", sub: "特殊採購需求（可複選）",
             options: [
-                { text: "溫潤明亮的淺色奶茶系、米白、暖灰色，隨著日光折射溫柔微光。", x: 0, y: 1, tag: "材料使用淺色系" },
-                { text: "深沉、內斂且帶有高級神祕感的深色系木質、暗黑灰調或沉穩黑色調。", x: 0, y: 1, tag: "材料使用深色系" },
-                { text: "帶有低飽和灰調的莫蘭迪色、灰藍色，展現空間溫柔的色塊層次。", x: 0, y: 2, tag: "材料使用莫蘭迪色系" }
+                { text: "端景收納櫃", x: 0, y: 0, tag: "" },
+                { text: "餐邊櫃", x: 0, y: 0, tag: "" },
+                { text: "玄關穿鞋凳", x: 0, y: 0, tag: "" },
+                { text: "書桌", x: 0, y: 0, tag: "" },
+                { text: "床尾凳", x: 0, y: 0, tag: "" },
+                { text: "首飾櫃", x: 0, y: 0, tag: "" },
+                { text: "無特殊需求", x: 0, y: 0, tag: "" }
+            ]
+        },
+{
+     time: "16:00", type: "multiple",
+    q: "店裡有好多心儀的家具，你通常是如何決定的？",sub: "了解您的購物決策習慣（可複選）",
+    options: [
+        { text: "直覺派：一眼看中設計風格就決定，重視當下的觸動", x: 0, y: 0, tag: "購物:感性直覺" },
+        { text: "研究派：會深入比較材質、細節與評價，確認符合需求才購買", x: 0, y: 0, tag: "購物:理性研究" },
+        { text: "精打細算派：會優先考量預算，慎重比價後才購買", x: 0, y: 0, tag: "購物:理性消費" },
+        { text: "建議派：喜歡聽取專業設計師意見，透過專業引導做最終選擇", x: 0, y: 0, tag: "購物:依賴專業" },
+        { text: "體驗派：重視實地試坐與觸感體驗，感受家具與身體的契合度", x: 0, y: 0, tag: "購物:重視體驗" }
+    ]
+},
+        {
+            time: "17:00",type: "single",
+            q: "逛著逛著，你終於搭配好家具了，它的主要用色是？", sub: "定調軟裝主色",
+            options: [
+                { text: "溫潤明亮的淺奶茶、米白色系", x: 0, y: -5, tag: "材料使用淺色系" },
+                { text: "簡約又乾淨俐落的灰、白色系", x: 0, y: 0, tag: "材料使用無彩色系" },
+                { text: "帶有神祕感的深色系", x: 0, y: -10, tag: "材料使用深色系" },
+                { text: "擁有低飽和度的莫蘭迪色系", x: 0, y: 5, tag: "材料使用莫蘭迪色系" },
+                { text: "大膽撞色的高彩度色系", x: 0, y: 10, tag: "材料使用高彩度撞色" },
+                { text: "沒有特定色系，只要跟空間和諧融合即可", x: 0, y: 0, tag: "材料使用混搭色系" },
+            ]
+        },
+  {
+            time: "18:00",type: "single",
+            q: "走出店門看見一件跳色單品，你想像它放在家裡的樣子...", sub: "了解跳色接受範圍",
+            options: [
+                { text: "拒絕任何跳色，顏色搭配應該與空間完美融為一體", x: 0, y: -10, tag: "色彩極度保守/追求同色調" },
+                { text: "可以接受局部跳色點綴空間", x: 0, y: -5, tag: "可接受空間局部跳色" },
+                { text: "越大膽越好！我著迷於衝突且極具美學張力的撞色變化", x: 0, y: 10, tag: "追求大膽撞色變化" }
+            ]
+        },
+                {
+            time: "19:00",type: "single",
+            q: "採購完後，你發現你最在意的細節其實是？", sub: "了解重視的要素",
+            options: [
+                { text: "耐用度、高機能與高維護度，是否完美契合生活習慣", x: 1, y: 0, tag: "最在意细節:機能與耐用度" },
+                { text: "美學張力、獨特外觀與極致觸感，是否能在開門一瞬間觸動我", x: 3, y: 0, tag: "最在意細節:美學張力與極致觸感" },
+                { text: "品牌故事、設計師理念與原創精神，是否能在空間中展現獨特品味", x: 2, y: 0, tag: "最在意細節:品牌故事與原創精神" },
+                { text: "價格、預算與性價比，是否能在合理範圍內達到生活機能最大化", x: 0, y: 0, tag: "最在意細節:價格與性價比" },
             ]
         },
         {
-            time: "17:00", info: "Phase 4 - Vibe Expectation", type: "single",
-            q: "下班開車走在回家的路上，你最期待打開大門那一瞬間的「氛圍撞擊」？", sub: "交叉對應最終美學定位象限",
+            time: "20:00",type: "single",
+            q: "晚餐時間門鈴響了，你的公共空間平常有準備迎接「社交活動」嗎？", sub: "家具配置與機能需求",
             options: [
-                { text: "簡單俐落、毫無負擔。能讓大腦一秒關機、極簡乾淨的純粹歸屬感。", x: 1, y: 0, tag: "偏好氛圍:簡單俐落" },
-                { text: "溫馨同色、被大地色細緻包裹。像精品度假飯店一樣的低調內斂高雅。", x: 2, y: 0, tag: "偏好氛圍:內斂同色" },
-                { text: "充滿故事、像私人藝廊。每一件家具線條都獨具藝術品味的陳列儀式。", x: 3, y: 0, tag: "偏好氛圍:藝術品味" }
+                { text: "我常邀請三五好友來聚會，需要靈活調整出最舒適的招待空間", x: 0, y: 0, tag: "使用習慣:有聚會社交需求" },
+                { text: "極少，我更沉溺於極致獨享與清靜", x: 0, y: 0, tag: "使用習慣:極致獨享無社交需求" }
+            ]
+        },
+                {
+            time: "21:00",type: "single",
+            q: "送走朋友後，洗澡前你想休息一下，你最常「小憩」的地方是哪裡？", sub: "使用習慣了解",
+            options: [
+                { text: "客廳區", x: 0, y: 0, tag: "客廳家具" },
+                { text: "餐廳區", x: 0, y: 0, tag: "餐廳家具" },
+                { text: "書房區", x: 0, y: 0, tag: "書房家具" },
+                { text: "臥室區", x: 0, y: 0, tag: "臥室家具" },
             ]
         },
         {
-            time: "18:00", info: "Phase 4 - Social Identity", type: "single",
-            q: "晚餐時間門鈴響了，你的公共空間平常有準備迎接「社交活動」嗎？", sub: "回推家具配置的開闊度與款待機能需求",
+            time: "22:00",type: "sort",
+            q: "你洗完澡了，擁有一些自己的時間，你通常會優先做什麼事情？", sub: "拖曳進行排序：生活習慣了解",
             options: [
-                { text: "有，我常邀請三五好友來家裡聚會喝咖啡，需要具備靈活款待人的包容彈性。", x: 1, y: 0, tag: "使用習慣:有聚會社交需求" },
-                { text: "極少，家是我高度私密的精神堡壘，除了摯愛家人，我更沉溺於極致獨享與清靜。", x: 2, y: 0, tag: "使用習慣:極致獨享無社交需求" }
+                { text: "窩在沙發的一角看電視", x: 0, y: 0, tag: "" },
+                { text: "在單椅或臥榻角落裡滑手機", x: 0, y: 0, tag: "" },
+                { text: "在書桌前處理雜事", x: 0, y: 0, tag: "" },
+                { text: "在餐廳區裡用著筆電", x: 0, y: 0, tag: "" },
+                { text: "在客廳或餐廳區跟親友聊天", x: 0, y: 0, tag: "" },
+                { text: "在臥室裡安靜閱讀或滑手機", x: 0, y: 0, tag: "" }
             ]
         },
         {
-            time: "19:00", info: "Phase 4 - Contrast Tension", type: "single",
-            q: "若要在客廳掛一幅「巨型當代藝術畫作」，你的大腦對色彩的接受極限是？", sub: "定調 Y 軸跳色與大膽撞色之接受邊界",
+            time: "23:00",type: "multiple",
+            q: "你最後決定看部電影，坐臥在沙發上，你覺得這張沙發為何舒適？", sub: "使用習慣了解（可複選）",
             options: [
-                { text: "色調必須與沙發、牆面完美融為一體，最好是同色系、留白或低調純色幾何。", x: 0, y: 1, tag: "色彩極度保守/追求同色調" },
-                { text: "可以接受1-2個高彩度的經典色塊（如克萊因藍、土橘色）局部跳色點綴空間。", x: 0, y: 2, tag: "可接受空間局部跳色" },
-                { text: "越包容越大膽越好！我著迷於衝突且極具美學張力的撞色變化。", x: 0, y: 3, tag: "追求大膽撞色變化" }
+                { text: "可調式靠背符合我的姿勢", x: 0, y: 0, tag: "重視實用與高CP值" },
+                { text: "可調式的靠背跟座位符合多元使用需求", x: 2, y: 0, tag: "重視標準與高級訂製工藝" },
+                { text: "寬大深度能讓雙腿輕鬆伸展", x: 4, y: 0, tag: "追求原創設計師品牌" },
+                { text: "高靠背包覆感更強烈", x: 0, y: 0, tag: "重視舒適與放鬆" },
+                { text: "座位深度適中，能讓我坐得更久", x: 0, y: 0, tag: "重視舒適與放鬆" },
+                { text: "低靠背更好延展雙臂", x: 0, y: 0, tag: "重視舒適與放鬆" },
+                { text: "貴妃位設計方便躺臥", x: 0, y: 0, tag: "重視舒適與放鬆" },
+                { text: "沙發自帶邊几功能", x: 0, y: 0, tag: "重視舒適與放鬆" },
             ]
         },
-        {
-            time: "20:00", info: "Phase 5 - Core Philosophy", type: "single",
-            q: "拉上窗簾，點亮核心燈具。你認為一套好的居家軟裝，核心價值該是什麼？", sub: "測量預算心態與原創品牌的溢價認同度",
-            options: [
-                { text: "實用、好維護、高 CP 值。在合理經濟的範疇內，達到生活機能最大化。", x: 0, y: 0, tag: "重視實用與高CP值" },
-                { text: "量身定製與細緻工藝細節。沙發的車縫線、陶板的邊角收邊，都該是訂製的精緻工藝。", x: 2, y: 0, tag: "重視標準與高級訂製工藝" },
-                { text: "原創大師精神與美學不可替代性。家具就是家裡的雕塑藝術品，我願意為原創買單。", x: 4, y: 0, tag: "追求原創設計師品牌" }
-            ]
-        },
-        {
-            time: "21:00", info: "Phase 5 - Reality Budget", type: "single",
-            q: "與現實攤牌：在規劃新家的軟裝採購規劃時，您的真實總預算區間是？", sub: "最真實硬核的數據收集，用以精準對應採購通路",
-            options: [
-                { text: "經濟實用型：希望以高 CP 值的家用規格品為主（預算範圍：輕軟裝區間）。", x: 0, y: 0, tag: "預算範圍:經濟規格品" },
-                { text: "重點升級型：核心沙發、大長餐桌願意升級高級訂製款，其餘燈飾混搭規格品。", x: 2, y: 0, tag: "預算範圍:核心高訂/其餘規格混搭" },
-                { text: "頂級追求型：追求極致整體感與品味純粹性，全屋家具傾向高級訂製或原裝品牌。", x: 4, y: 0, tag: "預算範圍:全屋頂級高級訂製" }
-            ]
-        },
-        {
-            time: "22:00", info: "Phase 5 - Product Details", type: "single",
-            q: "夜深了，喝著溫水，回顧前面 22 題的一日隨行，你發現你最在意的細節其實是？", sub: "挖掘潛意識中「機能」與「美學」的勝負分水嶺",
-            options: [
-                { text: "物件本身的「耐用度、高機能與高維護度」，是否完美契合生活習慣。", x: 1, y: 0, tag: "最在意细節:機能與耐用度" },
-                { text: "物件本身的「美學張力、獨特外觀與極致觸感」，是否能在開門一瞬間觸動我。", x: 3, y: 0, tag: "最在意細節:美學張力與極致觸感" }
-            ]
-        },
-        {
-            time: "23:00", info: "Phase 5 - Epilogue Concept", type: "single",
-            q: "時針即將走回起點。在閉上眼享受這個新家前，請對著未來的空間留下一句話：", sub: "驗證對觀域品牌核心精神的共鳴度",
-            options: [
-                { text: "「我期盼這個精心調配的新空間，能幫我整理好日常生活的步調。」", x: 0, y: 0, tag: "空間期許:整理生活步調" },
-                { text: "「因為我們整理的，不只是空間。更是未來長期生活的方式。」", x: 0, y: 0, tag: "空間期許:定調長期生活方式" }
-            ]
-        }
     ];
 
     // 九宮格結果定義
 const vibeResults = {
-    "1_1": { title: "璞", matrix: "Simple", img:"image/1.png",desc: "「璞」象徵著未經修飾的真實與純粹。我們捨棄過度繁複的裝飾，選擇線條最為簡約的家具，讓空間回歸最原始的質感，如同打磨過的原石般內斂；正因這種不刻意雕琢的留白，反而映襯出日常生活最平實的溫度，證明家的美感不必源於昂貴的堆砌，而是源於對真實生活的誠實擁抱。", tags: ["#標籤1", "#標籤2"] },
+    "1_1": { title: "璞", matrix: "Simple", img:"image/1.png",desc: "「璞」象徵著未經修飾的真實與純粹。我們捨棄過度繁複的裝飾，選擇線條最為簡約的家具，讓空間回歸最原始的質感，如同打磨過的原石般內斂；正因這種不刻意雕琢的留白，反而映襯出日常生活最平實的溫度，證明家的美感不必源於昂貴的堆砌，而是源於對真實生活的誠實擁抱。", tags: ["#璞真", "#減法設計","#極致內斂","#極致俐落", "#簡約"]},
+    "1_2": { title: "綴", matrix: "Adorn", img:"image/3.png",desc: "「綴」代表著在簡約基底中，以點到為止的跳色作為視覺引子，巧妙地將個性引入空間。保留了家具最俐落單純的線條，不讓色彩喧賓奪主，而是讓心儀的顏色化作角落裡的驚喜，既保留了極簡的清爽，又擁有了獨一無二的記憶點。", tags: ["#點綴", "#妝點生活感","#克制的驚喜","#俐落線條", "#簡約"] },
+    "1_3": { title: "蘊", matrix: "Submerge", img:"image/6.png",desc: "「蘊」是將張力隱藏於內。家具線條雖俐落克制，但那飽和的色澤與織紋卻在空間中靜靜湧動。我們不在外在做過多的裝飾，而是將奢華感「蘊」含在材質的觸感與色彩的濃度中。這不僅是極簡，更是一種將生活細節雕琢至極的態度，讓極簡的骨架與大膽的靈魂，在平靜的空間中展開對話。", tags: ["#低調奢華", "#大膽用色","#極簡的個性化","#俐落線條", "#內斂的張力"] },
+    "2_1": { title: "融", matrix: "Blend", img:"image/8.png",desc: "「融」代表物件「融於環境」的設計美學。利用家具造型堆疊及變化，來打破單調的線性結構，讓空間呈現出如自然起伏般的柔和律動。輔以帶有藝術感的造型單品作為視覺點綴，不僅增添了空間的趣味性，更透過造型之間的微妙呼應，在靜謐中構築出細膩的層次。", tags: ["#交融","#恰如其分" ,"#和諧層次","#內斂用色", "#點綴型態變化"] },
+    "2_2": { title: "延", matrix: "Extend", img:"image/artistic_interior_4_3_no_watermark.png",desc: "「延」象徵著延伸與延續。我們在既有的簡約架構中，讓單品帶有張力的線條或一抹跳脫的色彩，賦予原本平穩的設計動態感與情緒起伏。這種細膩的變化，既保有了空間的秩序感，又悄悄延伸出屬於屋主的獨特性格，讓家在規矩之中，充滿了引人入勝的細節", tags: ["#延伸", "#節制的點綴","#色彩與造型平衡","#微幅張力的美學"] },
+    "2_3": { title: "韻", matrix: "Rhythm", img:"image/9.png",desc: "「韻」代表韻律，適度的單品線條與強烈的色彩感相互調和，宛如沈靜湖面上隨意點下的漣漪，既打破了沈悶，又讓整體視野在張力中保有和諧的餘溫。透過色彩本身的特殊性，為居家場域定調出獨有的感性姿態。", tags: ["#韻律", "#溫潤的張力","#打破平庸","#跳色藝術"] },
+    "3_1": { title: "粹", matrix: "Purity", img:"image/\5.png",desc: "「粹」體現了在色彩最純粹的狀況下，不依賴跳色來吸引目光，而是完全回歸到「造型」與「材質」的本質。這種設計手法透過豐富的家具線條堆疊與細膩的材質肌理，創造出深厚的風格氣息。正因為色彩單純，反而更能襯托出家具本身的雕塑感與層次豐富度。", tags: ["#純粹美學", "#造型堆疊","#風格強化","豐富細節"] },
+    "3_2": { title: "塑", matrix: "Sculptural", img:"image/industrial_living_4_3_no_watermark.png",desc: "「塑」代表型塑與構築。以家具的造型張力來定義空間。選用具有豐富線條變化的家具單品，建構出空間的個性，並在這些豐富的線條基礎上，加入點綴跳色，如同畫龍點睛般強化家具的視覺輪廓，讓層次顯得更有深度。", tags: ["#型塑", "#點綴跳色","#豐富細節","#風格強化"] },
+    "3_3": { title: "異", matrix: "Unique", img:"image/7.png",desc: "「異」的核心在於打破常規的空間邏輯。我們不追求成套的統一感，而是透過大膽混搭具備強烈性格的家具，以意想不到的造型與材質組合，創造出視覺上的驚喜。這種設計語彙將空間從標準化的樣式中解放出來，讓每一件家具都成為獨特的敘事元素，為居家場域建立起與眾不同的個性格調。", tags: ["#異稟","#獨特選品", "#極致混搭","#個性化", ] },
 };
 
 // 啟動測驗與通用跳頁函式
@@ -1167,7 +1310,6 @@ function renderQuestion(idx) {
         // 組合題目的時間標籤、階段資訊、問題主標題與副標題
         let html = `
             <div class="time-badge">${qData.time}</div>
-            <div class="step-info">${qData.info}</div>
             <h2 class="question-title">Q${idx + 1}. ${qData.q}</h2>
             <p class="subtitle">${qData.sub}</p>
         `;
@@ -1295,31 +1437,27 @@ html += `<div class="quiz-navigation-flex">`;
     });
     }
 
-    // 儲存排序題數據
     function handleSortConfirm(idx) {
-        const list = document.getElementById("drag-list");
-        const items = list.querySelectorAll(".sort-item");
-        let sortOrder = [];
-        
-        items.forEach((item, index) => {
-            sortOrder.push(`${index + 1}.${item.getAttribute("data-val")}`);
-        });
+    const list = document.getElementById("drag-list");
+    const items = list.querySelectorAll(".sort-item");
+    
+    // 1. 只負責抓順序，存入陣列
+    let sortOrder = [];
+    items.forEach((item) => {
+        sortOrder.push(item.getAttribute("data-val"));
+    });
 
-        // 核心加權計分邏輯：若將「設計師單椅」或「燈飾地毯」排在第一順位，代表藝術品味高
-        const firstPlace = items[0].getAttribute("data-val");
-        if (firstPlace === "設計師單椅" || firstPlace === "燈飾地毯") {
-            clientData.scoreX += 3;
-        } else {
-            clientData.scoreX += 1;
-        }
+    // 2. 存入 clientData，不進行任何計分邏輯
+    // 確保 answers 是一個物件
+    if (!clientData.answers) clientData.answers = {};
+    clientData.answers[`第${idx + 1}題_排序順序`] = sortOrder.join(" > ");
+    
+    console.log("當前排序已記錄:", sortOrder); // 除錯用：按 F12 可看
 
-        clientData.answers["家具重視度排序"] = sortOrder.join(" > ");
-        
-        // 進入下一題
-        currentQuestionIdx++;
-        renderQuestion(currentQuestionIdx);
-    }
-        
+    // 3. 進入下一題
+    currentQuestionIdx++;
+    renderQuestion(currentQuestionIdx);
+}
 // 下一題通用邏輯 (單選與複選修正版)
 function nextQuestion(idx) {
     const qBox = document.getElementById("dynamic-quiz-box");
@@ -1401,11 +1539,39 @@ function calculateAndSubmit() {
             const resultStep = document.getElementById("step-result");
             resultStep.classList.add("active");
 
-            // 9 種結果判定邏輯 (區間 1-3)
-            const getIdx = (s) => (s <= 8 ? 1 : (s <= 16 ? 2 : 3));
-            const finalTypeKey = `${getIdx(clientData.scoreX)}_${getIdx(clientData.scoreY)}`;
-            const res = vibeResults[finalTypeKey];
-            clientData.resultType = res.title;
+// 在 calculateAndSubmit 函式中找到這段並替換：
+
+// 1. 定義判定九宮格的函式
+function getResultKey(x, y) {
+
+    let xPart, yPart;
+
+    // X 軸區間
+    if (x >= -30 && x <= -16) {
+        xPart = 1;
+    } else if (x >= -15 && x <= 15) {
+        xPart = 2;
+    } else if (x >= 16 && x <= 30) {
+        xPart = 3;
+    }
+
+
+    // Y 軸區間
+    if (y >= -40 && y <= -21) {
+        yPart = 1;
+    } else if (y >= -20 && y <= 20) {
+        yPart = 2;
+    } else if (y >= 21 && y <= 40) {
+        yPart = 3;
+    }
+
+
+    return `${xPart}_${yPart}`;
+}
+
+const finalTypeKey = getResultKey(clientData.scoreX, clientData.scoreY);
+const res = vibeResults[finalTypeKey];
+clientData.resultType = res.title;
 
             // 渲染內容 (對應「網頁_工作區域 1_4.jpg」結構)
             document.getElementById("display-vibe-title").innerText = res.title;
@@ -1417,13 +1583,44 @@ function calculateAndSubmit() {
             document.getElementById("display-vibe-tags").innerHTML = res.tags
                 .map(t => `<span class="tag-item">${t}</span>`).join('');
             
-            // 渲染量表
-            const pX = Math.min((clientData.scoreX / 24) * 100, 100);
-            const pY = Math.min((clientData.scoreY / 24) * 100, 100);
-            document.getElementById("display-vibe-gauge").innerHTML = `
-                <div class="gauge-row"><span>簡單俐落</span><div class="gauge-bar-bg"><div class="gauge-bar-fill" style="width: ${pX}%"></div></div><span>藝術品味</span></div>
-                <div class="gauge-row"><span>內斂同色</span><div class="gauge-bar-bg"><div class="gauge-bar-fill" style="width: ${pY}%"></div></div><span>撞色變化</span></div>
-            `;
+// 在 renderResultLogic 或 calculateAndSubmit 的量表顯示部分：
+
+// 將分數映射到 0~100 的公式 (假設 X 範圍 -30~30，Y 範圍 -40~40)
+const pX = Math.abs(clientData.scoreX) / 30 *100;
+const pY = Math.abs(clientData.scoreY) / 40 * 100;
+
+
+const xStyle = clientData.scoreX < 0
+    ? `left:0; width:${pX}%`
+    : `right:0; width:${pX}%`;
+
+
+const yStyle = clientData.scoreY < 0
+    ? `left:0; width:${pY}%`
+    : `right:0; width:${pY}%`;
+
+    document.getElementById("display-vibe-gauge").innerHTML = `
+    <div class="gauge-row">
+        <span>簡單俐落</span>
+
+        <div class="gauge-bar-bg">
+            <div class="gauge-bar-fill" style="${xStyle}"></div>
+        </div>
+
+        <span>藝術品味</span>
+    </div>
+
+
+    <div class="gauge-row">
+        <span>內斂同色</span>
+
+        <div class="gauge-bar-bg">
+            <div class="gauge-bar-fill" style="${yStyle}"></div>
+        </div>
+
+        <span>撞色變化</span>
+    </div>
+`;
 
             container.classList.add("active");
             
@@ -1434,39 +1631,50 @@ function calculateAndSubmit() {
         }, 350);
     }, 2350);
 }
-// 💡 補上遺失的渲染結果邏輯
 function renderResultLogic() {
-    // 獲取分數並計算結果類型 (與 calculateAndSubmit 中的邏輯一致)
+    // 1. 計算 Key
     const getIdx = (s) => (s <= 8 ? 1 : (s <= 16 ? 2 : 3));
-    const finalTypeKey = `${getIdx(clientData.scoreX)}_${getIdx(clientData.scoreY)}`;
-    const res = vibeResults[finalTypeKey] || vibeResults["1_1"];
+    const finalTypeKey = `${getIdx(clientData.scoreX || 0)}_${getIdx(clientData.scoreY || 0)}`;
+    const res = vibeResults[finalTypeKey];
 
-    // 渲染內容
-    document.getElementById("display-vibe-title").innerText = res.title;
-    document.getElementById("display-vibe-matrix").innerText = res.matrix;
-    document.getElementById("display-vibe-desc").innerText = res.desc;
-    document.getElementById("display-vibe-image").src = res.img;
+    if (!res) {
+        console.error("錯誤：找不到 Key 的資料:", finalTypeKey);
+        return;
+    }
+
+    // 2. 渲染文字與圖片
+    const elMap = {
+        "display-vibe-title": res.title,
+        "display-vibe-matrix": res.matrix,
+        "display-vibe-desc": res.desc
+    };
+
+    for (const [id, value] of Object.entries(elMap)) {
+        const el = document.getElementById(id);
+        if (el) el.innerText = value || "";
+    }
+
+    const imgEl = document.getElementById("display-vibe-image");
+    if (imgEl) imgEl.src = res.img || "";
     
-    // 渲染標籤
+    // 3. 渲染標籤
     const tagsContainer = document.getElementById("display-vibe-tags");
-    tagsContainer.innerHTML = res.tags.map(t => `<span class="tag-item">${t}</span>`).join('');
-    
-    // 渲染量表
-    const pX = Math.min((clientData.scoreX / 24) * 100, 100);
-    const pY = Math.min((clientData.scoreY / 24) * 100, 100);
-    document.getElementById("display-vibe-gauge").innerHTML = `
-        <div class="gauge-row"><span>簡單俐落</span><div class="gauge-bar-bg"><div class="gauge-bar-fill" style="width: ${pX}%"></div></div><span>藝術品味</span></div>
-        <div class="gauge-row"><span>內斂同色</span><div class="gauge-bar-bg"><div class="gauge-bar-fill" style="width: ${pY}%"></div></div><span>撞色變化</span></div>
-    `;
+    if (tagsContainer && Array.isArray(res.tags)) {
+        tagsContainer.innerHTML = res.tags.map(t => `<span class="tag-item">${t}</span>`).join('');
+    }
 
-const itemsContainer = document.getElementById("recommend-items");
-if (res.items) {
-    itemsContainer.innerHTML = res.items.map(item => `
-        <div style="width: 150px;">
-            <img src="${item}" style="width: 100%; height: auto; display: block;">
-        </div>
-    `).join('');
-}}
+ 
+}
+
+    // 5. 渲染推薦單品
+    const itemsContainer = document.getElementById("recommend-items");
+    if (itemsContainer && Array.isArray(res.items)) {
+        itemsContainer.innerHTML = res.items.map(item => `
+            <div style="width: 150px;">
+                <img src="${item}" style="width: 100%; height: auto; display: block;">
+            </div>
+        `).join('');
+    }
 
 function restartQuiz() {
     // 1. 擦乾淨進度鎖
@@ -1529,7 +1737,7 @@ function restartQuiz() {
 document.addEventListener("keydown", (e) => {
     // 按下 K 鍵強制跳轉
     if (e.key === "k" || e.key === "K") {
-        console.log("強制跳轉至結果頁...");
+        renderResultLogic();
         
         // 1. 移除首頁與問題頁的狀態
         document.body.classList.remove("is-home");
@@ -1542,12 +1750,8 @@ document.addEventListener("keydown", (e) => {
         resultStep.classList.add("active");
         
         // 3. 設定測試分數
-        clientData.scoreX = 15; 
-        clientData.scoreY = 20; 
-        
-        // 4. 確保 vibeResults 內有對應的資料（若無，請務必補上此物件內容）
-        // 呼叫渲染邏輯
-        renderResultLogic(); 
+        clientData.scoreX = 30; 
+        clientData.scoreY = 30; 
         
         // 5. 確保容器可見並執行淡入動畫
         const container = document.querySelector(".quiz-container");
