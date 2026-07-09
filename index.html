@@ -901,7 +901,7 @@ async function uploadToNotion(data) {
             method: "POST",
             mode: "cors",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
+            body: JSON.stringify(data){
                 name: data.name,
                 projectname: data.projectname,
                 scoreX: data.scoreX,
