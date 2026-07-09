@@ -871,6 +871,24 @@ footer {
 <footer>GUANYU-DESIGN ／ INTERIOR DECORATING</footer>
 
 <script>
+    // 1. 初始化全域變數 (一定要加這行)
+let clientData = {
+    name: "",
+    projectname: "",
+    scoreX: 0,
+    scoreY: 0,
+    resultType: "",
+    answers: {}
+};
+
+// 2. 接著才是你原本的 localStorage 讀取邏輯
+let currentQuestionIdx = localStorage.getItem("quiz_current_idx") 
+    ? parseInt(localStorage.getItem("quiz_current_idx")) 
+    : 0;
+
+if (localStorage.getItem("quiz_client_data")) {
+    clientData = JSON.parse(localStorage.getItem("quiz_client_data"));
+}
    async function uploadToNotion(data) {
     const GAS_URL = "https://script.google.com/macros/s/AKfycbymdqvBWXd7OZp3Ogk-SAzMhDYImQr4H-rz8G5r9GxWLGm_wZbiWtN3XVSV_KQTIcvc/exec"; 
 
