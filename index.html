@@ -871,7 +871,7 @@ footer {
 <footer>GUANYU-DESIGN ／ INTERIOR DECORATING</footer>
 
 <script>
-    // 1. 初始化全域變數 (一定要加這行)
+// 1. 初始化資料結構
 let clientData = {
     name: "",
     projectname: "",
@@ -881,17 +881,21 @@ let clientData = {
     answers: {}
 };
 
-// 2. 接著才是你原本的 localStorage 讀取邏輯
+// 2. 初始化目前題號
 let currentQuestionIdx = localStorage.getItem("quiz_current_idx") 
     ? parseInt(localStorage.getItem("quiz_current_idx")) 
     : 0;
 
+// 3. 從 localStorage 恢復資料（如果有的話）
 if (localStorage.getItem("quiz_client_data")) {
-    clientData = JSON.parse(localStorage.getItem("quiz_client_data"));
+    try {
+        clientData = JSON.parse(localStorage.getItem("quiz_client_data"));
+    } catch(e) { console.error("資料解析失敗", e); }
 }
-   async function uploadToNotion(data) {
-    const GAS_URL = "https://script.google.com/macros/s/AKfycbymdqvBWXd7OZp3Ogk-SAzMhDYImQr4H-rz8G5r9GxWLGm_wZbiWtN3XVSV_KQTIcvc/exec"; 
 
+// 4. 發送資料到 Notion 的函式
+async function uploadToNotion(data) {
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbymdqvBWXd7OZp3Ogk-SAzMhDYImQr4H-rz8G5r9GxWLGm_wZbiWtN3XVSV_KQTIcvc/exec"; 
     try {
         await fetch(GAS_URL, {
             method: "POST",
@@ -911,70 +915,30 @@ if (localStorage.getItem("quiz_client_data")) {
         console.error("傳送失敗:", err);
     }
 }
-let currentQuestionIdx = localStorage.getItem("quiz_current_idx") 
-    ? parseInt(localStorage.getItem("quiz_current_idx")) 
-    : 0;
 
-// 💡 2. 讀取使用者填寫過的資料（如果之前有填過的話）
-if (localStorage.getItem("quiz_client_data")) {
-    clientData = JSON.parse(localStorage.getItem("quiz_client_data"));
-}
-
+// 5. 頁面載入後的邏輯
 window.addEventListener("DOMContentLoaded", () => {
-    // 1. 檢查 localStorage 裡面有沒有紀錄目前在第幾題
     const savedIdx = localStorage.getItem("quiz_current_idx");
     const quizFinished = localStorage.getItem("quiz_finished");
 
-    // 🎯 核心判定 1：如果已經測驗完成（在結果頁），或者是全新開啟網頁（什麼紀錄都沒有）
-    // 重新整理時一律當作重置，回到最乾淨的首頁
     if (quizFinished === "true" || savedIdx === null) {
-        
-        // 澈底洗乾淨所有狀態
+        // [初始化重置邏輯]
         localStorage.clear();
-
-        // 清空 HTML 輸入框
-        const nameInput = document.getElementById("client-name");
-        const projectInput = document.getElementById("projectname");
-        if (nameInput) nameInput.value = "";
-        if (projectInput) projectInput.value = "";
-
-        clientData.name = "";
-        clientData.projectname = "";
-        clientData.scoreX = 0;
-        clientData.scoreY = 0;
-        clientData.answers = {};
         currentQuestionIdx = 0;
-
-        // 顯示首頁外觀
+        
         const titleZone = document.getElementById("intro-title-zone");
-        if (titleZone) {
-            titleZone.style.display = "block";
-            titleZone.style.opacity = "1";
-        }
+        if (titleZone) { titleZone.style.display = "block"; titleZone.style.opacity = "1"; }
+        
         const container = document.querySelector(".quiz-container");
-        if (container) {
-            container.classList.remove("fade-in-active");
-            container.classList.add("active");
-        }
+        if (container) { container.classList.remove("fade-in-active"); container.classList.add("active"); }
+        
         const step0 = document.getElementById("step-0");
         if (step0) step0.classList.add("active");
-
+        
         document.body.classList.add("is-home");
-
     } else {
-        // 🎯 核心判定 2：如果 `savedIdx` 有值，代表使用者是在「問題頁」中途按下了重新整理 (F5)！
-        
-        // 恢復暫存的測驗進度與客戶基本資料
+        // [恢復進度邏輯]
         currentQuestionIdx = parseInt(savedIdx, 10);
-        
-        const backupData = localStorage.getItem("quiz_client_data");
-        if (backupData) {
-            try {
-                Object.assign(clientData, JSON.parse(backupData));
-            } catch(e) { console.error("恢復數據失敗", e); }
-        }
-
-        // 拔除首頁專用的樣式
         document.body.classList.remove("is-home");
         
         const titleZone = document.getElementById("intro-title-zone");
@@ -982,18 +946,19 @@ window.addEventListener("DOMContentLoaded", () => {
         
         const step0 = document.getElementById("step-0");
         if (step0) step0.classList.remove("active");
-
-        // 喚醒大卡片與問題盒，並停留在原本的那一題
+        
         const container = document.querySelector(".quiz-container");
         if (container) container.classList.add("fade-in-active");
-
+        
         const qBox = document.getElementById("dynamic-quiz-box");
         if (qBox) qBox.classList.add("active");
-
-        // 重新渲染當前的問題畫面
-        renderQuestion(currentQuestionIdx);
+        
+        // 確保這行函式在你的 JS 裡有定義喔！
+        if (typeof renderQuestion === 'function') {
+            renderQuestion(currentQuestionIdx);
+        }
     }
-}); 
+});
     // 24小時全套題目庫配置
     const questions = [
         {
