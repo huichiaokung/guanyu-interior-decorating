@@ -1437,25 +1437,26 @@ function handleChoice(idx, val) {
 
 // 範例：處理排序題 (你原本的邏輯)
 function handleSortConfirm(idx) {
-    console.log("正在確認第 " + idx + " 題...");
+    console.log("正在處理第 " + (idx + 1) + " 題 (排序)");
     const items = document.querySelectorAll(".sort-item");
     let sortOrder = [];
-    items.forEach(item => sortOrder.push(item.getAttribute("data-val")));
+    items.forEach(item => sortOrder.push(item.querySelector(".sort-text").innerText)); // 確保抓到文字
     
-clientData.answers[`Q${idx + 1}_(排序)`] = sortOrder.join(" > ");
+    // 存入物件
+    clientData.answers[`Q${idx + 1}_(排序)`] = sortOrder.join(" > ");
     
-    // 儲存狀態到 LocalStorage
+    // 儲存狀態
     localStorage.setItem("quiz_client_data", JSON.stringify(clientData));
-    localStorage.setItem("quiz_current_idx", idx + 1); // 強制更新題號指標
-
-    // 改用明確的判斷方式
-    if (typeof quizData !== 'undefined' && idx >= quizData.length - 1) {
-        uploadToNotion(clientData);
-        // 這裡應該呼叫你的結束頁面函式，例如 showResult()
-        console.log("測驗結束，已送出");
+    
+    // 強制跳轉邏輯
+    if (idx >= questions.length - 1) {
+        // 最後一題直接結束
+        calculateAndSubmit(); 
     } else {
-        console.log("跳轉到下一題");
-        nextQuestion(); // 確保這一行有執行
+        // 不是最後一題就跳下一個索引
+        currentQuestionIdx = idx + 1;
+        localStorage.setItem("quiz_current_idx", currentQuestionIdx);
+        renderQuestion(currentQuestionIdx);
     }
 }
 // 下一題通用邏輯 (單選與複選修正版)
@@ -1512,6 +1513,7 @@ function calculateAndSubmit() {
     const container = document.querySelector(".quiz-container");
     const qBox = document.getElementById("dynamic-quiz-box");
     localStorage.setItem("quiz_finished", "true");
+    uploadToNotion(clientData);
     
     // 【第一步】淡出題目
     container.classList.remove("fade-in-active");
