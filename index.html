@@ -871,19 +871,28 @@ footer {
 <footer>GUANYU-DESIGN ／ INTERIOR DECORATING</footer>
 
 <script>
-    // 🔗 串接 Make.com 用的 Webhook 網址
-    const webhookUrl = "https://hook.us1.make.com/xxxxxxxxxxxxxx"; 
+   async function uploadToNotion(data) {
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbymdqvBWXd7OZp3Ogk-SAzMhDYImQr4H-rz8G5r9GxWLGm_wZbiWtN3XVSV_KQTIcvc/exec"; 
 
-    // 數據庫收集容器
-    let clientData = {
-        name: "",
-        projectname: "",
-        scoreX: 0,
-        scoreY: 0,
-        resultType: "",
-        answers: {}
-    };
-
+    try {
+        await fetch(GAS_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                name: data.name,
+                projectname: data.projectname,
+                scoreX: data.scoreX,
+                scoreY: data.scoreY,
+                resultType: data.resultType,
+                answers: data.answers
+            })
+        });
+        console.log("全套資料已傳送至 Notion");
+    } catch (err) {
+        console.error("傳送失敗:", err);
+    }
+}
 let currentQuestionIdx = localStorage.getItem("quiz_current_idx") 
     ? parseInt(localStorage.getItem("quiz_current_idx")) 
     : 0;
@@ -1437,26 +1446,27 @@ html += `<div class="quiz-navigation-flex">`;
     });
     }
 
-    function handleSortConfirm(idx) {
-    const list = document.getElementById("drag-list");
-    const items = list.querySelectorAll(".sort-item");
-    
-    // 1. 只負責抓順序，存入陣列
+    // 範例：處理選擇題
+function handleChoice(idx, val) {
+    clientData.answers[`第${idx + 1}題`] = val; // 存入物件，格式為：{"第1題": "簡約"}
+    nextQuestion();
+}
+
+// 範例：處理排序題 (你原本的邏輯)
+function handleSortConfirm(idx) {
+    const items = document.querySelectorAll(".sort-item");
     let sortOrder = [];
-    items.forEach((item) => {
-        sortOrder.push(item.getAttribute("data-val"));
-    });
-
-    // 2. 存入 clientData，不進行任何計分邏輯
-    // 確保 answers 是一個物件
-    if (!clientData.answers) clientData.answers = {};
-    clientData.answers[`第${idx + 1}題_排序順序`] = sortOrder.join(" > ");
+    items.forEach(item => sortOrder.push(item.getAttribute("data-val")));
     
-    console.log("當前排序已記錄:", sortOrder); // 除錯用：按 F12 可看
-
-    // 3. 進入下一題
-    currentQuestionIdx++;
-    renderQuestion(currentQuestionIdx);
+    // 存入物件
+    clientData.answers[`第${idx + 1}題 (排序)`] = sortOrder.join(" > ");
+    
+    // 檢查是否最後一題，是的話就執行送出
+    if (idx === quizData.length - 1) {
+        uploadToNotion(clientData); 
+    } else {
+        nextQuestion();
+    }
 }
 // 下一題通用邏輯 (單選與複選修正版)
 function nextQuestion(idx) {
