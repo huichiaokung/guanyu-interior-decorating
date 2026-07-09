@@ -1492,10 +1492,8 @@ function nextQuestion(idx) {
         }
     });
 
-clientData.answers[`Q${idx + 1}...`] = {
-    answers: chosenTexts.join(" | "),
-    tags: chosenTags.join(", ")
-};
+clientData.answers[`Q${idx+1}`] =
+`${chosenTexts.join(" | ")}（${chosenTags.join(", ")}）`;
 
     // 💡 修正關鍵：統一使用全域變數 currentQuestionIdx 進行累加與判斷
     currentQuestionIdx = idx + 1;
@@ -1514,11 +1512,19 @@ function prevQuestion() {
     }
 }
 
-function calculateAndSubmit() {
+async function calculateAndSubmit() {
     const container = document.querySelector(".quiz-container");
     const qBox = document.getElementById("dynamic-quiz-box");
     localStorage.setItem("quiz_finished", "true");
-    uploadToNotion(clientData);
+    try{
+
+    await uploadToNotion(clientData);
+
+}catch(err){
+
+    console.error(err);
+
+}
     
     // 【第一步】淡出題目
     container.classList.remove("fade-in-active");
@@ -1575,19 +1581,41 @@ function getResultKey(x, y) {
     return `${xPart}_${yPart}`;
 }
 
-const finalTypeKey = getResultKey(clientData.scoreX, clientData.scoreY);
-const res = vibeResults[finalTypeKey];
-clientData.resultType = res.title;
+async function calculateAndSubmit(){
 
-            // 渲染內容 (對應「網頁_工作區域 1_4.jpg」結構)
-            document.getElementById("display-vibe-title").innerText = res.title;
-            document.getElementById("display-vibe-matrix").innerText = res.matrix;
-            document.getElementById("display-vibe-desc").innerText = res.desc;
-            document.getElementById("display-vibe-image").src = res.img;
-            
-            // 渲染標籤
-            document.getElementById("display-vibe-tags").innerHTML = res.tags
-                .map(t => `<span class="tag-item">${t}</span>`).join('');
+    // 計算結果
+    const finalTypeKey = calculateResult();
+
+    const res = vibeResults[finalTypeKey];
+
+    if(!res){
+        console.error("找不到結果", finalTypeKey);
+        return;
+    }
+
+
+    // 存結果類型
+    clientData.resultType = res.title;
+
+
+    // 傳 Notion
+    await uploadToNotion(clientData);
+
+
+    // 顯示結果
+    renderResult(res);
+
+}
+
+// ===== 顯示結果 =====
+document.getElementById("display-vibe-title").innerText = res.title;
+document.getElementById("display-vibe-matrix").innerText = res.matrix;
+document.getElementById("display-vibe-desc").innerText = res.desc;
+document.getElementById("display-vibe-image").src = res.img;
+
+document.getElementById("display-vibe-tags").innerHTML = res.tags
+    .map(t => `<span class="tag-item">${t}</span>`)
+    .join('');
             
 // 在 renderResultLogic 或 calculateAndSubmit 的量表顯示部分：
 
