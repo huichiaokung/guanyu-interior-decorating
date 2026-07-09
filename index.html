@@ -896,7 +896,7 @@ if (localStorage.getItem("quiz_client_data")) {
 // 4. 發送資料到 Notion 的函式
 // 修正後的函式
 async function uploadToNotion(data) {
-    const GAS_URL = "https://script.google.com/macros/s/AKfycbymdqvBWXd7OZp3Ogk-SAzMhDYImQr4H-rz8G5r9GxWLGm_wZbiWtN3XVSV_KQTIcvc/exec"; 
+    const GAS_URL = "https://script.google.com/macros/s/AKfycbwRa4UcN3MYSfG1w3-UNvGaEIS9l5BJPKpGIXocEsTEVDVS_0FG5s-iig8xwpc_30V_/exec"; 
     try {
         const response = await fetch(GAS_URL, {
             method: "POST",
