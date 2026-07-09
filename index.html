@@ -900,25 +900,28 @@ async function uploadToNotion(data) {
     try {
         const response = await fetch(GAS_URL, {
             method: "POST",
-            mode: "cors", // 確保這裡與 GAS 的回傳設定相容
             headers: { 
-                "Content-Type": "application/json" 
+                "Content-Type": "application/json" // 改成這個！
             },
-            // 修正點：直接字串化整個 data 物件
             body: JSON.stringify(data) 
         });
         
-        // 建議增加一個檢測，確認伺服器真的收到並處理了
-        if (response.ok) {
-            console.log("全套資料已成功傳送至 Notion");
+        // 確保成功才往下走
+        if (!response.ok) throw new Error('HTTP 錯誤 ' + response.status);
+
+        const resJson = await response.json(); // 直接用 .json()
+        
+        if (resJson.status === "success") {
+            console.log("全套資料已成功傳送至 Notion！");
+            // 這裡呼叫切換頁面的邏輯
+            showResultPage(); 
         } else {
-            console.error("伺服器回應錯誤，狀態碼:", response.status);
+            console.error("GAS 處理失敗:", resJson);
         }
     } catch (err) {
-        console.error("傳送失敗，請檢查網路或 GAS 網址:", err);
+        console.error("傳送失敗:", err);
     }
 }
-
 // 5. 頁面載入後的邏輯
 window.addEventListener("DOMContentLoaded", () => {
     const savedIdx = localStorage.getItem("quiz_current_idx");
