@@ -900,26 +900,24 @@ async function uploadToNotion(data) {
     try {
         const response = await fetch(GAS_URL, {
             method: "POST",
+            mode: "cors", // 確保這裡與 GAS 的回傳設定相容
             headers: { 
-                "Content-Type": "text/plain" 
+                "Content-Type": "application/json" 
             },
+            // 修正點：直接字串化整個 data 物件
             body: JSON.stringify(data) 
         });
         
-        // 讀取 GAS 回傳的 JSON 結果
-        const resText = await response.text();
-        const resJson = JSON.parse(resText);
-        
-        if (resJson.status === "success") {
-            console.log("全套資料已成功傳送至 Notion！");
+        // 建議增加一個檢測，確認伺服器真的收到並處理了
+        if (response.ok) {
+            console.log("全套資料已成功傳送至 Notion");
         } else {
-            console.error("GAS 處理失敗:", resJson.message);
+            console.error("伺服器回應錯誤，狀態碼:", response.status);
         }
     } catch (err) {
         console.error("傳送失敗，請檢查網路或 GAS 網址:", err);
     }
 }
-
 
 // 5. 頁面載入後的邏輯
 window.addEventListener("DOMContentLoaded", () => {
@@ -1492,8 +1490,10 @@ function nextQuestion(idx) {
         }
     });
 
-clientData.answers[`Q${idx+1}`] =
-`${chosenTexts.join(" | ")}（${chosenTags.join(", ")}）`;
+clientData.answers[`Q${idx + 1}...`] = {
+    answers: chosenTexts.join(" | "),
+    tags: chosenTags.join(", ")
+};
 
     // 💡 修正關鍵：統一使用全域變數 currentQuestionIdx 進行累加與判斷
     currentQuestionIdx = idx + 1;
@@ -1512,19 +1512,11 @@ function prevQuestion() {
     }
 }
 
-async function calculateAndSubmit() {
+function calculateAndSubmit() {
     const container = document.querySelector(".quiz-container");
     const qBox = document.getElementById("dynamic-quiz-box");
     localStorage.setItem("quiz_finished", "true");
-    try{
-
-    await uploadToNotion(clientData);
-
-}catch(err){
-
-    console.error(err);
-
-}
+    uploadToNotion(clientData);
     
     // 【第一步】淡出題目
     container.classList.remove("fade-in-active");
@@ -1581,41 +1573,19 @@ function getResultKey(x, y) {
     return `${xPart}_${yPart}`;
 }
 
-async function calculateAndSubmit(){
+const finalTypeKey = getResultKey(clientData.scoreX, clientData.scoreY);
+const res = vibeResults[finalTypeKey];
+clientData.resultType = res.title;
 
-    // 計算結果
-    const finalTypeKey = calculateResult();
-
-    const res = vibeResults[finalTypeKey];
-
-    if(!res){
-        console.error("找不到結果", finalTypeKey);
-        return;
-    }
-
-
-    // 存結果類型
-    clientData.resultType = res.title;
-
-
-    // 傳 Notion
-    await uploadToNotion(clientData);
-
-
-    // 顯示結果
-    renderResult(res);
-
-}
-
-// ===== 顯示結果 =====
-document.getElementById("display-vibe-title").innerText = res.title;
-document.getElementById("display-vibe-matrix").innerText = res.matrix;
-document.getElementById("display-vibe-desc").innerText = res.desc;
-document.getElementById("display-vibe-image").src = res.img;
-
-document.getElementById("display-vibe-tags").innerHTML = res.tags
-    .map(t => `<span class="tag-item">${t}</span>`)
-    .join('');
+            // 渲染內容 (對應「網頁_工作區域 1_4.jpg」結構)
+            document.getElementById("display-vibe-title").innerText = res.title;
+            document.getElementById("display-vibe-matrix").innerText = res.matrix;
+            document.getElementById("display-vibe-desc").innerText = res.desc;
+            document.getElementById("display-vibe-image").src = res.img;
+            
+            // 渲染標籤
+            document.getElementById("display-vibe-tags").innerHTML = res.tags
+                .map(t => `<span class="tag-item">${t}</span>`).join('');
             
 // 在 renderResultLogic 或 calculateAndSubmit 的量表顯示部分：
 
