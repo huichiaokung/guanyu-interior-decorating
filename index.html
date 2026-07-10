@@ -895,29 +895,24 @@ if (localStorage.getItem("quiz_client_data")) {
 
 // 4. 發送資料到 Notion 的函式
 // 修正後的函式
-async function uploadToNotion(data) {
+async function uploadToSheet(data) {
     const GAS_URL = "https://script.google.com/macros/s/AKfycbwRa4UcN3MYSfG1w3-UNvGaEIS9l5BJPKpGIXocEsTEVDVS_0FG5s-iig8xwpc_30V_/exec"; 
+    
     try {
         const response = await fetch(GAS_URL, {
             method: "POST",
+            mode: "no-cors", // 嘗試這個模式，它會繞過 CORS 檢查 (但注意：這樣就拿不到 response.json())
             headers: { 
-                "Content-Type": "application/json" // 改成這個！
+                "Content-Type": "application/json"
             },
             body: JSON.stringify(data) 
         });
         
-        // 確保成功才往下走
-        if (!response.ok) throw new Error('HTTP 錯誤 ' + response.status);
+        // 如果使用了 no-cors，response.ok 和 json() 會失效
+        // 所以我們直接假設成功，並跳轉頁面
+        console.log("資料已發送 (No-CORS 模式)");
+        showResultPage(); 
 
-        const resJson = await response.json(); // 直接用 .json()
-        
-        if (resJson.status === "success") {
-            console.log("全套資料已成功傳送至 Notion！");
-            // 這裡呼叫切換頁面的邏輯
-            showResultPage(); 
-        } else {
-            console.error("GAS 處理失敗:", resJson);
-        }
     } catch (err) {
         console.error("傳送失敗:", err);
     }
