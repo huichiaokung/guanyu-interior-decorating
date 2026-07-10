@@ -893,26 +893,26 @@ if (localStorage.getItem("quiz_client_data")) {
     } catch(e) { console.error("資料解析失敗", e); }
 }
 
-async function uploadToNotion(data) {
+async function uploadToSheet(data) {
 
-const GAS_URL = "https://script.google.com/macros/s/AKfycbymdqvBWXd7OZp3Ogk-SAzMhDYImQr4H-rz8G5r9GxWLGm_wZbiWtN3XVSV_KQTIcvc/exec";
+const GAS_URL = "https://script.google.com/macros/s/AKfycbwRa4UcN3MYSfG1w3-UNvGaEIS9l5BJPKpGIXocEsTEVDVS_0FG5s-iig8xwpc_30V_/exec";
 
 try {
 
     await fetch(GAS_URL, {
-        method:"POST",
-        mode:"no-cors",
-        headers:{
-            "Content-Type":"text/plain"
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+            "Content-Type": "text/plain"
         },
-        body:JSON.stringify(data)
+        body: JSON.stringify(data)
     });
 
-    console.log("資料送出");
+    console.log("已送出 GAS");
 
-}catch(error){
+} catch(error){
 
-    console.error(error);
+    console.error("送出失敗:", error);
 
 }
 
@@ -1574,7 +1574,7 @@ function getResultKey(x, y) {
 const finalTypeKey = getResultKey(clientData.scoreX, clientData.scoreY);
 const res = vibeResults[finalTypeKey];
 clientData.resultType = res.title;
-uploadToNotion(clientData);
+uploadToSheet(clientData);
             // 渲染內容 (對應「網頁_工作區域 1_4.jpg」結構)
             document.getElementById("display-vibe-title").innerText = res.title;
             document.getElementById("display-vibe-matrix").innerText = res.matrix;
