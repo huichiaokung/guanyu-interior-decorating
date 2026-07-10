@@ -898,23 +898,24 @@ if (localStorage.getItem("quiz_client_data")) {
 async function uploadToSheet(data) {
     const GAS_URL = "https://script.google.com/macros/s/AKfycbwRa4UcN3MYSfG1w3-UNvGaEIS9l5BJPKpGIXocEsTEVDVS_0FG5s-iig8xwpc_30V_/exec"; 
     
-    // 1. 無論發送成功與否，我們都準備顯示結果頁
-    console.log("開始發送資料...");
+try{
 
-    try {
-        // 使用 fetch 發送 (使用 no-cors 避免瀏覽器攔截)
-        fetch(GAS_URL, {
-            method: "POST",
-            mode: "no-cors",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data)
-        });
-        
-        console.log("資料發送指令已發出 (背景處理中)");
+await fetch(GAS_URL,{
+method:"POST",
+headers:{
+"Content-Type":"application/json"
+},
+body:JSON.stringify(data)
+});
 
-    } catch (err) {
-        console.error("發送過程出錯，但沒關係，繼續執行顯示:", err);
-    }
+console.log("資料成功送出");
+
+}catch(err){
+
+console.error("GAS錯誤",err);
+
+}
+
 }
 // 5. 頁面載入後的邏輯
 window.addEventListener("DOMContentLoaded", () => {
