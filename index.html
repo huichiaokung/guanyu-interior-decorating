@@ -893,26 +893,26 @@ if (localStorage.getItem("quiz_client_data")) {
     } catch(e) { console.error("資料解析失敗", e); }
 }
 
-async function uploadToSheet(data) {
+async function uploadToNotion(data) {
 
-const GAS_URL = "https://script.google.com/macros/s/AKfycbwRa4UcN3MYSfG1w3-UNvGaEIS9l5BJPKpGIXocEsTEVDVS_0FG5s-iig8xwpc_30V_/exec";
+const GAS_URL = "https://script.google.com/macros/s/AKfycbymdqvBWXd7OZp3Ogk-SAzMhDYImQr4H-rz8G5r9GxWLGm_wZbiWtN3XVSV_KQTIcvc/exec";
 
 try {
 
     await fetch(GAS_URL, {
-        method: "POST",
-        mode: "no-cors",
-        headers: {
-            "Content-Type": "text/plain"
+        method:"POST",
+        mode:"no-cors",
+        headers:{
+            "Content-Type":"text/plain"
         },
-        body: JSON.stringify(data)
+        body:JSON.stringify(data)
     });
 
-    console.log("已送出 GAS");
+    console.log("資料送出");
 
-} catch(error){
+}catch(error){
 
-    console.error("送出失敗:", error);
+    console.error(error);
 
 }
 
