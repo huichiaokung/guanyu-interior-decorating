@@ -893,26 +893,26 @@ if (localStorage.getItem("quiz_client_data")) {
     } catch(e) { console.error("資料解析失敗", e); }
 }
 
-// 4. 發送資料到 Notion 的函式
-// 修正後的函式
 async function uploadToSheet(data) {
-    const GAS_URL = "https://script.google.com/macros/s/AKfycbwRa4UcN3MYSfG1w3-UNvGaEIS9l5BJPKpGIXocEsTEVDVS_0FG5s-iig8xwpc_30V_/exec"; 
-    
-try{
 
-await fetch(GAS_URL,{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify(data)
-});
+const GAS_URL = "https://script.google.com/macros/s/AKfycbwRa4UcN3MYSfG1w3-UNvGaEIS9l5BJPKpGIXocEsTEVDVS_0FG5s-iig8xwpc_30V_/exec";
 
-console.log("資料成功送出");
+try {
 
-}catch(err){
+    await fetch(GAS_URL, {
+        method: "POST",
+        mode: "no-cors",
+        headers: {
+            "Content-Type": "text/plain"
+        },
+        body: JSON.stringify(data)
+    });
 
-console.error("GAS錯誤",err);
+    console.log("已送出 GAS");
+
+} catch(error){
+
+    console.error("送出失敗:", error);
 
 }
 
