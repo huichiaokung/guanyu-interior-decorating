@@ -915,13 +915,6 @@ async function uploadToSheet(data) {
     } catch (err) {
         console.error("發送過程出錯，但沒關係，繼續執行顯示:", err);
     }
-
-    // 2. 為了確保結果頁一定會跳轉，我們延遲 500 毫秒後強制執行顯示
-    // 這能保證使用者按下按鈕後，感覺很流暢地跳到結果頁
-    setTimeout(() => {
-        console.log("強制跳轉至結果頁");
-        showResultPage(); 
-    }, 500);
 }
 // 5. 頁面載入後的邏輯
 window.addEventListener("DOMContentLoaded", () => {
@@ -1479,6 +1472,7 @@ function nextQuestion(idx) {
 
     const qData = questions[idx];
     let chosenTexts = [];
+
     let chosenTags = [];
 
     // 加總計分與標籤收集
@@ -1520,7 +1514,6 @@ function calculateAndSubmit() {
     const container = document.querySelector(".quiz-container");
     const qBox = document.getElementById("dynamic-quiz-box");
     localStorage.setItem("quiz_finished", "true");
-    uploadToNotion(clientData);
     
     // 【第一步】淡出題目
     container.classList.remove("fade-in-active");
@@ -1580,7 +1573,7 @@ function getResultKey(x, y) {
 const finalTypeKey = getResultKey(clientData.scoreX, clientData.scoreY);
 const res = vibeResults[finalTypeKey];
 clientData.resultType = res.title;
-
+uploadToSheet(clientData);
             // 渲染內容 (對應「網頁_工作區域 1_4.jpg」結構)
             document.getElementById("display-vibe-title").innerText = res.title;
             document.getElementById("display-vibe-matrix").innerText = res.matrix;
@@ -1639,50 +1632,6 @@ const yStyle = clientData.scoreY < 0
         }, 350);
     }, 2350);
 }
-function renderResultLogic() {
-    // 1. 計算 Key
-    const getIdx = (s) => (s <= 8 ? 1 : (s <= 16 ? 2 : 3));
-    const finalTypeKey = `${getIdx(clientData.scoreX || 0)}_${getIdx(clientData.scoreY || 0)}`;
-    const res = vibeResults[finalTypeKey];
-
-    if (!res) {
-        console.error("錯誤：找不到 Key 的資料:", finalTypeKey);
-        return;
-    }
-
-    // 2. 渲染文字與圖片
-    const elMap = {
-        "display-vibe-title": res.title,
-        "display-vibe-matrix": res.matrix,
-        "display-vibe-desc": res.desc
-    };
-
-    for (const [id, value] of Object.entries(elMap)) {
-        const el = document.getElementById(id);
-        if (el) el.innerText = value || "";
-    }
-
-    const imgEl = document.getElementById("display-vibe-image");
-    if (imgEl) imgEl.src = res.img || "";
-    
-    // 3. 渲染標籤
-    const tagsContainer = document.getElementById("display-vibe-tags");
-    if (tagsContainer && Array.isArray(res.tags)) {
-        tagsContainer.innerHTML = res.tags.map(t => `<span class="tag-item">${t}</span>`).join('');
-    }
-
- 
-}
-
-    // 5. 渲染推薦單品
-    const itemsContainer = document.getElementById("recommend-items");
-    if (itemsContainer && Array.isArray(res.items)) {
-        itemsContainer.innerHTML = res.items.map(item => `
-            <div style="width: 150px;">
-                <img src="${item}" style="width: 100%; height: auto; display: block;">
-            </div>
-        `).join('');
-    }
 
 function restartQuiz() {
     // 1. 擦乾淨進度鎖
