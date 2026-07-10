@@ -898,24 +898,30 @@ if (localStorage.getItem("quiz_client_data")) {
 async function uploadToSheet(data) {
     const GAS_URL = "https://script.google.com/macros/s/AKfycbwRa4UcN3MYSfG1w3-UNvGaEIS9l5BJPKpGIXocEsTEVDVS_0FG5s-iig8xwpc_30V_/exec"; 
     
+    // 1. 無論發送成功與否，我們都準備顯示結果頁
+    console.log("開始發送資料...");
+
     try {
-        const response = await fetch(GAS_URL, {
+        // 使用 fetch 發送 (使用 no-cors 避免瀏覽器攔截)
+        fetch(GAS_URL, {
             method: "POST",
-            mode: "no-cors", // 嘗試這個模式，它會繞過 CORS 檢查 (但注意：這樣就拿不到 response.json())
-            headers: { 
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(data) 
+            mode: "no-cors",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
         });
         
-        // 如果使用了 no-cors，response.ok 和 json() 會失效
-        // 所以我們直接假設成功，並跳轉頁面
-        console.log("資料已發送 (No-CORS 模式)");
-        showResultPage(); 
+        console.log("資料發送指令已發出 (背景處理中)");
 
     } catch (err) {
-        console.error("傳送失敗:", err);
+        console.error("發送過程出錯，但沒關係，繼續執行顯示:", err);
     }
+
+    // 2. 為了確保結果頁一定會跳轉，我們延遲 500 毫秒後強制執行顯示
+    // 這能保證使用者按下按鈕後，感覺很流暢地跳到結果頁
+    setTimeout(() => {
+        console.log("強制跳轉至結果頁");
+        showResultPage(); 
+    }, 500);
 }
 // 5. 頁面載入後的邏輯
 window.addEventListener("DOMContentLoaded", () => {
