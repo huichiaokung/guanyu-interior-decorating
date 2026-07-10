@@ -1574,7 +1574,7 @@ function getResultKey(x, y) {
 const finalTypeKey = getResultKey(clientData.scoreX, clientData.scoreY);
 const res = vibeResults[finalTypeKey];
 clientData.resultType = res.title;
-uploadToSheet(clientData);
+uploadToNotion(clientData);
             // 渲染內容 (對應「網頁_工作區域 1_4.jpg」結構)
             document.getElementById("display-vibe-title").innerText = res.title;
             document.getElementById("display-vibe-matrix").innerText = res.matrix;
